@@ -28,7 +28,6 @@ namespace Controls
         [SerializeField]
         private float defaultAngle = 45;
 
-
         private void OnValidate()
         {
             gameObject.transform.rotation = Quaternion.Euler(Vector3.right * defaultAngle);
@@ -53,12 +52,17 @@ namespace Controls
             else return 0;
         }
 
-        
+        void Move(Vector2 _offset)
+        {
+            gameObject.transform.position = new Vector3(_offset.x, TargetHeight(_offset), _offset.y);
+        }
+
+
 
         // Start is called before the first frame update
         void Start()
         {
-        
+            
         }
 
         // Update is called once per frame
