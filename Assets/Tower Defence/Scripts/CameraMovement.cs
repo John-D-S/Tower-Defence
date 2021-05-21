@@ -57,18 +57,20 @@ namespace Controls
             gameObject.transform.position = new Vector3(_offset.x, TargetHeight(_offset), _offset.y);
         }
 
-
-
-        // Start is called before the first frame update
-        void Start()
+        void Rotate(Vector2 _rotation)
         {
-            
+            gameObject.transform.rotation = Quaternion.Euler(Mathf.Clamp(_rotation.x), _rotation.y, 0);
         }
 
         // Update is called once per frame
         void Update()
         {
-        
+            if (Input.GetAxis("Mouse X") > 0 || Input.GetAxis("Mouse Y") > 0)
+            {
+                Vector2 rotation = new Vector2(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"));
+            }
+
+            
         }
     }
 }
