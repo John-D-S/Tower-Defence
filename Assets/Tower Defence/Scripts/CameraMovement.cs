@@ -59,7 +59,7 @@ namespace Controls
             {
                 return hit.transform.position;
             }
-            else return Vector3.zero;
+            return MouseRayHitPoint(0f);
         }
         
         /// <summary>
@@ -74,7 +74,7 @@ namespace Controls
             {
                 return hit.point;
             }
-            return Vector3.zero;
+            return MouseRayHitPoint(0f);
         }
 
         /// <summary>
