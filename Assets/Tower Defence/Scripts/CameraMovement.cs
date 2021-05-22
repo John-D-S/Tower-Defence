@@ -189,9 +189,10 @@ namespace Controls
             }
             
             attatchedCamera.transform.localPosition = Vector3.Lerp(attatchedCamera.transform.localPosition, Vector3.back * targetCameraDistance, 0.1f);
-
-            transform.position = new Vector3(transform.position.x, TargetHeight(new Vector2(transform.position.x, transform.position.z)) + pivotHeight, transform.position.z);
+            
             EnforceBoundaries();
+            transform.position = new Vector3(transform.position.x, TargetHeight(new Vector2(transform.position.x, transform.position.z)) + pivotHeight, transform.position.z);
+            
         }
     }
 }
