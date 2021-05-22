@@ -93,7 +93,7 @@ namespace Controls
 
         void Move(Vector2 _offset)
         {
-            gameObject.transform.position = new Vector3(transform.position.x + _offset.x, transform.position.y, transform.position.z + _offset.y);
+            gameObject.transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x + _offset.x, transform.position.y, transform.position.z + _offset.y), 0.1f);
         }
 
         void Rotate(Vector2 _rotationOffset)
@@ -144,7 +144,7 @@ namespace Controls
         // Update is called once per frame
         void Update()
         {
-            transform.position = new Vector3(transform.position.x, TargetHeight(new Vector2(transform.position.x, transform.position.z)) + pivotHeight, transform.position.z);
+            
             if (Input.GetMouseButtonDown(1))
             {
                 LayerMask terrain = LayerMask.GetMask("Terrain");
@@ -175,6 +175,7 @@ namespace Controls
                 Cursor.lockState = CursorLockMode.None;
             }
 
+            transform.position = new Vector3(transform.position.x, TargetHeight(new Vector2(transform.position.x, transform.position.z)) + pivotHeight, transform.position.z);
             EnforceBoundaries();
         }
     }

@@ -426,7 +426,7 @@ MonoBehaviour:
   maxBoundaryCorner: {x: 950, y: 950}
   minBoundaryCorner: {x: 50, y: 50}
   maxAngle: 90
-  minAngle: 25
+  minAngle: 35
   defaultAngle: 45
   MinDistance: 10
   MaxDistance: 500
