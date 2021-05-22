@@ -14,6 +14,8 @@ namespace Controls
         private float pivotHeight = 5;
         [SerializeField]
         private Vector2 defaultPivotPostion = Vector2.zero;
+        [SerializeField]
+        private float moveSpeed = 1;
 
         [Header("Pivot Boundaries")]
         [SerializeField]
@@ -86,7 +88,6 @@ namespace Controls
             {
                 return hit.point.y;
             }
-            Debug.LogError("TargetHeight didn't work");
             return 0;
         }
 
@@ -97,15 +98,19 @@ namespace Controls
 
         void Rotate(Vector2 _rotationOffset)
         {
-            Vector3 currentRotation = gameObject.transform.localEulerAngles;
-            gameObject.transform.localRotation = Quaternion.Euler(new Vector3(Mathf.Clamp(currentRotation.x + _rotationOffset.x, minAngle, maxAngle), currentRotation.y, currentRotation.z));
-            gameObject.transform.Rotate(0, _rotationOffset.x, 0);
+            Vector3 rotateValue = new Vector3(_rotationOffset.y, _rotationOffset.x, 0);
+            transform.eulerAngles -= rotateValue;
+        }
+
+        Vector3 ConvertToV3(Vector2 input)
+        {
+            return new Vector3(input.x, 0, input.y);
         }
 
         private void OnValidate()
         {
             gameObject.transform.rotation = Quaternion.Euler(Vector3.right * defaultAngle);
-            gameObject.transform.position = new Vector3(defaultPivotPostion.x, TargetHeight(new Vector2(transform.position.x, transform.position.z)), defaultPivotPostion.y);
+            gameObject.transform.position = new Vector3(defaultPivotPostion.x, TargetHeight(new Vector2(transform.position.x, transform.position.z)) + pivotHeight, defaultPivotPostion.y);
             //if the camera is assigned, correctly set its position;
             if (attatchedCamera)
             {
@@ -115,42 +120,62 @@ namespace Controls
             }
         }
 
-        Vector3 ConvertToV3(Vector2 input)
-        {
-            return new Vector3(input.x, 0, input.y);
-        }
-
         private void OnDrawGizmos()
         {
+            Debug.DrawLine(transform.position + transform.forward * 5, transform.position - transform.forward * 5, Color.blue);
+            Debug.DrawLine(transform.position + transform.right * 5, transform.position - transform.right * 5, Color.red);
+            Debug.DrawLine(transform.position + transform.up * 5, transform.position - transform.up * 5, Color.green);
             Gizmos.color = Color.cyan;
             Gizmos.DrawSphere(MouseDragAnchor, 2);
             Gizmos.color = Color.grey; 
-            Gizmos.DrawSphere(transform.position, 2);
+            Gizmos.DrawWireSphere(transform.position, 2);
             Gizmos.color = Color.Lerp(Color.clear, Color.white, 0.5f);
             Gizmos.DrawWireCube((ConvertToV3(maxBoundaryCorner * 0.5f + minBoundaryCorner) + Vector3.up * 100f), new Vector3(maxBoundaryCorner.x - minBoundaryCorner.x, 200, maxBoundaryCorner.y - minBoundaryCorner.y));
+            Gizmos.DrawCube(MouseDragAnchor, new Vector3(5, 0, 5));
+            Gizmos.DrawSphere(gameObject.transform.position + Vector3.down * pivotHeight, 5);
+        }
+
+        void EnforceBoundaries()
+        {
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, minBoundaryCorner.x, maxBoundaryCorner.x), transform.position.y, Mathf.Clamp(transform.position.z, minBoundaryCorner.y, maxBoundaryCorner.y));
+            transform.eulerAngles = new Vector3(Mathf.Clamp(transform.eulerAngles.x, minAngle, maxAngle), transform.eulerAngles.y, transform.eulerAngles.z);
         }
 
         // Update is called once per frame
         void Update()
         {
-            transform.position = new Vector3(transform.position.x, TargetHeight(new Vector2(transform.position.x, transform.position.z)), transform.position.z);
-            if (Input.GetMouseButtonDown(0))
+            transform.position = new Vector3(transform.position.x, TargetHeight(new Vector2(transform.position.x, transform.position.z)) + pivotHeight, transform.position.z);
+            if (Input.GetMouseButtonDown(1))
             {
                 LayerMask terrain = LayerMask.GetMask("Terrain");
                 MouseDragAnchor = MouseRayHitPoint(terrain);
             }
-            if (Input.GetMouseButton(0))
+            else if (Input.GetMouseButton(1))
             {
                 Vector3 mouseOffsetPosition = MouseRayHitPoint(MouseDragAnchor.y);
-                Debug.Log("mouseOffsetPosition: " + mouseOffsetPosition);
-                Debug.Log("mouseDragAnchor: " + MouseDragAnchor);
                 Move(new Vector2(MouseDragAnchor.x - mouseOffsetPosition.x, MouseDragAnchor.z - mouseOffsetPosition.z));
             }
 
-            if (Input.GetAxis("Mouse X") > 0 || Input.GetAxis("Mouse Y") > 0)
+            if (!Input.GetMouseButton(1))
             {
-                Vector2 rotation = new Vector2(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"));
+                gameObject.transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed, 0, Input.GetAxisRaw("Vertical") * moveSpeed));
             }
+
+            if (Input.GetMouseButtonDown(2))
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else if (Input.GetMouseButton(2))
+            {
+                Vector2 rotation = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+                Rotate(rotation);
+            }
+            else if (Input.GetMouseButtonUp(2))
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+
+            EnforceBoundaries();
         }
     }
 }
