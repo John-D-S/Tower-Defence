@@ -13,10 +13,12 @@ namespace Controls
         [SerializeField]
         private float pivotHeight = 5;
         [SerializeField]
-        private Vector2 defaultPivotPostion = Vector2.zero;
-        [SerializeField]
         private float moveSpeed = 1;
+        [SerializeField]
+        private Vector2 defaultPivotPostion = Vector2.zero;
 
+        private Vector3 MouseDragAnchor;
+        
         [Header("Pivot Boundaries")]
         [SerializeField]
         Vector2 maxBoundaryCorner;
@@ -26,7 +28,7 @@ namespace Controls
         [Header("Pivot Rotation Settings")]
         //the maximum angle from the ground
         [SerializeField]
-        private float maxAngle = 90;
+        private float maxAngle = 89.99f;
         [SerializeField]
         private float minAngle = 10;
         [SerializeField]
@@ -39,8 +41,10 @@ namespace Controls
         private float MaxDistance = 500;
         [SerializeField]
         private float DefaultDistance = 100f;
+        [SerializeField]
+        private float zoomAmount = 5;
 
-        private Vector3 MouseDragAnchor;
+        private float targetCameraDistance = 100;
 
         #region MouseRayHitPoint function and overload
         private Vector3 MouseRayHitPoint(LayerMask _layerMask)
@@ -98,8 +102,8 @@ namespace Controls
 
         void Rotate(Vector2 _rotationOffset)
         {
-            Vector3 rotateValue = new Vector3(_rotationOffset.y, _rotationOffset.x, 0);
-            transform.eulerAngles -= rotateValue;
+            Vector3 rotateValue = new Vector3(-_rotationOffset.y, _rotationOffset.x, 0);
+            transform.eulerAngles += rotateValue;
         }
 
         Vector3 ConvertToV3(Vector2 input)
@@ -158,7 +162,10 @@ namespace Controls
 
             if (!Input.GetMouseButton(1))
             {
-                gameObject.transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed, 0, Input.GetAxisRaw("Vertical") * moveSpeed));
+                Vector3 flattenedForwardVector = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
+                Vector3 targetOffset = (transform.right * Input.GetAxisRaw("Horizontal") + flattenedForwardVector * Input.GetAxisRaw("Vertical")) * moveSpeed;
+                transform.position = Vector3.Lerp(transform.position, transform.position + targetOffset, 0.1f);
+                //gameObject.transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed, 0, Input.GetAxisRaw("Vertical") * moveSpeed).normalized);
             }
 
             if (Input.GetMouseButtonDown(2))
@@ -174,6 +181,14 @@ namespace Controls
             {
                 Cursor.lockState = CursorLockMode.None;
             }
+
+            if (Input.mouseScrollDelta.y != 0)
+            {
+                targetCameraDistance -= targetCameraDistance / (Input.mouseScrollDelta.y * zoomAmount);
+                targetCameraDistance = Mathf.Clamp(targetCameraDistance, MinDistance, MaxDistance);
+            }
+            
+            attatchedCamera.transform.localPosition = Vector3.Lerp(attatchedCamera.transform.localPosition, Vector3.back * targetCameraDistance, 0.1f);
 
             transform.position = new Vector3(transform.position.x, TargetHeight(new Vector2(transform.position.x, transform.position.z)) + pivotHeight, transform.position.z);
             EnforceBoundaries();

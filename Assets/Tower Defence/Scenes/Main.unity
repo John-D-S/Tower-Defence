@@ -419,15 +419,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a73f2ec6345e84ea5e41290d2bba9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attatchedCamera: {fileID: 0}
+  attatchedCamera: {fileID: 963194225}
   pivotHeight: 5
+  moveSpeed: 5
   defaultPivotPostion: {x: 479.7, y: 500}
-  moveSpeed: 0.25
   maxBoundaryCorner: {x: 950, y: 950}
   minBoundaryCorner: {x: 50, y: 50}
-  maxAngle: 90
+  maxAngle: 89.99
   minAngle: 35
   defaultAngle: 45
   MinDistance: 10
   MaxDistance: 500
   DefaultDistance: 100
+  zoomAmount: 5
