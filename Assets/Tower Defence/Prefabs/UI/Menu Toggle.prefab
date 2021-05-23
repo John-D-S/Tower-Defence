@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Toggle
+  m_text: Fullscreen
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ef91996fd7b065c47afdb4add08ab0d0, type: 2}
   m_sharedMaterial: {fileID: -2491233369150868529, guid: ef91996fd7b065c47afdb4add08ab0d0, type: 2}
@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 7283071370277557277}
   - component: {fileID: 7283071370277557266}
   - component: {fileID: 7283071370277557267}
+  - component: {fileID: 3787863894597320999}
   m_Layer: 5
   m_Name: Menu Toggle
   m_TagString: Untagged
@@ -491,3 +492,18 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &3787863894597320999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7283071370277557265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3df05d559fe03b04eb6d61f3b2322c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleType: 0
+  toggle: {fileID: 7283071370277557277}
+  toggleText: {fileID: 7283071368584622137}

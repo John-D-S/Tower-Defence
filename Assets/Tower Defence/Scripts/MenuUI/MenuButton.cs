@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 namespace Menu
@@ -27,7 +23,7 @@ namespace Menu
         [SerializeField, HideInInspector]
         private Button button;
         [SerializeField, HideInInspector]
-        private TextMeshProUGUI buttonText;
+        private TextMeshProUGUI toggleText;
 
         private MenuHandler menuHandler;
 
@@ -35,10 +31,10 @@ namespace Menu
         {
             if (!button)
                 button = GetComponent<Button>();
-            if (!buttonText)
-                buttonText = GetComponentInChildren<TextMeshProUGUI>();
+            if (!toggleText)
+                toggleText = GetComponentInChildren<TextMeshProUGUI>();
 
-            buttonText.text = buttonType.ToString().Replace("_", " ");
+            toggleText.text = buttonType.ToString().Replace("_", " ");
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(PerformFunction);
         }

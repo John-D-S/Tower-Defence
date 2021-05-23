@@ -105,34 +105,46 @@ namespace Menu
         #region Volume
         public void ChangeSFXVolume(float _volume)
         {
-            sFXAudio.SetFloat("volume", _volume);
-            PlayerPrefs.SetFloat("SFXVolume", _volume);
-            PlayerPrefs.Save();
+            if (sFXAudio)
+            {
+                sFXAudio.SetFloat("volume", _volume);
+                PlayerPrefs.SetFloat("SFXVolume", _volume);
+                PlayerPrefs.Save();
+            }
+            else Debug.Log(_volume);
         }
 
         public void ChangeMusicVolume(float _volume)
         {
-            musicAudio.SetFloat("volume", _volume);
-            PlayerPrefs.SetFloat("MusicVolume", _volume);
-            PlayerPrefs.Save();
+            if (musicAudio)
+            {
+                musicAudio.SetFloat("volume", _volume);
+                PlayerPrefs.SetFloat("MusicVolume", _volume);
+                PlayerPrefs.Save();
+            }
+            else Debug.Log(_volume);
         }
 
         public void SetMute(bool isMuted)
         {
-            if (isMuted)
+            if (musicAudio && sFXAudio)
             {
-                musicAudio.SetFloat("isMutedVolume", -80);
-                sFXAudio.SetFloat("isMutedVolume", -80);
-                PlayerPrefs.SetInt("Muted", 1);
-                PlayerPrefs.Save();
+                if (isMuted)
+                {
+                    musicAudio.SetFloat("isMutedVolume", -80);
+                    sFXAudio.SetFloat("isMutedVolume", -80);
+                    PlayerPrefs.SetInt("Muted", 1);
+                    PlayerPrefs.Save();
+                }
+                else
+                {
+                    musicAudio.SetFloat("isMutedVolume", 0);
+                    sFXAudio.SetFloat("isMutedVolume", 0);
+                    PlayerPrefs.SetInt("Muted", 0);
+                    PlayerPrefs.Save();
+                }
             }
-            else
-            {
-                musicAudio.SetFloat("isMutedVolume", 0);
-                sFXAudio.SetFloat("isMutedVolume", 0);
-                PlayerPrefs.SetInt("Muted", 0);
-                PlayerPrefs.Save();
-            }
+            else Debug.Log("IsMuted: " + isMuted);
         }
         #endregion
 
