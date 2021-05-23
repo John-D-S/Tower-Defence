@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Menu;
 
 namespace Controls
 {
@@ -180,6 +181,10 @@ namespace Controls
         // Update is called once per frame
         void Update()
         {
+            //stop the camera controls if the game is paused
+            if (Time.timeScale == 0)
+                return;
+
             //Set the position of the mouseDrag Anchor when the rightMouse button is pressed
             if (Input.GetMouseButtonDown(1))
             {
