@@ -36,7 +36,6 @@ namespace Menu
 
             toggleText.text = buttonType.ToString().Replace("_", " ");
             button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(PerformFunction);
         }
 
         #region FindParentObjectWithTag()
@@ -64,6 +63,7 @@ namespace Menu
         private void Start()
         {
             menuHandler = TheMenuHandler.theMenuHandler;
+            button.onClick.AddListener(PerformFunction);
         }
 
         private void PerformFunction()

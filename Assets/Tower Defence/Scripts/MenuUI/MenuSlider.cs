@@ -31,12 +31,12 @@ namespace Menu
 
             sliderText.text = sliderType.ToString().Replace("_", " ");
             slider.onValueChanged.RemoveAllListeners();
-            slider.onValueChanged.AddListener(PerformFunction);
         }
 
         private void Start()
         {
             menuHandler = TheMenuHandler.theMenuHandler;
+            slider.onValueChanged.AddListener(PerformFunction);
         }
 
         private void PerformFunction(float _value)

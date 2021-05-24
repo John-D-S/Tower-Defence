@@ -157,8 +157,10 @@ namespace Menu
 
         public void SetFullscreen(bool isFullscreen)
         {
-            Screen.fullScreen = isFullscreen;
-
+            if (Application.isEditor)
+            {
+                Screen.fullScreen = isFullscreen;
+            }
         }
 
         #endregion

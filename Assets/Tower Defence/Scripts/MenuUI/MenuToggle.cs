@@ -31,12 +31,12 @@ namespace Menu
 
             toggleText.text = toggleType.ToString().Replace("_", " ");
             toggle.onValueChanged.RemoveAllListeners();
-            toggle.onValueChanged.AddListener(delegate { PerformFunction( toggle ); } );
         }
 
         private void Start()
         {
             menuHandler = TheMenuHandler.theMenuHandler;
+            toggle.onValueChanged.AddListener(delegate { PerformFunction( toggle ); } );
         }
 
         private void PerformFunction(bool _value)
