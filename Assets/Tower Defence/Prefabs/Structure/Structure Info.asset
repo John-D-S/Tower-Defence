@@ -14,4 +14,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:Structure:StructureInfo
   structureIcon: {fileID: 0}
   structure: {fileID: 0}
-  structureScript: {fileID: 0}

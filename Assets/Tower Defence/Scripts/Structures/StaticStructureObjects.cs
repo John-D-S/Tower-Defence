@@ -8,5 +8,10 @@ namespace Structure
     {
         public static StructureSelectionPanel theStructureSelectionPanel;
         public static StructurePlacer theStructurePlacer;
+
+        public static void SwitchSelectedStructures(GameObject _structureToReplace)
+        {
+            theStructurePlacer.selectedStructure = _structureToReplace;
+        }
     }
 }

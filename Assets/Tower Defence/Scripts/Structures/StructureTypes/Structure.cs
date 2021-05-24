@@ -43,7 +43,10 @@ namespace Structure
 
         private void InitializeHealth() => health = maxHealth;
 
-        public abstract void Activate();
+        private void ConsumeEnergy()
+        {
+            Economy.EconomyTracker.energy -= EnergyToRun;
+        }
 
         private void Start()
         {

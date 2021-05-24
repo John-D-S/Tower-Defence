@@ -9,7 +9,8 @@ namespace Structure
     {
         private StructureSelectionPanel structureSelectionPanel;
         private StructureInfo selectedStructureInfo;
-        private GameObject selectedStructure;
+        [System.NonSerialized]
+        public GameObject selectedStructure;
 
         private void Awake()
         {

@@ -6,10 +6,13 @@ namespace Structure
 {
     public abstract class Tower : Structure
     {
+        
         [SerializeField, Tooltip("The Furthest enemies can be from the turret before it stops fireing")]
-        float range = 50;
+        private float range = 50;
         [SerializeField, Tooltip("The number of projectiles fired Per Second")]
-        float fireRate = 1;
+        private float fireRate = 1;
+        [SerializeField, Tooltip("The amount of metal consumed each time Fire is called")]
+        private int MetalConsumption = 0;
 
         [SerializeField, Tooltip("The part of the turret that rotates left and right on the y axis")]
         private GameObject turretBase;

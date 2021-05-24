@@ -8,15 +8,32 @@ namespace Economy
     {
         public static int metal;
         public static int energy;
+
+        public static int maxMetal;
+        public static int maxEnergy;
+
+        public static bool TryIncrementResource(int incrementAmount, ref int resourceToIncrement, int maxResource)
+        {
+            int resultantAmount = resourceToIncrement + incrementAmount;
+            if (resultantAmount < 0 || resultantAmount > maxResource)
+                return false;
+            else
+                resourceToIncrement = resultantAmount;
+            return true;
+        }
+
+        public static bool TryIncrementMetal(int _metalIncrementAmount) => TryIncrementResource(_metalIncrementAmount, ref metal, maxMetal);
+        
+        public static bool TryIncrementEnergy(int _energyIncrementAmount) => TryIncrementResource(_energyIncrementAmount, ref energy, maxEnergy);
     }
 
     public class EconomyManager : MonoBehaviour
     {
         [Header("-- Starting Values --")]
         [SerializeField]
-        private int startingMetal = 100;
+        private int startingMetal = 50;
         [SerializeField]
-        private int startingEnergy = 100;
+        private int startingEnergy = 50;
 
 
         [SerializeField]
@@ -29,14 +46,13 @@ namespace Economy
             while (true)
             {
                 yield return new WaitForSeconds(1);
-                EconomyTracker.metal += baseMetalPerSecond;
-                EconomyTracker.energy += baseEnergyPerSecond;
+                EconomyTracker.TryIncrementMetal(baseMetalPerSecond);
+                EconomyTracker.TryIncrementEnergy(baseEnergyPerSecond);
             }
         }
 
         private void Start()
         {
-
             StartCoroutine(BaseGenerate());
         }
     }
