@@ -11,7 +11,7 @@ namespace Structure
         [SerializeField]
         private StructureInfo structureInfo;
 
-        private StructurePlacer structurePlacer = StaticStructureObjects.theStructurePlacer;
+        private StructurePlacer structurePlacer = StaticObjects.theStructurePlacer;
         private Image structureIcon;
         private Button structureButton;
 

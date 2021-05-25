@@ -8,7 +8,7 @@ namespace Structure
     {
         public override void ShootProjectile()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public override GameObject Target()

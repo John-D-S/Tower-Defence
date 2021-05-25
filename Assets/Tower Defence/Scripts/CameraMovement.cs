@@ -1,10 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Controls.ControlHelperFunctions;
 using Menu;
 
 namespace Controls
 {
+    public static class ControlHelperFunctions
+    {
+        #region MouseRayHitPoint function and overloads
+        /// <summary>
+        /// Returns the point in space where the cursor is hovering over a collider.
+        /// </summary>
+        public static Vector3 MouseRayHitPoint()
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                return hit.transform.position;
+            }
+            return MouseRayHitPoint(0f);
+        }
+
+        /// <summary>
+        /// Returns the point in space where the cursor is hovering over a collider of an object with the specified layer. 
+        /// </summary>
+        /// <param name="_layerMask">The layer of the object you want to raycast to.</param>
+        public static Vector3 MouseRayHitPoint(LayerMask _layerMask)
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layerMask))
+            {
+                return hit.point;
+            }
+            return MouseRayHitPoint(0f);
+        }
+
+        /// <summary>
+        /// Returns the point in space where the cursor is hovering over an infinite, upward facing plane with a specified y height.
+        /// </summary>
+        /// <param name="TargetHeight">The height in space of the plane.</param>
+        public static Vector3 MouseRayHitPoint(float TargetHeight)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Plane plane = new Plane(Vector3.up, Vector3.up * TargetHeight);
+            float distance = 0;
+            if (plane.Raycast(ray, out distance))
+            {
+                return ray.GetPoint(distance);
+            }
+            else return Vector3.zero;
+        }
+        #endregion
+    }
+
+
     public class CameraMovement : MonoBehaviour
     {
         [SerializeField, Tooltip("The camera that is parented to this object.")]
@@ -47,54 +99,7 @@ namespace Controls
 
         //the distance away from the pivot that the camera lerps toward. It changes;
         private float targetCameraDistance = 100;
-
-        #region MouseRayHitPoint function and overloads
-        /// <summary>
-        /// Returns the point in space where the cursor is hovering over a collider.
-        /// </summary>
-        private Vector3 MouseRayHitPoint()
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                return hit.transform.position;
-            }
-            return MouseRayHitPoint(0f);
-        }
         
-        /// <summary>
-        /// Returns the point in space where the cursor is hovering over a collider of an object with the specified layer. 
-        /// </summary>
-        /// <param name="_layerMask">The layer of the object you want to raycast to.</param>
-        private Vector3 MouseRayHitPoint(LayerMask _layerMask)
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layerMask))
-            {
-                return hit.point;
-            }
-            return MouseRayHitPoint(0f);
-        }
-
-        /// <summary>
-        /// Returns the point in space where the cursor is hovering over an infinite, upward facing plane with a specified y height.
-        /// </summary>
-        /// <param name="TargetHeight">The height in space of the plane.</param>
-        private Vector3 MouseRayHitPoint(float TargetHeight)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane plane = new Plane(Vector3.up, Vector3.up * TargetHeight);
-            float distance = 0;
-            if (plane.Raycast(ray, out distance))
-            {
-                return ray.GetPoint(distance);
-            }
-            else return Vector3.zero;
-        }
-        #endregion
-
         #region Pivot Movement Function methods
         /// <summary>
         /// Returns the Y height of colliders of objects with the Terrain layer at the given coordinates on the horizontal plane.
@@ -177,6 +182,11 @@ namespace Controls
             Gizmos.DrawSphere(gameObject.transform.position + Vector3.down * pivotHeight, 5);
         }
 
+        private void Awake()
+        {
+            //initialize theCameraMovement as this.
+            StaticObjects.theCameraMovement = this;
+        }
 
         // Update is called once per frame
         void Update()

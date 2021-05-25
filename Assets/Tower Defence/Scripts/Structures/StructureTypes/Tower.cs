@@ -21,7 +21,7 @@ namespace Structure
 
         private bool canFire = true;
 
-        LayerMask enemy = LayerMask.GetMask("Enemy");
+        LayerMask enemy;
 
         #region Shooting
         public abstract void ShootProjectile();
@@ -62,6 +62,11 @@ namespace Structure
         private void AimAtEnemy()
         {
 
+        }
+
+        private void Awake()
+        {
+            enemy = LayerMask.GetMask("Enemy");
         }
 
         private void Update()

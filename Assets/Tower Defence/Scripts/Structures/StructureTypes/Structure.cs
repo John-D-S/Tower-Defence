@@ -5,37 +5,36 @@ using UnityEngine;
 
 namespace Structure
 {
-    [CreateAssetMenu(fileName = "Structure Info", menuName = "Tower Defence/Structure Info", order = 100)]
-    public class StructureInfo : ScriptableObject
-    {
-        public Sprite structureIcon;
-        [Tooltip("The structure must have a script which inherits from structure.")]
-        public GameObject structure;
-        
-        public Structure StructureScript
-        {
-            get
-            {
-                return structureScript;
-            }
-            set { }
-        }
-        private Structure structureScript;
-
-        private void OnValidate()
-        {
-            structureScript = structure.GetComponent<Structure>();
-            if (structureScript == null)
-                structure = null;
-        }
-    }
-
     public abstract class Structure : MonoBehaviour
     {
         [SerializeField, Tooltip("The amount of metal consumed when this structure is built")]
         int MetalCostToBuild;
         [SerializeField, Tooltip("The amount of energy consumed when this structure is activated")]
         int EnergyToRun;
+
+        private List<MeshRenderer> meshRenderers;
+
+        private Material realMaterial;
+        private Material previewMaterial;
+        private bool preview = false;
+        public bool Preview
+        {
+            set
+            {
+                preview = value;
+                foreach (MeshRenderer meshRenderer in meshRenderers)
+                {
+                    if (preview)
+                        meshRenderer.material = previewMaterial;
+                    else
+                        meshRenderer.material = realMaterial;
+                }
+            }
+            get
+            {
+                return preview;
+            }
+        }
 
         [SerializeField] 
         private float maxHealth;
@@ -46,6 +45,14 @@ namespace Structure
         private void ConsumeEnergy()
         {
             Economy.EconomyTracker.energy -= EnergyToRun;
+        }
+
+        private void InitializeMeshRendering()
+        {
+            foreach (MeshRenderer renderer in gameObject.GetComponentsInChildren<MeshRenderer>(true))
+            {
+                meshRenderers.Add(renderer);
+            }
         }
 
         private void Start()
