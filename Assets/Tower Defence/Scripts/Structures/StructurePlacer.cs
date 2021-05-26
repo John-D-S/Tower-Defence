@@ -35,7 +35,6 @@ namespace Structure
             if (structureScript == null)
                 structure = null;
         }
-
     }
 
     public class StructurePlacer : MonoBehaviour
@@ -127,14 +126,10 @@ namespace Structure
                 //Debug.Log(true);
                 if (selectedStructure && ! previewStructureInstance)
                 {
-                    Debug.Log("previewStructure should be instantiating");
                     previewStructureInstance = Instantiate(selectedStructure, MouseRayHitPoint(LayerMask.GetMask("Terrain")), Quaternion.identity);
                 }
                 else if (selectedStructure && previewStructureInstance)
                 {
-                    Debug.Log("previewStructure should be moved");
-
-
                     previewStructureInstance.transform.position = MouseRayHitPoint(LayerMask.GetMask("Terrain"));
                 }
             }
@@ -142,7 +137,6 @@ namespace Structure
             {
                 if (previewStructureInstance)
                 {
-                    Debug.Log("PreviewStructure should be dead");
                     StartCoroutine(Destroy(previewStructureInstance));
                 }
             }
