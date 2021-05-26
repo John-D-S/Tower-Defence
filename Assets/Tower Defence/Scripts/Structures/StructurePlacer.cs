@@ -29,6 +29,12 @@ namespace Structure
             if (structureScript == null)
                 structure = null;
         }
+
+        public StructureInfo(Sprite _structureIcon, GameObject _structure)
+        {
+            structureIcon = _structureIcon;
+            structure = _structure;
+        }
     }
 
     public class StructurePlacer : MonoBehaviour
@@ -77,9 +83,9 @@ namespace Structure
                 GameObject currentSelectionButtonObject = Instantiate(structureButtonObject, structureSelectionPanel.transform);
                 StructureSelectionButton currentSelectionButton = currentSelectionButtonObject.GetComponent<StructureSelectionButton>();
                 if (i == 0)
-                    currentSelectionButton.structureInfo.structureIcon = cancelSelectionImage;
+                    currentSelectionButton.ButtonStructureInfo = new StructureInfo(cancelSelectionImage, null);
                 else
-                    currentSelectionButton.structureInfo = structureButtonInfos[i + 1];
+                    currentSelectionButton.ButtonStructureInfo = structureButtonInfos[i - 1];
             }
         }
 
