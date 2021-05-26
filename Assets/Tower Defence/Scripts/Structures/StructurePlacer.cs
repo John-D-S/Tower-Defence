@@ -13,6 +13,12 @@ namespace Structure
         [Tooltip("The structure must have a script which inherits from structure.")]
         public GameObject structure;
 
+        public StructureInfo(Sprite _structureIcon, GameObject _structure)
+        {
+            structureIcon = _structureIcon;
+            structure = _structure;
+        }
+
         public Structure StructureScript
         {
             get
@@ -30,11 +36,6 @@ namespace Structure
                 structure = null;
         }
 
-        public StructureInfo(Sprite _structureIcon, GameObject _structure)
-        {
-            structureIcon = _structureIcon;
-            structure = _structure;
-        }
     }
 
     public class StructurePlacer : MonoBehaviour
@@ -55,8 +56,11 @@ namespace Structure
         [SerializeField]
         private Material previewMaterial;
 
+        private StructureSelectionButton selectedButtonObject;
         private GameObject selectedStructure;
         private GameObject previewStructure;
+
+        private GameObject previewStructureInstance;
 
         IEnumerator Destroy(GameObject go)
         {
@@ -89,14 +93,16 @@ namespace Structure
             }
         }
 
-        public void SelectNewStructure(GameObject _structureToReplace)
+        public void SelectNewStructure(GameObject _structureToReplace, StructureSelectionButton _selectedButtonObject)
         {
+            if (selectedButtonObject)
+                selectedButtonObject.DeselectStructure();
+            selectedButtonObject = _selectedButtonObject;
             selectedStructure = _structureToReplace;
             if (selectedStructure)
             {
                 previewStructure = selectedStructure;
-                previewStructure.GetComponent<Structure>();
-
+                previewStructure.GetComponent<Structure>().Preview = true;
             }
         }
 
@@ -115,17 +121,29 @@ namespace Structure
 
         private void Update()
         {
-            if (selectedStructure && ! previewStructure)
-            {
-                previewStructure = Instantiate(selectedStructure, MouseRayHitPoint(), Quaternion.identity, gameObject.transform);
-                
-            }
             //if the pointer is not over any gui
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                if (selectedStructure)
+                //Debug.Log(true);
+                if (selectedStructure && ! previewStructureInstance)
                 {
+                    Debug.Log("previewStructure should be instantiating");
+                    previewStructureInstance = Instantiate(selectedStructure, MouseRayHitPoint(LayerMask.GetMask("Terrain")), Quaternion.identity);
+                }
+                else if (selectedStructure && previewStructureInstance)
+                {
+                    Debug.Log("previewStructure should be moved");
 
+
+                    previewStructureInstance.transform.position = MouseRayHitPoint(LayerMask.GetMask("Terrain"));
+                }
+            }
+            else
+            {
+                if (previewStructureInstance)
+                {
+                    Debug.Log("PreviewStructure should be dead");
+                    StartCoroutine(Destroy(previewStructureInstance));
                 }
             }
         }

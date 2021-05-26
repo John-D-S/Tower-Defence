@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,7 @@ namespace Structure
         }
         private StructureInfo structureInfo;
 
+        private bool selected = false;
 
         [SerializeField]
         private Image structureIcon;
@@ -30,10 +32,17 @@ namespace Structure
 
         private StructurePlacer structurePlacer;
 
-        private void SelectStructure()
+        public void SelectStructure()
         {
-            structurePlacer.SelectNewStructure(ButtonStructureInfo.structure);
+            structurePlacer.SelectNewStructure(ButtonStructureInfo.structure, this);
+            selected = true;
         }
+
+        public void DeselectStructure()
+        {
+            selected = false;
+            EventSystem.current.SetSelectedGameObject(null);
+        }   
 
         private void OnValidate()
         {
@@ -43,11 +52,15 @@ namespace Structure
         private void Awake()
         {
             structurePlacer = StaticObjects.theStructurePlacer;
+            structureButton.onClick.AddListener(SelectStructure);
         }
 
-        private void Start()
+        private void Update()
         {
-            //structureIcon.sprite = StructureInfo.structureIcon;
+            if (selected && EventSystem.current.currentSelectedGameObject != structureButton.gameObject)
+            {
+                EventSystem.current.SetSelectedGameObject(structureButton.gameObject);
+            }
         }
     }
 }

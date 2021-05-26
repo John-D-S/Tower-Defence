@@ -18,7 +18,7 @@ namespace Controls
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                return hit.transform.position;
+                return hit.point;
             }
             return MouseRayHitPoint(0f);
         }
