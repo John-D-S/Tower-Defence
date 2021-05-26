@@ -8,27 +8,33 @@ namespace Structure
     [RequireComponent(typeof(Button))]
     public class StructureSelectionButton : MonoBehaviour
     {
-        [SerializeField]
-        private StructureInfo structureInfo;
+        //[System.NonSerialized]
+        public StructureInfo structureInfo;
 
-        private StructurePlacer structurePlacer = StaticObjects.theStructurePlacer;
         private Image structureIcon;
         private Button structureButton;
 
+        private StructurePlacer structurePlacer;
+
+        private void SelectStructure()
+        {
+            structurePlacer.SelectNewStructure(structureInfo.structure);
+        }
+
+        private void OnValidate()
+        {
+            structureButton ??= gameObject.GetComponent<Button>();
+
+        }
+
+        private void Awake()
+        {
+            structurePlacer = StaticObjects.theStructurePlacer;
+        }
+
         private void Start()
         {
-            //structureSelectionPanel = StaticStructureObjects.theStructureSelectionPanel;
-            structureButton = gameObject.GetComponent<Button>();
-            foreach (Transform child in transform)
-            {
-                Image image = child.GetComponent<Image>();
-                if (image)
-                    structureIcon = image;
-            }
-            if (structureIcon)
-            {
-                structureIcon.sprite = structureInfo.structureIcon;
-            }
+            
         }
     }
 }

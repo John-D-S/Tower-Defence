@@ -2,21 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace Structure
 {
     public abstract class Structure : MonoBehaviour
     {
-        [SerializeField, Tooltip("The amount of metal consumed when this structure is built")]
-        int MetalCostToBuild;
-        [SerializeField, Tooltip("The amount of energy consumed when this structure is activated")]
-        int EnergyToRun;
-
-        private List<MeshRenderer> meshRenderers;
+        private List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
 
         private Material realMaterial;
-        private Material previewMaterial;
-        private bool preview = false;
+        public Material previewMaterial;
+        private bool preview = true;
         public bool Preview
         {
             set
@@ -37,22 +31,34 @@ namespace Structure
         }
 
         [SerializeField] 
-        private float maxHealth;
+        private float maxHealth = 50;
         private float health;
+
+        [SerializeField, Tooltip("The amount of metal consumed when this structure is built")]
+        int metalCostToBuild;
+        [SerializeField, Tooltip("The amount of energy consumed when this structure is activated")]
+        int energyToRun;
 
         private void InitializeHealth() => health = maxHealth;
 
-        private void ConsumeEnergy()
-        {
-            Economy.EconomyTracker.energy -= EnergyToRun;
-        }
 
         private void InitializeMeshRendering()
         {
+            meshRenderers.Clear();
             foreach (MeshRenderer renderer in gameObject.GetComponentsInChildren<MeshRenderer>(true))
             {
                 meshRenderers.Add(renderer);
             }
+        }
+
+        private void ConsumeEnergy()
+        {
+            Economy.EconomyTracker.TryIncrementEnergy(-energyToRun);
+        }
+
+        private void OnValidate()
+        {
+            InitializeMeshRendering();
         }
 
         private void Start()
