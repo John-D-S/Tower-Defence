@@ -53,7 +53,9 @@ namespace Structure
         
         [Header("-- Structure Options --")]
         [SerializeField]
-        private Material previewMaterial;
+        private Material allowedPreviewMaterial;
+        [SerializeField]
+        private Material disallowedPreviewMaterial;
 
         private StructureSelectionButton selectedButtonObject;
         private GameObject selectedStructure;
@@ -78,7 +80,9 @@ namespace Structure
             }
             foreach (StructureInfo structureInfo in structureButtonInfos)
             {
-                structureInfo.structure.GetComponent<Structure>().previewMaterial = previewMaterial;
+                Structure structureInfoStructure = structureInfo.structure.GetComponent<Structure>();
+                structureInfoStructure.allowedPreviewMaterial = allowedPreviewMaterial;
+                structureInfoStructure.disallowedPreviewMaterial = disallowedPreviewMaterial;
             }
             for (int i = 0; i < structureButtonInfos.Count + 1; i++)
             {

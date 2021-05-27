@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 3833119609746957532}
   - component: {fileID: 3833119609746957531}
   - component: {fileID: 3833119609746957530}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,8 +301,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   realMaterial: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
-  previewMaterial: {fileID: 2100000, guid: 68bc473b1b6f9f34fb1a988f60a54ce8, type: 2}
-  isIntersecting: 0
+  allowedPreviewMaterial: {fileID: 2100000, guid: 68bc473b1b6f9f34fb1a988f60a54ce8, type: 2}
+  disallowedPreviewMaterial: {fileID: 2100000, guid: 4b99f62fdd5a6f14eadded4ae9c4e256, type: 2}
+  radius: 0.5
+  height: 3
   maxHealth: 0
   metalCostToBuild: 0
   energyToRun: 0

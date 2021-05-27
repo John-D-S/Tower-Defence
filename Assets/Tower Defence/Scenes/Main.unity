@@ -583,7 +583,8 @@ MonoBehaviour:
     structure: {fileID: 3833119609746957529, guid: ac9926a7ae426c34ba67922830682f28, type: 3}
   structureButtonObject: {fileID: 7037222968358994789, guid: de7f9a0b57e631b4090b5fdb138278e8, type: 3}
   structureSelectionPanel: {fileID: 777585052}
-  previewMaterial: {fileID: 2100000, guid: 68bc473b1b6f9f34fb1a988f60a54ce8, type: 2}
+  allowedPreviewMaterial: {fileID: 2100000, guid: 68bc473b1b6f9f34fb1a988f60a54ce8, type: 2}
+  disallowedPreviewMaterial: {fileID: 2100000, guid: 4b99f62fdd5a6f14eadded4ae9c4e256, type: 2}
 --- !u!4 &497904620
 Transform:
   m_ObjectHideFlags: 0

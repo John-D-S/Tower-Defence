@@ -8,8 +8,12 @@ namespace Structure
     public abstract class Structure : MonoBehaviour
     {
         [Header("-- Material Settings --")]
+        [HideInInspector]
         public Material realMaterial;
-        public Material previewMaterial;
+        [HideInInspector]
+        public Material allowedPreviewMaterial;
+        [HideInInspector]
+        public Material disallowedPreviewMaterial;
         private List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
 
         [Header("-- Area Settings --")]
@@ -33,9 +37,9 @@ namespace Structure
                 foreach (MeshRenderer meshRenderer in meshRenderers)
                 {
                     if (preview)
-                        meshRenderer.material = previewMaterial;
+                        SetMaterial(allowedPreviewMaterial);
                     else
-                        meshRenderer.material = realMaterial;
+                        SetMaterial(realMaterial);
                 }
             }
             get
@@ -53,6 +57,12 @@ namespace Structure
         [SerializeField, Tooltip("The amount of energy consumed when this structure is activated")]
         int energyToRun;
 
+        private void SetMaterial(Material _material)
+        {
+            foreach (MeshRenderer meshRenderer in meshRenderers)
+                meshRenderer.material = _material;
+        }
+
         public void TryPlaceStructure(Vector3 _position)
         {
             if (EconomyTracker.TryIncrementMetal(-metalCostToBuild))
@@ -67,12 +77,22 @@ namespace Structure
 
         public bool IntersectingOtherStructure()
         {
-            Vector3 point0 = transform.position + Vector3.up * (height * 0.5f - radius);
-            Vector3 point1 = transform.position - Vector3.up * (height * 0.5f - radius);
-            if (Physics.OverlapCapsule(point0, point1, radius, LayerMask.GetMask("Structure")).Length > 0)
-                return true;
-            else
-                return false;
+            if (Preview)
+            {
+                Vector3 point0 = transform.position + Vector3.up * (height * 0.5f - radius);
+                Vector3 point1 = transform.position - Vector3.up * (height * 0.5f - radius);
+                if (Physics.OverlapCapsule(point0, point1, radius, LayerMask.GetMask("Structure")).Length > 0)
+                {
+                    SetMaterial(disallowedPreviewMaterial);
+                    return true;
+                }
+                else
+                {
+                    SetMaterial(allowedPreviewMaterial);
+                    return false;
+                }
+            }
+            return false;
         }
 
         private void InitializeMeshRendering()
