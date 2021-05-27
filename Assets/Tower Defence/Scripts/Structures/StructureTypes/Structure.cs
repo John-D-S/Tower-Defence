@@ -27,7 +27,7 @@ namespace Structure
             {
                 preview = value;
                 if (preview)
-                    gameObject.layer = LayerMask.NameToLayer("StructurePreview");
+                    gameObject.layer = LayerMask.NameToLayer("PreviewStructure");
                 else
                     gameObject.layer = LayerMask.NameToLayer("Structure");
                 foreach (MeshRenderer meshRenderer in meshRenderers)
