@@ -220,6 +220,7 @@ namespace Menu
 
         public void Quit()
         {
+            Time.timeScale = 1;
             if (gameObject.scene.name == gameSceneName)
                 ReturnToMainMenu();
             else

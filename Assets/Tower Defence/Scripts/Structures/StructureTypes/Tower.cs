@@ -6,7 +6,7 @@ namespace Structure
 {
     public abstract class Tower : Structure
     {
-        
+        [Header("-- Settings --")]
         [SerializeField, Tooltip("The Furthest enemies can be from the turret before it stops fireing")]
         private float range = 50;
         [SerializeField, Tooltip("The number of projectiles fired Per Second")]
@@ -14,6 +14,7 @@ namespace Structure
         [SerializeField, Tooltip("The amount of metal consumed each time Fire is called")]
         private int MetalConsumption = 0;
 
+        [Header("-- Turret Parts --")]
         [SerializeField, Tooltip("The part of the turret that rotates left and right on the y axis")]
         private GameObject turretBase;
         [SerializeField, Tooltip("The part of the turret that rotates up and down on the x axis")]
@@ -21,7 +22,7 @@ namespace Structure
 
         private bool canFire = true;
 
-        LayerMask enemy;
+        LayerMask enemyLayer;
 
         #region Shooting
         public abstract void ShootProjectile();
@@ -43,35 +44,48 @@ namespace Structure
         }
         #endregion
 
-        public abstract GameObject Target();
-        /*
+        protected Transform NearestVisibleEnemy()
         {
-            if (Physics.CheckSphere(turretBarrel.transform.position, range, enemy))
+            if (Physics.CheckSphere(turretBarrel.transform.position, range, enemyLayer))
             {
                 Collider currentNearestVisibleCollider = null;
-                Collider[] inRangeEnemyColliders = Physics.OverlapSphere(turretBarrel.transform.position, range, enemy);
+                float currentClosestDistance = Mathf.Infinity;
+                Collider[] inRangeEnemyColliders = Physics.OverlapSphere(turretBarrel.transform.position, range, enemyLayer);
                 foreach (Collider enemyCollider in inRangeEnemyColliders)
                 {
-                    if
+                    float distance = Vector3.Distance(enemyCollider.transform.position, transform.position);
+                    if (distance < currentClosestDistance)
+                    {
+                        currentNearestVisibleCollider = enemyCollider;
+                        currentClosestDistance = distance;
+                    }
                 }
-                //Physics.SphereCast(turretBarrel.transform.position, range, )
-
+                return currentNearestVisibleCollider.transform;
             }
+            return null;
         }
-        */
-        private void AimAtEnemy()
-        {
 
+        protected void AimAtEnemy(Transform _enemy)
+        {
+            Vector3 turretBaseTarget = new Vector3(_enemy.position.x, turretBase.transform.position.y, _enemy.position.z);
+            Vector3 turretBarrelTarget = _enemy.transform.position;
+            
+            turretBase.transform.LookAt(turretBaseTarget);
+            turretBarrel.transform.LookAt(turretBarrelTarget);
+        }
+
+        protected void UpdateTower()
+        {
+            Transform enemy = NearestVisibleEnemy();
+            if (enemy)
+            {
+                AimAtEnemy(enemy);
+            }
         }
 
         private void Awake()
         {
-            enemy = LayerMask.GetMask("Enemy");
-        }
-
-        private void Update()
-        {
-            
+            enemyLayer = LayerMask.GetMask("Enemy");
         }
     }
 }

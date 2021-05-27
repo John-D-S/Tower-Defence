@@ -11,9 +11,13 @@ namespace Structure
             
         }
 
-        public override GameObject Target()
+        private void Update()
         {
-            throw new System.NotImplementedException();
+            UpdateStructure();
+            if (!Preview)
+            {
+                UpdateTower();
+            }
         }
     }
 }

@@ -129,20 +129,17 @@ namespace Structure
                 //Debug.Log(true);
                 if (selectedStructure && ! previewStructureInstance)
                 {
-                    Debug.Log("Instantiated New Preview Structure");
                     previewStructureInstance = Instantiate(selectedStructure, MouseRayHitPoint(LayerMask.GetMask("Terrain")), Quaternion.identity);
                     previewStructureInstanceScript = previewStructureInstance.GetComponent<Structure>();
                 }
                 else if (selectedStructure && previewStructureInstance)
                 {
-                    Debug.Log("Moved Current Preview Structure");
                     previewStructureInstance.transform.position = MouseRayHitPoint(LayerMask.GetMask("Terrain"));
                 }
 
 
                 if (previewStructureInstance)
                 {
-                    Debug.Log(previewStructureInstanceScript.IntersectingOtherStructure());
                     if (!previewStructureInstanceScript.IntersectingOtherStructure())
                     {
                         if (Input.GetMouseButtonDown(0))

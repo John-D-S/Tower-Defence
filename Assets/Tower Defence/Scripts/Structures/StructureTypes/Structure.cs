@@ -75,22 +75,32 @@ namespace Structure
 
         private void InitializeHealth() => health = maxHealth;
 
-        public bool IntersectingOtherStructure()
+        private void SetAllowedDisallowedMaterial()
+        {
+            if (Preview)
+            {
+                if (IntersectingOtherStructure() && metalCostToBuild < EconomyTracker.metal)
+                {
+                    SetMaterial(disallowedPreviewMaterial);
+                }
+                else
+                {
+                    SetMaterial(allowedPreviewMaterial);
+                }
+
+            }
+        }
+
+        public virtual bool IntersectingOtherStructure()
         {
             if (Preview)
             {
                 Vector3 point0 = transform.position + Vector3.up * (height * 0.5f - radius);
                 Vector3 point1 = transform.position - Vector3.up * (height * 0.5f - radius);
                 if (Physics.OverlapCapsule(point0, point1, radius, LayerMask.GetMask("Structure")).Length > 0)
-                {
-                    SetMaterial(disallowedPreviewMaterial);
                     return true;
-                }
                 else
-                {
-                    SetMaterial(allowedPreviewMaterial);
                     return false;
-                }
             }
             return false;
         }
@@ -120,10 +130,9 @@ namespace Structure
             InitializeHealth();
         }
 
-        private void Update()
+        protected void UpdateStructure()
         {
-            Debug.Log("Hello?");
-            Debug.Log(isIntersecting);
+            SetAllowedDisallowedMaterial();
         }
     }
 }
