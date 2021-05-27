@@ -8,17 +8,17 @@ namespace Structure
     {
         [Header("-- Settings --")]
         [SerializeField, Tooltip("The Furthest enemies can be from the turret before it stops fireing")]
-        private float range = 50;
+        protected float range = 50;
         [SerializeField, Tooltip("The number of projectiles fired Per Second")]
-        private float fireRate = 1;
+        protected float fireRate = 1;
         [SerializeField, Tooltip("The amount of metal consumed each time Fire is called")]
-        private int MetalConsumption = 0;
+        protected int MetalConsumption = 0;
 
         [Header("-- Turret Parts --")]
         [SerializeField, Tooltip("The part of the turret that rotates left and right on the y axis")]
         private GameObject turretBase;
         [SerializeField, Tooltip("The part of the turret that rotates up and down on the x axis")]
-        private GameObject turretBarrel;
+        protected GameObject turretBarrel;
 
         private bool canFire = true;
 
@@ -32,7 +32,7 @@ namespace Structure
             if (canFire)
             {
                 ShootProjectile();
-                FireCooldown();
+                StartCoroutine(FireCooldown());
             }
         }
 
@@ -80,7 +80,9 @@ namespace Structure
             if (enemy)
             {
                 AimAtEnemy(enemy);
+                Fire();
             }
+            
         }
 
         private void Awake()
