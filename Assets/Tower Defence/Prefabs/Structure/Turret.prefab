@@ -314,4 +314,5 @@ MonoBehaviour:
   turretBase: {fileID: 3833119608638892664}
   turretBarrel: {fileID: 3833119609613238870}
   bullet: {fileID: 7423836921931420716, guid: e63c8c7b0de38384284a247d0ace2d1a, type: 3}
-  bulletSpeed: 5
+  bulletSpeed: 25
+  spread: 5
