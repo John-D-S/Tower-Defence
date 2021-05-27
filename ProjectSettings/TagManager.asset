@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - MenuHandler
+  - Structure
+  - StructurePreview
   layers:
   - Default
   - TransparentFX
@@ -12,8 +13,8 @@ TagManager:
   - Terrain
   - Water
   - UI
-  - 
-  - 
+  - Structure
+  - PreviewStructure
   - 
   - 
   - 

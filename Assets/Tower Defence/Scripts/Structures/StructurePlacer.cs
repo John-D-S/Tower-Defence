@@ -60,6 +60,7 @@ namespace Structure
         private GameObject previewStructure;
 
         private GameObject previewStructureInstance;
+        private Structure previewStructureInstanceScript;
 
         IEnumerator Destroy(GameObject go)
         {
@@ -79,10 +80,8 @@ namespace Structure
             {
                 structureInfo.structure.GetComponent<Structure>().previewMaterial = previewMaterial;
             }
-            Debug.Log(structureButtonInfos.Count + 1);
             for (int i = 0; i < structureButtonInfos.Count + 1; i++)
             {
-                Debug.Log(i);
                 GameObject currentSelectionButtonObject = Instantiate(structureButtonObject, structureSelectionPanel.transform);
                 StructureSelectionButton currentSelectionButton = currentSelectionButtonObject.GetComponent<StructureSelectionButton>();
                 if (i == 0)
@@ -126,11 +125,27 @@ namespace Structure
                 //Debug.Log(true);
                 if (selectedStructure && ! previewStructureInstance)
                 {
+                    Debug.Log("Instantiated New Preview Structure");
                     previewStructureInstance = Instantiate(selectedStructure, MouseRayHitPoint(LayerMask.GetMask("Terrain")), Quaternion.identity);
+                    previewStructureInstanceScript = previewStructureInstance.GetComponent<Structure>();
                 }
                 else if (selectedStructure && previewStructureInstance)
                 {
+                    Debug.Log("Moved Current Preview Structure");
                     previewStructureInstance.transform.position = MouseRayHitPoint(LayerMask.GetMask("Terrain"));
+                }
+
+
+                if (previewStructureInstance)
+                {
+                    Debug.Log(previewStructureInstanceScript.IntersectingOtherStructure());
+                    if (!previewStructureInstanceScript.IntersectingOtherStructure())
+                    {
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            selectedStructure.GetComponent<Structure>().TryPlaceStructure(MouseRayHitPoint(LayerMask.GetMask("Terrain")));
+                        }
+                    }
                 }
             }
             else
@@ -138,6 +153,7 @@ namespace Structure
                 if (previewStructureInstance)
                 {
                     StartCoroutine(Destroy(previewStructureInstance));
+                    previewStructureInstanceScript = null;
                 }
             }
         }

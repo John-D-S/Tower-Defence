@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Economy
 {
@@ -34,8 +35,11 @@ namespace Economy
         [SerializeField]
         private Image metalHudBar;
         [SerializeField]
+        private TextMeshProUGUI metalHudText;
+        [SerializeField]
         private Image energyHudBar;
-
+        [SerializeField]
+        private TextMeshProUGUI energyHudText;
 
         [Header("-- Starting Values --")]
         [SerializeField]
@@ -83,6 +87,11 @@ namespace Economy
             {
                 metalHudBar.fillAmount = (float)EconomyTracker.metal / (float)EconomyTracker.maxMetal;
                 energyHudBar.fillAmount = (float)EconomyTracker.energy / (float)EconomyTracker.maxEnergy;
+            }
+            if (metalHudText && energyHudText)
+            {
+                metalHudText.text = $"Metal: {EconomyTracker.metal} / {EconomyTracker.maxEnergy}";
+                energyHudText.text = $"Energy: {EconomyTracker.energy} / {EconomyTracker.maxEnergy}";
             }
         }
     }
