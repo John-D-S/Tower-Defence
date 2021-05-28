@@ -1802,7 +1802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attatchedCamera: {fileID: 963194225}
   pivotHeight: 5
-  moveSpeed: 5
+  moveSpeed: 0.05
   defaultPivotPostion: {x: 479.7, y: 500}
   maxBoundaryCorner: {x: 950, y: 950}
   minBoundaryCorner: {x: 50, y: 50}

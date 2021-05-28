@@ -213,7 +213,7 @@ namespace Controls
             if (!Input.GetMouseButton(1))
             {
                 Vector3 flattenedForwardVector = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
-                Vector3 targetOffset = (transform.right * Input.GetAxisRaw("Horizontal") + flattenedForwardVector * Input.GetAxisRaw("Vertical")) * moveSpeed;
+                Vector3 targetOffset = (transform.right * Input.GetAxisRaw("Horizontal") + flattenedForwardVector * Input.GetAxisRaw("Vertical")) * moveSpeed * targetCameraDistance;
                 transform.position = Vector3.Lerp(transform.position, transform.position + targetOffset, 0.1f);
             }
 
