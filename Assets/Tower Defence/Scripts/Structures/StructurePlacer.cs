@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static Controls.ControlHelperFunctions;
+using static HelperClasses.HelperFunctions;
 
 namespace Structure
 {

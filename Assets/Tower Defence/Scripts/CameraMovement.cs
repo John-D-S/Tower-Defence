@@ -1,62 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Controls.ControlHelperFunctions;
+using static HelperClasses.HelperFunctions;
 using Menu;
 
 namespace Controls
 {
-    public static class ControlHelperFunctions
-    {
-        #region MouseRayHitPoint function and overloads
-        /// <summary>
-        /// Returns the point in space where the cursor is hovering over a collider.
-        /// </summary>
-        public static Vector3 MouseRayHitPoint()
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                return hit.point;
-            }
-            return MouseRayHitPoint(0f);
-        }
-
-        /// <summary>
-        /// Returns the point in space where the cursor is hovering over a collider of an object with the specified layer. 
-        /// </summary>
-        /// <param name="_layerMask">The layer of the object you want to raycast to.</param>
-        public static Vector3 MouseRayHitPoint(LayerMask _layerMask)
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layerMask))
-            {
-                return hit.point;
-            }
-            return MouseRayHitPoint(0f);
-        }
-
-        /// <summary>
-        /// Returns the point in space where the cursor is hovering over an infinite, upward facing plane with a specified y height.
-        /// </summary>
-        /// <param name="TargetHeight">The height in space of the plane.</param>
-        public static Vector3 MouseRayHitPoint(float TargetHeight)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane plane = new Plane(Vector3.up, Vector3.up * TargetHeight);
-            float distance = 0;
-            if (plane.Raycast(ray, out distance))
-            {
-                return ray.GetPoint(distance);
-            }
-            else return Vector3.zero;
-        }
-        #endregion
-    }
-
-
     public class CameraMovement : MonoBehaviour
     {
         [SerializeField, Tooltip("The camera that is parented to this object.")]
@@ -102,26 +51,12 @@ namespace Controls
         
         #region Pivot Movement Function methods
         /// <summary>
-        /// Returns the Y height of colliders of objects with the Terrain layer at the given coordinates on the horizontal plane.
-        /// </summary>
-        float TargetHeight(Vector2 _targetPosition)
-        {
-            LayerMask terrain = LayerMask.GetMask("Terrain");
-            RaycastHit hit;
-            if (Physics.Raycast(ConvertToV3(_targetPosition) + Vector3.up * 1000, Vector3.down, out hit, Mathf.Infinity, terrain))
-            {
-                return hit.point.y;
-            }
-            return 0;
-        }
-
-        /// <summary>
         /// Moves the pivot point along the horizontal plane by the specified offset.
         /// </summary>
         /// <param name="_offset">The amount to move the pivot by</param>
         void Move(Vector2 _offset)
         {
-            Vector3 targetPosition = transform.position + ConvertToV3(_offset);
+            Vector3 targetPosition = transform.position + ConvertToVector3(_offset);
             gameObject.transform.position = Vector3.Lerp(transform.position, targetPosition, 0.1f);
         }
 
@@ -144,14 +79,6 @@ namespace Controls
             transform.eulerAngles = new Vector3(Mathf.Clamp(transform.eulerAngles.x, minAngle, maxAngle), transform.eulerAngles.y, transform.eulerAngles.z);
         }
         #endregion
-
-        /// <summary>
-        /// Converts a vector 2 into a point in space on the horizontal plane at y = 0.
-        /// </summary>
-        Vector3 ConvertToV3(Vector2 input)
-        {
-            return new Vector3(input.x, 0, input.y);
-        }
 
         private void OnValidate()
         {
@@ -177,7 +104,7 @@ namespace Controls
             Gizmos.DrawSphere(mouseDragAnchor, 2);
             //draws the boundary wireframe walls of the pivot.
             Gizmos.color = Color.Lerp(Color.clear, Color.white, 0.5f);
-            Gizmos.DrawWireCube((ConvertToV3((maxBoundaryCorner - minBoundaryCorner) * 0.5f + minBoundaryCorner) + Vector3.up * 100f), new Vector3(maxBoundaryCorner.x - minBoundaryCorner.x, 200, maxBoundaryCorner.y - minBoundaryCorner.y));
+            Gizmos.DrawWireCube((ConvertToVector3((maxBoundaryCorner - minBoundaryCorner) * 0.5f + minBoundaryCorner) + Vector3.up * 100f), new Vector3(maxBoundaryCorner.x - minBoundaryCorner.x, 200, maxBoundaryCorner.y - minBoundaryCorner.y));
             //draws a sphere on the terrain where the pivot is hovering over it.
             Gizmos.DrawSphere(gameObject.transform.position + Vector3.down * pivotHeight, 5);
         }
