@@ -204,8 +204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51dc285626e702489fced26914c0a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVelocity: 5
-  aiVisionRadius: 2.5
-  aiFieldOfView: 90
-  AiVisionPointNumber: 16
-  aiTarget: {fileID: 0}
+  maxVelocity: 10
+  aiVisionRadius: 3
+  aiFieldOfView: 45
+  AiVisionPointNumber: 32
+  aiTargetWeight: 2

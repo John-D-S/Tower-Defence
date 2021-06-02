@@ -10,6 +10,8 @@ public class Spawner : MonoBehaviour
     private float enemySpawnRadius = 950f;
     [SerializeField]
     private GameObject Enemy;
+    [SerializeField]
+    private GameObject Core;
     [SerializeField, Tooltip("The time between waves")]
     private float enemySpawnPeriod;
     [SerializeField]
