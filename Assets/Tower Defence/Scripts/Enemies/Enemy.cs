@@ -12,7 +12,9 @@ public class Enemy : MonoBehaviour
     private float velocity;
 
     [SerializeField]
-    private float aiVisionRadius;
+    private float aiVisionRadius = 2.5f;
+    [SerializeField]
+    private float aiFieldOfView =  45f;
     [SerializeField]
     private int AiVisionPointNumber = 36;
     [SerializeField]
@@ -43,16 +45,10 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, transform.position + direction3D * 5);
     }
-
-    private Vector2 Angle2Direction(float _angle)
-    {
-        return ConvertToVector2(Quaternion.Euler(0, _angle, 0) * Vector3.forward);
-    }
-
     
     private void FixedUpdate()
     {
-        CalculateDirection(AiVisionPointNumber);
+        CalculateDirection(AiVisionPointNumber, aiFieldOfView);
         transform.position = new Vector3(transform.position.x, TargetHeight(ConvertToVector2(transform.position)), transform.position.z);
         transform.position = transform.position + transform.forward * maxVelocity * Time.deltaTime;
         setRotationOnGround();     
@@ -63,22 +59,24 @@ public class Enemy : MonoBehaviour
         float weight = 0;
 
         float groundNormalYAtPoint = GetGroundNormal(ConvertToVector2(transform.position) + _direction * aiVisionRadius).y;
-        weight += groundNormalYAtPoint;
+        //the weight is slightly greater when going downhill than when going uphill
+        weight += (Vector2.Dot(direction2D, _direction) + 1) * 0.5f * groundNormalYAtPoint * groundNormalYAtPoint;
 
-        weight += (Vector2.Dot(_directionToTarget, _direction) + 1) * 0.25f;
+        weight += (Vector2.Dot(_directionToTarget, _direction) + 1) * 0.15f;
         return weight;
     }
 
-    void CalculateDirection(int _pointNumber)
+    void CalculateDirection(int _pointNumber, float fieldOfView)
     {
         List<Vector2> possibleDirections = new List<Vector2>();
 
-        float angleIncrement = 360f / _pointNumber;
+        float angleIncrement = fieldOfView / _pointNumber;
+        float startingAngle = Direction2Angle(direction2D) - fieldOfView * 0.5f;
         Vector2 directionToTarget = ConvertToVector2(aiTarget.position - transform.position).normalized;
         for (int i = 0; i < _pointNumber; i++)
         {
             //Debug.Log(Angle2Direction(i * angleIncrement));
-            possibleDirections.Add(Angle2Direction(i * angleIncrement));
+            possibleDirections.Add(Angle2Direction(startingAngle + i * angleIncrement));
         }
         float currentHighestWeight = 0;
         Vector2 bestDirection = Vector2.zero;
@@ -95,10 +93,5 @@ public class Enemy : MonoBehaviour
         }
         Debug.DrawLine(transform.position, transform.position + ConvertToVector3(bestDirection * aiVisionRadius), Color.green);
         direction2D = Vector2.Lerp(direction2D, bestDirection, 0.1f);
-    }
-
-    private void OnValidate()
-    {
-
     }
 }

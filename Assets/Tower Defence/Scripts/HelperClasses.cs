@@ -90,5 +90,21 @@ public class HelperClasses : MonoBehaviour
             }
             return Vector3.up;
         }
+
+        public static Vector2 Angle2Direction(float _angle)
+        {
+            return ConvertToVector2(Quaternion.Euler(0, _angle, 0) * Vector3.forward);
+        }
+
+        public static float Direction2Angle(Vector2 _direction)
+        {
+            float angle = Vector3.Angle(new Vector3(0.0f, 1.0f, 0.0f), new Vector3(_direction.x, _direction.y, 0.0f));
+            if (_direction.x < 0.0f)
+            {
+                angle = -angle;
+                angle = angle + 360;
+            }
+            return angle;
+        }
     }
 }
