@@ -31,7 +31,7 @@ public class HealthBar : MonoBehaviour
     public void SetHealth(float health, float maxHealth)
     {
         HealthBarWidth = healthBarMaxWidth * health / maxHealth;
-        Bar.transform.position = new Vector3(healthBarMaxWidth * 0.5f + healthBarMaxWidth * 0.5f * health / maxHealth, Bar.transform.position.y, Bar.transform.position.z);
+        //Bar.transform.position = new Vector3(healthBarMaxWidth * 0.5f + healthBarMaxWidth * 0.5f * health / maxHealth, Bar.transform.position.y, Bar.transform.position.z);
     }
 
     private void SetPosition()

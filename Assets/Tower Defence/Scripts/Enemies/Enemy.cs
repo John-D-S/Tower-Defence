@@ -47,15 +47,16 @@ public class Enemy : MonoBehaviour, IKillable
         get => health;
         set
         {
-            if (value < maxHealth)
-                health = value;
-            else if (value < 0)
+            if (value < 0)
             {
                 health = 0;
+                Debug.Log("I should be dead");
                 Die();
             }
-            else
+            else if (value > maxHealth)
                 health = maxHealth;
+            else
+                health = value;
 
             if (healthBar)
             {
@@ -143,7 +144,7 @@ public class Enemy : MonoBehaviour, IKillable
         CalculateDirection(AiVisionPointNumber, aiFieldOfView);
         transform.position = new Vector3(transform.position.x, TargetHeight(ConvertToVector2(transform.position)), transform.position.z);
         transform.position = transform.position + transform.forward * maxVelocity * Time.deltaTime;
-        setRotationOnGround();     
+        setRotationOnGround();
+        //Debug.Log(Health);
     }
-
 }

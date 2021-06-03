@@ -124,7 +124,7 @@ namespace Structure
             InitializeMeshRendering();
         }
 
-        private void Start()
+        protected void StartStructure()
         {
             InitializeMeshRendering();
             InitializeHealth();

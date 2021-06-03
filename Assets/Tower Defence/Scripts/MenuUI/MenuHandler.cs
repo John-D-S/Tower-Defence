@@ -233,9 +233,7 @@ namespace Menu
         private void Update()
         {
             if (Input.GetButtonDown("Cancel"))
-            {
                 MenuGoBack();
-            }
         }
 
         private void Awake()
