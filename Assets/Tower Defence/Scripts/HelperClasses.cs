@@ -4,6 +4,46 @@ using UnityEngine;
 
 public class HelperClasses : MonoBehaviour
 {
+    public static class WeaponFunctions
+    {
+        public static Quaternion RandomSpread(float _spread)
+        {
+            float randomXSpread = Random.Range(-_spread, _spread) * 0.5f;
+            float randomYSpread = Random.Range(-_spread, _spread) * 0.5f;
+            return Quaternion.Euler(randomXSpread, randomYSpread, 0);
+        }
+
+        public static IEnumerator ShootBullet(Collider spawningCollider, Vector3 _startPosition, Quaternion _direction, float _bulletSpeed, GameObject _bullet, float _bulletRadius, float _bulletDamage, float _spread, float _range, string _targetTag)
+        {
+            GameObject bulletInstance = Instantiate(_bullet, _startPosition, _direction * RandomSpread(_spread));
+            bulletInstance.transform.localScale = Vector3.one * _bulletRadius * 2;
+            float distance = 0;
+            while (distance < _range)
+            {
+                yield return new WaitForFixedUpdate();
+                float distanceDelta = Time.deltaTime * _bulletSpeed;
+                RaycastHit hitInfo;
+                if (Physics.SphereCast(new Ray(bulletInstance.transform.position, bulletInstance.transform.forward), _bulletRadius, out hitInfo, distanceDelta))
+                {
+                    //if the bullet hits the thing that it's supposed to, damage the thing
+                    if (hitInfo.collider.tag == _targetTag)
+                    {
+                        IKillable objectToDamage = hitInfo.collider.GetComponentInParent<IKillable>();
+                        if (objectToDamage != null)
+                            objectToDamage.Damage(_bulletDamage);
+                    }
+                    else if (hitInfo.collider != spawningCollider)
+                    {
+                        break;
+                    }
+                }
+                bulletInstance.transform.position += bulletInstance.transform.forward * distanceDelta;
+                distance += distanceDelta;
+            }
+            Destroy(bulletInstance);
+        }
+    }
+
     public static class HelperFunctions
     {
         #region MouseRayHitPoint function and overloads

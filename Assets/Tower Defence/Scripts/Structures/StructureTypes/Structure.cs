@@ -5,7 +5,7 @@ using Economy;
 
 namespace Structure
 {
-    public abstract class Structure : MonoBehaviour
+    public abstract class Structure : MonoBehaviour, IKillable
     {
         [Header("-- Material Settings --")]
         [HideInInspector]
@@ -48,14 +48,43 @@ namespace Structure
             }
         }
 
-        [SerializeField] 
-        private float maxHealth = 50;
-        private float health;
 
         [SerializeField, Tooltip("The amount of metal consumed when this structure is built")]
         int metalCostToBuild;
         [SerializeField, Tooltip("The amount of energy consumed when this structure is activated")]
         int energyToRun;
+
+        [SerializeField]
+        HealthBar healthBar;
+        [SerializeField]
+        private float maxHealth = 100;
+        public float MaxHealth { get => maxHealth; set => maxHealth = value; }
+        private float health;
+        public float Health
+        {
+            get => health;
+            set
+            {
+                if (value < 0)
+                {
+                    health = 0;
+                    Debug.Log("I should be dead");
+                    Die();
+                }
+                else if (value > maxHealth)
+                    health = maxHealth;
+                else
+                    health = value;
+
+                if (healthBar)
+                {
+                    healthBar.SetHealth(value, MaxHealth);
+                }
+            }
+        }
+        public void Damage(float amount) => Health -= amount;
+        public void Heal(float amount) => Health += amount;
+        public void Die() => Destroy(gameObject);
 
         private void SetMaterial(Material _material)
         {
@@ -72,8 +101,6 @@ namespace Structure
                 newObject.GetComponent<Structure>().Preview = false;
             }
         }
-
-        private void InitializeHealth() => health = maxHealth;
 
         private void SetAllowedDisallowedMaterial()
         {
@@ -127,12 +154,12 @@ namespace Structure
         protected void StartStructure()
         {
             InitializeMeshRendering();
-            InitializeHealth();
         }
 
         protected void UpdateStructure()
         {
             SetAllowedDisallowedMaterial();
         }
+
     }
 }

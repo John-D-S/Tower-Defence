@@ -18,7 +18,10 @@ public class Spawner : MonoBehaviour
     private float baseSpawnRate;
     [SerializeField, Tooltip("relates to how quickly enemy difficulty and amount increases with each wave")]
     private float difficultyCurveExponent = 0.075f;
-    
+
+    [SerializeField]
+    HealthBar healthBar;
+
     //the enemies spawned per wave
     private int numberOfEnemiesToSpawn
     {
