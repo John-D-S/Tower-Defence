@@ -26,6 +26,9 @@ public class Enemy : MonoBehaviour, IKillable
     private Vector2 direction2D;
     private Vector3 direction3D;
 
+    [SerializeField]
+    HealthBar healthBar;
+
     private Vector3 GroundNormal
     {
         get
@@ -39,7 +42,30 @@ public class Enemy : MonoBehaviour, IKillable
     private float maxHealth = 100;
     public float MaxHealth { get => maxHealth; set => maxHealth = value; }
     private float health;
-    public float Health { get => health; set => health = value; }
+    public float Health 
+    { 
+        get => health;
+        set
+        {
+            if (value < maxHealth)
+                health = value;
+            else if (value < 0)
+            {
+                health = 0;
+                Die();
+            }
+            else
+                health = maxHealth;
+
+            if (healthBar)
+            {
+                healthBar.SetHealth(value, MaxHealth);
+            }
+        }
+    }
+    public void Damage(float amount) => Health -= amount;
+    public void Heal(float amount) => Health += amount;
+    public void Die() => Destroy(gameObject);
 
     private void setRotationOnGround()
     {
@@ -101,6 +127,7 @@ public class Enemy : MonoBehaviour, IKillable
 
     private void Start()
     {
+        health = maxHealth;
         foreach (GameObject obj in gameObject.scene.GetRootGameObjects())
         {
             if (obj.tag == "EnemyTarget")
@@ -119,13 +146,4 @@ public class Enemy : MonoBehaviour, IKillable
         setRotationOnGround();     
     }
 
-    public void Damage()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void Kill()
-    {
-        throw new System.NotImplementedException();
-    }
 }

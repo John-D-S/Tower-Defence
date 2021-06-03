@@ -7,6 +7,7 @@ public interface IKillable
     float MaxHealth { get; set; }
     float Health { get; set; }
 
-    void Damage();
-    void Kill();
+    void Damage(float amount);
+    void Heal(float amount);
+    void Die();
 }
