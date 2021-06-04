@@ -46,6 +46,7 @@ namespace Structure
 
         protected Transform NearestVisibleEnemy()
         {
+
             if (Physics.CheckSphere(turretBarrel.transform.position, range, enemyLayer))
             {
                 Collider currentNearestVisibleCollider = null;
@@ -56,11 +57,24 @@ namespace Structure
                     float distance = Vector3.Distance(enemyCollider.transform.position, transform.position);
                     if (distance < currentClosestDistance)
                     {
-                        currentNearestVisibleCollider = enemyCollider;
-                        currentClosestDistance = distance;
+                        float enemyScale = enemyCollider.transform.localScale.y;
+                        RaycastHit enemyHit;
+                        //we are testing if we can see the top of the enemy because if we aim for the center, the terrain can get in the way easily
+                        if (Physics.Raycast(turretBarrel.transform.position, (enemyCollider.transform.position + Vector3.up * enemyScale * 0.5f) - turretBarrel.transform.position, out enemyHit, range))
+                        {
+                            Debug.DrawLine(turretBarrel.transform.position, (enemyCollider.transform.position + Vector3.up * enemyScale * 0.5f), Color.red);
+                            if (enemyHit.collider == enemyCollider)
+                            {
+                                currentNearestVisibleCollider = enemyCollider;
+                                currentClosestDistance = distance;
+                            }
+                        }
                     }
                 }
-                return currentNearestVisibleCollider.transform;
+                if (currentNearestVisibleCollider)
+                {
+                    return currentNearestVisibleCollider.transform;
+                }
             }
             return null;
         }
@@ -68,7 +82,7 @@ namespace Structure
         protected void AimAtEnemy(Transform _enemy)
         {
             Vector3 turretBaseTarget = new Vector3(_enemy.position.x, turretBase.transform.position.y, _enemy.position.z);
-            Vector3 turretBarrelTarget = _enemy.transform.position;
+            Vector3 turretBarrelTarget = _enemy.transform.position + Vector3.up * 0.5f;
             
             turretBase.transform.LookAt(turretBaseTarget);
             turretBarrel.transform.LookAt(turretBarrelTarget);
@@ -76,6 +90,7 @@ namespace Structure
 
         protected void UpdateTower()
         {
+
             Transform enemy = NearestVisibleEnemy();
             if (enemy)
             {
