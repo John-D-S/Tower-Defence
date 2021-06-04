@@ -82,6 +82,7 @@ namespace Structure
         protected void AimAtEnemy(Transform _enemy)
         {
             Vector3 turretBaseTarget = new Vector3(_enemy.position.x, turretBase.transform.position.y, _enemy.position.z);
+            //the turret is aiming slightly above the position of the enemy so that it is less likely to be obscured by the terrain.
             Vector3 turretBarrelTarget = _enemy.transform.position + Vector3.up * 0.5f;
             
             turretBase.transform.LookAt(turretBaseTarget);
