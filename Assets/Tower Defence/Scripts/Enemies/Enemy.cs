@@ -2,24 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static HelperClasses.HelperFunctions;
+using static HelperClasses.WeaponFunctions;
+
 
 public class Enemy : MonoBehaviour, IKillable
 {
+    [Header("-- Movement Settings --")]
     private float acceleration;
     [SerializeField]
     private float maxVelocity = 10;
     //the amount the gameobject moves each physics update.
     private float velocity;
 
+    [Header("-- AI Settings --")]
     [SerializeField]
     private float aiVisionRadius = 2.5f;
     [SerializeField]
     private float aiFieldOfView =  45f;
     [SerializeField]
-    private int AiVisionPointNumber = 36;
+    private int aiVisionPointNumber = 36;
 
     [SerializeField]
     private float aiTargetWeight = 2;
+
+    [Header("-- Shooting Settings --")]
+    [SerializeField, Tooltip("The Furthest enemies can be from the turret before it stops fireing")]
+    protected float range = 50;
+    [SerializeField, Tooltip("The number of projectiles fired Per Second")]
+    protected float fireRate = 1;
+    [SerializeField]
+    private GameObject bullet;
+    [SerializeField]
+    private float bulletSpeed = 50f;
+    [SerializeField]
+    private float spread = 5f;
+    [SerializeField]
+    private float bulletRadius = 0.25f;
+    [SerializeField]
+    private string bulletHitTargetTag;
+    [SerializeField]
+    private float bulletDamage = 10f;
+
+    [SerializeField]
+    private GameObject turretBase;
+    [SerializeField]
+    private GameObject turretBarrel;
 
     private Transform aiTarget;
 
@@ -50,7 +77,6 @@ public class Enemy : MonoBehaviour, IKillable
             if (value < 0)
             {
                 health = 0;
-                Debug.Log("I should be dead");
                 Die();
             }
             else if (value > maxHealth)
@@ -67,6 +93,8 @@ public class Enemy : MonoBehaviour, IKillable
     public void Damage(float amount) => Health -= amount;
     public void Heal(float amount) => Health += amount;
     public void Die() => Destroy(gameObject);
+
+    private Collider thisCollider;
 
     private void setRotationOnGround()
     {
@@ -126,8 +154,23 @@ public class Enemy : MonoBehaviour, IKillable
         Gizmos.DrawLine(transform.position, transform.position + direction3D * 5);
     }
 
+    private void AimAndShoot()
+    {
+        Transform target = NearestVisibleTarget(turretBarrel, range, LayerMask.GetMask("Structure"));
+        if (target)
+        {
+            AimAtTarget(target, gameObject, ref turretBase, ref turretBarrel);
+            ShootBullet(thisCollider, turretBarrel.transform.position, turretBarrel.transform.rotation, bulletSpeed, bullet, bulletRadius, bulletDamage, spread, range, bulletHitTargetTag);
+        }
+    }
+
     private void Start()
     {
+        if (!thisCollider)
+        {
+            thisCollider = gameObject.GetComponent<Collider>();
+            Debug.Log("collider is now set");
+        }
         health = maxHealth;
         foreach (GameObject obj in gameObject.scene.GetRootGameObjects())
         {
@@ -141,10 +184,13 @@ public class Enemy : MonoBehaviour, IKillable
 
     private void FixedUpdate()
     {
-        CalculateDirection(AiVisionPointNumber, aiFieldOfView);
+        //AI and movement
+        CalculateDirection(aiVisionPointNumber, aiFieldOfView);
         transform.position = new Vector3(transform.position.x, TargetHeight(ConvertToVector2(transform.position)), transform.position.z);
         transform.position = transform.position + transform.forward * maxVelocity * Time.deltaTime;
         setRotationOnGround();
-        //Debug.Log(Health);
+
+        //shooting
+        AimAndShoot();
     }
 }

@@ -7,6 +7,7 @@ namespace Structure
 {
     public class Gun : Tower
     {
+        [Header("-- Projectile Settings --")]
         [SerializeField]
         private GameObject bullet;
         [SerializeField]

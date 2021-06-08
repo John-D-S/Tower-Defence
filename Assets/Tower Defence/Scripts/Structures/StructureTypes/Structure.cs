@@ -31,9 +31,15 @@ namespace Structure
             {
                 preview = value;
                 if (preview)
+                {
                     gameObject.layer = LayerMask.NameToLayer("PreviewStructure");
+                    gameObject.tag = "PreviewStructure";
+                }
                 else
+                {
                     gameObject.layer = LayerMask.NameToLayer("Structure");
+                    gameObject.tag = "Structure";
+                }
                 foreach (MeshRenderer meshRenderer in meshRenderers)
                 {
                     if (preview)
@@ -47,7 +53,6 @@ namespace Structure
                 return preview;
             }
         }
-
 
         [SerializeField, Tooltip("The amount of metal consumed when this structure is built")]
         int metalCostToBuild;
