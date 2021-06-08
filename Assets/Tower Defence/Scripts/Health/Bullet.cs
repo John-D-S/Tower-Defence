@@ -28,12 +28,10 @@ public class Bullet : MonoBehaviour
         if (trailRenderer)
             trailRenderer.widthMultiplier = bulletRadius * 2;
         StartCoroutine(ActLikeABullet(spawningCollider, gameObject, bulletRadius, bulletRange, bulletSpeed, spread, bulletDamage, targetTag));
-        Debug.Log(targetTag);
     }
 
     public static IEnumerator ActLikeABullet(Collider spawningCollider, GameObject bullet, float bulletRadius, float bulletRange, float bulletSpeed, float bulletSpread, float bulletDamage, string targetTag)
     {
-        Debug.Log("trying to hit " + targetTag);
         bullet.transform.localScale = Vector3.one * bulletRadius * 2;
         bullet.transform.localRotation *= RandomSpread(bulletSpread);
         float distance = 0;

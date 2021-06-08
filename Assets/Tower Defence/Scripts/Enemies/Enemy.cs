@@ -18,12 +18,14 @@ public class Enemy : MonoBehaviour, IKillable
     [SerializeField]
     private float aiVisionRadius = 2.5f;
     [SerializeField]
-    private float aiFieldOfView =  45f;
+    private float aiFieldOfView = 45f;
     [SerializeField]
     private int aiVisionPointNumber = 36;
-
     [SerializeField]
     private float aiTargetWeight = 2;
+
+    private List<Collider> nearbyEnemies = new List<Collider>();
+    private List<Collider> nearbyStructures = new List<Collider>();
 
     [Header("-- Shooting Settings --")]
     [SerializeField, Tooltip("The Furthest enemies can be from the turret before it stops fireing")]
@@ -115,7 +117,35 @@ public class Enemy : MonoBehaviour, IKillable
         float downhillBias = ((Vector2.Dot(groundNormalDirection, _direction) + 1) * 0.5f + 1) * 0.5f;
         weight += downhillBias;
 
+
         weight += Mathf.Pow(groundNormalYAtPoint, 2) * ((Vector2.Dot(_directionToTarget, _direction) + 1) * 0.5f + 1) * 0.5f * aiTargetWeight;
+        
+        //obstical avoidance;
+        //this could be put into a function.
+        if (nearbyEnemies.Count > 0f)
+        {
+            foreach (Collider enemyCollider in nearbyEnemies)
+            {
+                // this if statement is here because we might be trying to reference an object that was deleted in the last frame.
+                if (enemyCollider)
+                {
+                    float distanceToEnemyCollider = Vector3.Distance(enemyCollider.transform.position, transform.position);
+                    weight *= Mathf.Lerp((-Vector2.Dot(ConvertToVector2(enemyCollider.transform.position) - ConvertToVector2(transform.position), _direction) + 1), 1, distanceToEnemyCollider / aiVisionRadius);
+                }
+            }
+        }
+        if (nearbyStructures.Count > 0f)
+        {
+            foreach (Collider structureCollider in nearbyStructures)
+            {
+                if (structureCollider)
+                {
+                    float distanceToStructureCollider = Vector3.Distance(structureCollider.transform.position, transform.position);
+                    weight *= Mathf.Lerp((-Vector2.Dot(ConvertToVector2(structureCollider.transform.position) - ConvertToVector2(transform.position), _direction) + 1), 1, distanceToStructureCollider / aiVisionRadius);
+                }
+            }
+        }
+
         return weight;
     }
 
@@ -123,9 +153,21 @@ public class Enemy : MonoBehaviour, IKillable
     {
         List<Vector2> possibleDirections = new List<Vector2>();
 
-        float angleIncrement = fieldOfView / _pointNumber;
-        float startingAngle = Direction2Angle(direction2D) - fieldOfView * 0.5f;
+        float angleIncrement;
+        float startingAngle;
+        if (nearbyStructures.Count == 0)
+        {
+            angleIncrement = fieldOfView / _pointNumber;
+            startingAngle = Direction2Angle(direction2D) - fieldOfView * 0.5f;
+        }
+        else
+        {
+            angleIncrement = 360 / _pointNumber;
+            startingAngle = 0f;
+        }
+
         Vector2 directionToTarget = ConvertToVector2(aiTarget.position - transform.position).normalized;
+
         for (int i = 0; i < _pointNumber; i++)
         {
             //Debug.Log(Angle2Direction(i * angleIncrement));
@@ -144,7 +186,7 @@ public class Enemy : MonoBehaviour, IKillable
                 bestDirection = direction;
             }
         }
-        Debug.DrawLine(transform.position, transform.position + ConvertToVector3(bestDirection * aiVisionRadius), Color.green);
+        Debug.DrawLine(transform.position, transform.position + ConvertToVector3(bestDirection * aiVisionRadius), Color.green, Time.deltaTime, false);
         direction2D = Vector2.Lerp(direction2D, bestDirection, 0.1f);
     }
 
@@ -214,9 +256,28 @@ public class Enemy : MonoBehaviour, IKillable
         }
     }
 
+    void FindNearbyObjects()
+    {
+        nearbyEnemies.Clear();
+        nearbyStructures.Clear();
+        Collider[] nearbyEnemiesincludingThis = Physics.OverlapSphere(transform.position, aiVisionRadius, LayerMask.GetMask("Enemy"));
+        foreach (Collider enemyCollider in nearbyEnemiesincludingThis)
+        {
+            if (enemyCollider != thisCollider)
+                nearbyEnemies.Add(enemyCollider);
+        }
+        Collider[] nearbyStructuresArray = Physics.OverlapSphere(transform.position, aiVisionRadius, LayerMask.GetMask("Structure"));
+        foreach (Collider structureCollider in nearbyStructuresArray)
+        {
+            nearbyStructures.Add(structureCollider);
+        }
+    }
+
     private void FixedUpdate()
     {
+
         //AI and movement
+        FindNearbyObjects();
         CalculateDirection(aiVisionPointNumber, aiFieldOfView);
         transform.position = new Vector3(transform.position.x, TargetHeight(ConvertToVector2(transform.position)), transform.position.z);
         transform.position = transform.position + transform.forward * maxVelocity * Time.deltaTime;

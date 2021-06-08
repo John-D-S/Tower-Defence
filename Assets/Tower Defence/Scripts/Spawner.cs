@@ -5,11 +5,12 @@ using static HelperClasses.HelperFunctions;
 
 public class Spawner : MonoBehaviour
 {
-
     [SerializeField]
     private float enemySpawnRadius = 950f;
     [SerializeField]
     private GameObject Enemy;
+    [SerializeField]
+    private float coreSpawnRadius;
     [SerializeField]
     private GameObject Core;
     [SerializeField, Tooltip("The time between waves")]
@@ -33,8 +34,6 @@ public class Spawner : MonoBehaviour
         set { }
     }
 
-    [SerializeField]
-    private float playerCoreSpawnRadius;
     [SerializeField]
     private float lookRadius = 875f;
     
