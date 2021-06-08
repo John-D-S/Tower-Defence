@@ -27,9 +27,9 @@ public class Enemy : MonoBehaviour, IKillable
 
     [Header("-- Shooting Settings --")]
     [SerializeField, Tooltip("The Furthest enemies can be from the turret before it stops fireing")]
-    protected float range = 50;
+    private float range = 50;
     [SerializeField, Tooltip("The number of projectiles fired Per Second")]
-    protected float fireRate = 1;
+    private float fireRate = 1;
     [SerializeField]
     private GameObject bullet;
     [SerializeField]
@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour, IKillable
     private string bulletHitTargetTag;
     [SerializeField]
     private float bulletDamage = 10f;
+    private bool canFire = true;
 
     [SerializeField]
     private GameObject turretBase;
@@ -160,10 +161,41 @@ public class Enemy : MonoBehaviour, IKillable
         if (target)
         {
             AimAtTarget(target, gameObject, ref turretBase, ref turretBarrel);
-            ShootBullet(thisCollider, turretBarrel.transform.position, turretBarrel.transform.rotation, bulletSpeed, bullet, bulletRadius, bulletDamage, spread, range, bulletHitTargetTag);
+            if (canFire)
+            {
+                Instantiate(bullet, turretBarrel.transform.position, turretBarrel.transform.rotation);
+                StartCoroutine(FireCooldown());
+            }
         }
     }
 
+    private IEnumerator FireCooldown()
+    {
+        canFire = false;
+        yield return new WaitForSeconds(1 / fireRate);
+        canFire = true;
+    }
+
+    void OnValidate()
+    {
+        if (bullet)
+        {
+            Bullet bulletScript = bullet.GetComponent<Bullet>();
+            if (bulletScript)
+            {
+                bulletScript.spawningCollider = GetComponent<Collider>();
+                bulletScript.bulletSpeed = bulletSpeed;
+                bulletScript.spread = spread;
+                bulletScript.bulletRadius = bulletRadius;
+                bulletScript.bulletHitTargetTag = bulletHitTargetTag;
+                bulletScript.bulletDamage = bulletDamage;
+                bulletScript.bulletRange = range;
+            }
+            else
+                bullet = null;
+        }
+    }
+    
     private void Start()
     {
         if (!thisCollider)
