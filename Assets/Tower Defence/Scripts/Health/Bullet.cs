@@ -5,20 +5,20 @@ using static HelperClasses.WeaponFunctions;
 
 public class Bullet : MonoBehaviour
 {
-    [System.NonSerialized]
+    [HideInInspector]
     public Collider spawningCollider;
-    [System.NonSerialized]
-    public float bulletSpeed = 50f;
-    [System.NonSerialized]
-    public float spread = 5f;
-    [System.NonSerialized]
-    public float bulletRadius = 0.25f;
-    [System.NonSerialized]
-    public string bulletHitTargetTag;
-    [System.NonSerialized]
-    public float bulletDamage = 10f;
-    [System.NonSerialized]
-    public float bulletRange = 50f;
+    [HideInInspector]
+    public float bulletSpeed;
+    [HideInInspector]
+    public float spread;
+    [HideInInspector]
+    public float bulletRadius;
+    [HideInInspector]
+    public string targetTag;
+    [HideInInspector]
+    public float bulletDamage;
+    [HideInInspector] 
+    public float bulletRange;
 
     [SerializeField]
     private TrailRenderer trailRenderer;
@@ -27,11 +27,13 @@ public class Bullet : MonoBehaviour
     {
         if (trailRenderer)
             trailRenderer.widthMultiplier = bulletRadius * 2;
-        StartCoroutine(ActLikeABullet(spawningCollider, gameObject, bulletRadius, bulletRange, bulletSpeed, spread, bulletDamage, bulletHitTargetTag));
+        StartCoroutine(ActLikeABullet(spawningCollider, gameObject, bulletRadius, bulletRange, bulletSpeed, spread, bulletDamage, targetTag));
+        Debug.Log(targetTag);
     }
 
     public static IEnumerator ActLikeABullet(Collider spawningCollider, GameObject bullet, float bulletRadius, float bulletRange, float bulletSpeed, float bulletSpread, float bulletDamage, string targetTag)
     {
+        Debug.Log("trying to hit " + targetTag);
         bullet.transform.localScale = Vector3.one * bulletRadius * 2;
         bullet.transform.localRotation *= RandomSpread(bulletSpread);
         float distance = 0;

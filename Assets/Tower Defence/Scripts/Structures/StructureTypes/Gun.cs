@@ -34,7 +34,7 @@ namespace Structure
                     bulletScript.bulletSpeed = bulletSpeed;
                     bulletScript.spread = spread;
                     bulletScript.bulletRadius = bulletRadius;
-                    bulletScript.bulletHitTargetTag = bulletHitTargetTag;
+                    bulletScript.targetTag = bulletHitTargetTag;
                     bulletScript.bulletDamage = bulletDamage;
                     bulletScript.bulletRange = range;
                 }
