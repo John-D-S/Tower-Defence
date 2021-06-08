@@ -97,7 +97,7 @@ public class HelperClasses : MonoBehaviour
                         float enemyScale = enemyCollider.transform.localScale.y;
                         RaycastHit enemyHit;
                         //we are testing if we can see the top of the enemy because if we aim for the center, the terrain can get in the way easily
-                        if (Physics.Raycast(_turretBarrel.transform.position, (enemyCollider.transform.position + Vector3.up * enemyScale * 0.5f) - _turretBarrel.transform.position, out enemyHit, _range))
+                        if (Physics.Raycast(_turretBarrel.transform.position, (enemyCollider.transform.position + Vector3.up * enemyScale * 0.5f) - _turretBarrel.transform.position, out enemyHit))
                         {
                             Debug.DrawLine(_turretBarrel.transform.position, (enemyCollider.transform.position + Vector3.up * enemyScale * 0.5f), Color.red);
                             if (enemyHit.collider == enemyCollider)
@@ -218,6 +218,30 @@ public class HelperClasses : MonoBehaviour
                 angle = angle + 360;
             }
             return angle;
+        }
+
+        public static void SetLayerOfAllChildren(GameObject objectToSetLayerOn, LayerMask layer)
+        {
+            objectToSetLayerOn.layer = layer;
+            if (objectToSetLayerOn.transform.childCount > 0)
+            {
+                foreach (Transform child in objectToSetLayerOn.transform)
+                {
+                    SetLayerOfAllChildren(child.gameObject, layer);
+                }
+            }
+        }
+
+        public static void SetTagOfAllChildren(GameObject objectToSetLayerOn, string layer)
+        {
+            objectToSetLayerOn.tag = layer;
+            if (objectToSetLayerOn.transform.childCount > 0)
+            {
+                foreach (Transform child in objectToSetLayerOn.transform)
+                {
+                    SetTagOfAllChildren(child.gameObject, layer);
+                }
+            }
         }
     }
 }

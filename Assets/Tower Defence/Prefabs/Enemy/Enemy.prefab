@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1325899183360845396}
   - component: {fileID: 2308534167667385529}
   - component: {fileID: 87924433348972091}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TurretBarrel
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -90,9 +90,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9042277919806513615}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheels
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,9 +126,9 @@ GameObject:
   - component: {fileID: 4391126478887032460}
   - component: {fileID: 5512514686929127807}
   - component: {fileID: 762577011954920424}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -207,9 +207,9 @@ GameObject:
   - component: {fileID: 409806838801551691}
   - component: {fileID: 6934776004130655000}
   - component: {fileID: 6422208385222641254}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TurretBase
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -289,9 +289,9 @@ GameObject:
   - component: {fileID: 7241320795493869229}
   - component: {fileID: 1087797338925373058}
   - component: {fileID: 8079012897441713}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel (3)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -530,9 +530,9 @@ GameObject:
   - component: {fileID: 8284786937919815538}
   - component: {fileID: 5563820849990100440}
   - component: {fileID: 1485244877563355542}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel (2)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -692,9 +692,9 @@ GameObject:
   - component: {fileID: 2617071740858246627}
   - component: {fileID: 805199030859049837}
   - component: {fileID: 3893628830796146517}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel (1)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -769,9 +769,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4952703412376866438}
     m_Modifications:
+    - target: {fileID: 2346273886042457617, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515533, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_Name
       value: HealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346273886059515533, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346273886059515533, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_RootOrder
@@ -828,6 +840,10 @@ PrefabInstance:
     - target: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346273887633780618, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}

@@ -21,8 +21,6 @@ namespace Structure
         [SerializeField]
         private float bulletDamage= 10f;
 
-        private Collider thisCollider;
-
         private void OnValidate()
         {
             if (bullet)
@@ -51,7 +49,6 @@ namespace Structure
         private void Start()
         {
             StartStructure();
-            thisCollider = gameObject.GetComponent<Collider>();
         }
 
         private void Update()
