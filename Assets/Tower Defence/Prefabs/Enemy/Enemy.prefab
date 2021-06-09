@@ -410,7 +410,8 @@ MonoBehaviour:
   aiVisionRadius: 3
   aiFieldOfView: 45
   aiVisionPointNumber: 36
-  aiTargetWeight: 2
+  aiTargetWeight: 3
+  aiTargetTag: EnemyTarget
   range: 50
   fireRate: 5
   bullet: {fileID: 7423836921931420716, guid: 4eeb98c10d313014a9c3d39ba9df9b28, type: 3}

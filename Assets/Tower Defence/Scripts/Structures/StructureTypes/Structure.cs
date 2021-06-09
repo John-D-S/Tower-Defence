@@ -68,9 +68,9 @@ namespace Structure
 
         [Header("-- Stats --")]
         [SerializeField, Tooltip("The amount of metal consumed when this structure is built")]
-        int metalCostToBuild;
+        private int metalCostToBuild;
         [SerializeField, Tooltip("The amount of energy consumed when this structure is activated")]
-        int energyToRun;
+        protected int energyToRun;
 
         [SerializeField]
         HealthBar healthBar;
@@ -156,11 +156,6 @@ namespace Structure
         }
 
         void initializeHealth() => Health = maxHealth;
-
-        private void ConsumeEnergy()
-        {
-            Economy.EconomyTracker.TryIncrementEnergy(-energyToRun);
-        }
 
         private void OnValidate()
         {

@@ -23,9 +23,14 @@ public class Enemy : MonoBehaviour, IKillable
     private int aiVisionPointNumber = 36;
     [SerializeField]
     private float aiTargetWeight = 2;
+    [SerializeField]
+    private string aiTargetTag = "EnemyTarget";
 
     private List<Collider> nearbyEnemies = new List<Collider>();
     private List<Collider> nearbyStructures = new List<Collider>();
+
+    private Transform aiTarget;
+    private Collider aiTargetCollider;
 
     [Header("-- Shooting Settings --")]
     [SerializeField, Tooltip("The Furthest enemies can be from the turret before it stops fireing")]
@@ -51,11 +56,21 @@ public class Enemy : MonoBehaviour, IKillable
     [SerializeField]
     private GameObject turretBarrel;
 
-    private Transform aiTarget;
+    [SerializeField, Tooltip("The damage the core takes when the enemy collides with it.")]
+    private float coreDamage = 10f;
+    public float CoreDamage
+    {
+        get
+        {
+            return coreDamage;
+        }
+        set {}
+    }
 
     private Vector2 direction2D;
     private Vector3 direction3D;
-
+    
+    [Header("Health Settings")]
     [SerializeField]
     HealthBar healthBar;
 
@@ -248,9 +263,10 @@ public class Enemy : MonoBehaviour, IKillable
         health = maxHealth;
         foreach (GameObject obj in gameObject.scene.GetRootGameObjects())
         {
-            if (obj.tag == "EnemyTarget")
+            if (obj.tag == aiTargetTag)
             {
                 aiTarget = obj.transform;
+                aiTargetCollider = obj.GetComponent<Collider>();
                 break;
             }
         }
@@ -266,7 +282,8 @@ public class Enemy : MonoBehaviour, IKillable
             if (enemyCollider != thisCollider)
                 nearbyEnemies.Add(enemyCollider);
         }
-        Collider[] nearbyStructuresArray = Physics.OverlapSphere(transform.position, aiVisionRadius, LayerMask.GetMask("Structure"));
+        Collider[] nearbyStructuresArray = Physics.OverlapSphere(transform.position, aiVisionRadius, LayerMask.GetMask("EnemyTarget"));
+        bool addCoreCollider = Physics.CheckSphere(transform.position, aiVisionRadius, LayerMask.GetMask(aiTargetTag));
         foreach (Collider structureCollider in nearbyStructuresArray)
         {
             nearbyStructures.Add(structureCollider);

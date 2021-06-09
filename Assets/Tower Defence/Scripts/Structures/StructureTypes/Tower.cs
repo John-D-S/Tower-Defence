@@ -32,8 +32,11 @@ namespace Structure
         {
             if (canFire)
             {
-                ShootProjectile();
-                StartCoroutine(FireCooldown());
+                if (Economy.EconomyTracker.TryIncrementEnergy(-energyToRun))
+                {
+                    ShootProjectile();
+                    StartCoroutine(FireCooldown());
+                }
             }
         }
 

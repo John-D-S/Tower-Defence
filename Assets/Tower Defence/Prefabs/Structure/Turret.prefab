@@ -279,12 +279,12 @@ MonoBehaviour:
   radius: 0.5
   height: 3
   thisCollider: {fileID: 3833119609746957531}
-  metalCostToBuild: 0
-  energyToRun: 0
+  metalCostToBuild: 5
+  energyToRun: 5
   healthBar: {fileID: 5632168957651797055}
   maxHealth: 1000
   range: 50
-  fireRate: 0.1
+  fireRate: 5
   MetalConsumption: 0
   turretBase: {fileID: 3833119608638892664}
   turretBarrel: {fileID: 3833119609613238870}
