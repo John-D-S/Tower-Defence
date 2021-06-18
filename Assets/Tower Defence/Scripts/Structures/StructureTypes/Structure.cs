@@ -54,6 +54,12 @@ namespace Structure
         [SerializeField, Tooltip("The amount of energy consumed when this structure is activated")]
         int energyToRun;
 
+        public bool IsConnectedToCore
+        {
+            //insert code to check if this structure is linked directly or by proxy to the core.
+            get => true;
+        }
+
         [SerializeField]
         HealthBar healthBar;
         [SerializeField]

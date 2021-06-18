@@ -44,6 +44,7 @@ namespace Structure
         }
         #endregion
 
+        #region Aiming
         protected Transform NearestVisibleEnemy()
         {
 
@@ -88,6 +89,8 @@ namespace Structure
             turretBase.transform.LookAt(turretBaseTarget);
             turretBarrel.transform.LookAt(turretBarrelTarget);
         }
+
+        #endregion
 
         protected void UpdateTower()
         {

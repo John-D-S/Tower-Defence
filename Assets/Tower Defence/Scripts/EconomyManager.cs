@@ -2,17 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Structure;
 using TMPro;
 
 namespace Economy
 {
+    public enum EconomyResource
+    {
+        Metal,
+        Energy
+    }
+
     public static class EconomyTracker
     {
         public static int metal;
         public static int energy;
 
-        public static int maxMetal;
-        public static int maxEnergy;
+        public static int baseMaxMetal;
+        public static int baseMaxEnergy;
+        
+        public static List<Storage> activeMetalStorageStructures;
+        public static List<Storage> activeEnergyStorageStructures;
+        public static int MaxMetal
+        {
+            get
+            {
+                int returnValue = baseMaxMetal;
+                foreach (Storage storageStructure in activeMetalStorageStructures)
+                {
+                    returnValue += storageStructure.StorageCapacity;
+                }
+                return returnValue;
+            }
+        }
+        public static int MaxEnergy
+        {
+            get
+            {
+                int returnValue = baseMaxEnergy;
+                foreach (Storage storageStructure in activeEnergyStorageStructures)
+                {
+                    returnValue += storageStructure.StorageCapacity;
+                }
+                return returnValue;
+            }
+        }
+
 
         public static bool TryIncrementResource(int incrementAmount, ref int resourceToIncrement, int maxResource)
         {
@@ -24,9 +59,9 @@ namespace Economy
             return true;
         }
 
-        public static bool TryIncrementMetal(int _metalIncrementAmount) => TryIncrementResource(_metalIncrementAmount, ref metal, maxMetal);
+        public static bool TryIncrementMetal(int _metalIncrementAmount) => TryIncrementResource(_metalIncrementAmount, ref metal, MaxMetal);
         
-        public static bool TryIncrementEnergy(int _energyIncrementAmount) => TryIncrementResource(_energyIncrementAmount, ref energy, maxEnergy);
+        public static bool TryIncrementEnergy(int _energyIncrementAmount) => TryIncrementResource(_energyIncrementAmount, ref energy, MaxEnergy);
     }
 
     public class EconomyManager : MonoBehaviour
@@ -61,8 +96,8 @@ namespace Economy
 
         private void InitializeBaseMaxEconomy()
         {
-            EconomyTracker.maxMetal = baseMaxMetal;
-            EconomyTracker.maxEnergy = baseMaxEnergy;
+            EconomyTracker.baseMaxMetal = baseMaxMetal;
+            EconomyTracker.baseMaxEnergy = baseMaxEnergy;
         }
 
         private IEnumerator BaseGenerate()
@@ -85,13 +120,13 @@ namespace Economy
         {
             if (metalHudBar.sprite && energyHudBar.sprite)
             {
-                metalHudBar.fillAmount = (float)EconomyTracker.metal / (float)EconomyTracker.maxMetal;
-                energyHudBar.fillAmount = (float)EconomyTracker.energy / (float)EconomyTracker.maxEnergy;
+                metalHudBar.fillAmount = (float)EconomyTracker.metal / (float)EconomyTracker.baseMaxMetal;
+                energyHudBar.fillAmount = (float)EconomyTracker.energy / (float)EconomyTracker.baseMaxEnergy;
             }
             if (metalHudText && energyHudText)
             {
-                metalHudText.text = $"Metal: {EconomyTracker.metal} / {EconomyTracker.maxEnergy}";
-                energyHudText.text = $"Energy: {EconomyTracker.energy} / {EconomyTracker.maxEnergy}";
+                metalHudText.text = $"Metal: {EconomyTracker.metal} / {EconomyTracker.baseMaxEnergy}";
+                energyHudText.text = $"Energy: {EconomyTracker.energy} / {EconomyTracker.baseMaxEnergy}";
             }
         }
     }
