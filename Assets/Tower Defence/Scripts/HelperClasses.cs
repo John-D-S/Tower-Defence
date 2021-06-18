@@ -15,9 +15,12 @@ public class HelperClasses : MonoBehaviour
 
         public static IEnumerator ShootBullet(Collider spawningCollider, Vector3 _startPosition, Quaternion _direction, float _bulletSpeed, GameObject _bullet, float _bulletRadius, float _bulletDamage, float _spread, float _range, string _targetTag)
         {
+            //Debug.Log($"attemted Firing at {_targetTag}");
             GameObject bulletInstance = Instantiate(_bullet, _startPosition, _direction * RandomSpread(_spread));
             bulletInstance.transform.localScale = Vector3.one * _bulletRadius * 2;
             float distance = 0;
+            if (bulletInstance)
+                Debug.Log($"attemted Firing at {_targetTag}");
             while (distance < _range)
             {
                 yield return new WaitForFixedUpdate();
@@ -41,6 +44,76 @@ public class HelperClasses : MonoBehaviour
                 distance += distanceDelta;
             }
             Destroy(bulletInstance);
+        }
+
+        public static float RotationTowardsTargetOnAxis(Transform objectToRotate, Vector3 target, Vector3 constraintAxis)
+        {
+
+            float angleToRotate = Vector3.SignedAngle(objectToRotate.forward, objectToRotate.position - target, constraintAxis);
+            return angleToRotate;
+
+            /*
+            Vector3 pos = objectToRotate.position;
+            //this is the angle between the line from target to target + constraintAxis and the line from target to pos.
+            float axisPosAngle = Vector3.Angle(constraintAxis, target - pos);
+            float targetPosDistance = Vector3.Distance(target, pos);
+            float targetRotPosDistance = targetPosDistance * Mathf.Cos(axisPosAngle);
+            Vector3 targetRotPos = target + constraintAxis.normalized * targetRotPosDistance;
+            float angleToRotPos = Vector3.SignedAngle(objectToRotate.forward, objectToRotate.position - targetRotPos, constraintAxis);
+            */
+        }
+
+        public static void AimAtTarget(Transform _target, GameObject _attatchedStructure, ref GameObject _turretBase, ref GameObject _turretBarrel)
+        {
+            Vector3 targetPos = _target.position;
+            Vector3 transformedTargetPos = _attatchedStructure.transform.InverseTransformPoint(_target.position);
+
+            Vector3 turretBaseTarget = new Vector3(targetPos.x, targetPos.y, targetPos.z);
+            //the turret is aiming slightly above the position of the enemy so that it is less likely to be obscured by the terrain.
+            Vector3 turretBarrelTarget = targetPos + Vector3.up * 0.5f;
+
+            
+            Quaternion turretBaseRotation = Quaternion.LookRotation(turretBaseTarget - _turretBase.transform.position, _attatchedStructure.transform.up);
+            Quaternion turretBarrelRotation = Quaternion.LookRotation(turretBarrelTarget - _turretBarrel.transform.position, _attatchedStructure.transform.up);
+
+            _turretBase.transform.rotation = turretBaseRotation;
+            Vector3 turretBaseLocRot = _turretBase.transform.localRotation.eulerAngles;
+            _turretBase.transform.localRotation = Quaternion.Euler(0, turretBaseLocRot.y, turretBaseLocRot.z);
+            _turretBarrel.transform.rotation = turretBarrelRotation;
+        }
+
+        public static Transform NearestVisibleTarget(GameObject _turretBarrel, float _range, LayerMask _TargetLayer)
+        {
+            if (Physics.CheckSphere(_turretBarrel.transform.position, _range, _TargetLayer))
+            {
+                Collider currentNearestVisibleCollider = null;
+                float currentClosestDistance = Mathf.Infinity;
+                Collider[] inRangeEnemyColliders = Physics.OverlapSphere(_turretBarrel.transform.position, _range, _TargetLayer);
+                foreach (Collider enemyCollider in inRangeEnemyColliders)
+                {
+                    float distance = Vector3.Distance(enemyCollider.transform.position, _turretBarrel.transform.position);
+                    if (distance < currentClosestDistance)
+                    {
+                        float enemyScale = enemyCollider.transform.localScale.y;
+                        RaycastHit enemyHit;
+                        //we are testing if we can see the top of the enemy because if we aim for the center, the terrain can get in the way easily
+                        if (Physics.Raycast(_turretBarrel.transform.position, (enemyCollider.transform.position + Vector3.up * enemyScale * 0.5f) - _turretBarrel.transform.position, out enemyHit))
+                        {
+                            Debug.DrawLine(_turretBarrel.transform.position, (enemyCollider.transform.position + Vector3.up * enemyScale * 0.5f), Color.red);
+                            if (enemyHit.collider == enemyCollider)
+                            {
+                                currentNearestVisibleCollider = enemyCollider;
+                                currentClosestDistance = distance;
+                            }
+                        }
+                    }
+                }
+                if (currentNearestVisibleCollider)
+                {
+                    return currentNearestVisibleCollider.transform;
+                }
+            }
+            return null;
         }
     }
 
@@ -145,6 +218,30 @@ public class HelperClasses : MonoBehaviour
                 angle = angle + 360;
             }
             return angle;
+        }
+
+        public static void SetLayerOfAllChildren(GameObject objectToSetLayerOn, LayerMask layer)
+        {
+            objectToSetLayerOn.layer = layer;
+            if (objectToSetLayerOn.transform.childCount > 0)
+            {
+                foreach (Transform child in objectToSetLayerOn.transform)
+                {
+                    SetLayerOfAllChildren(child.gameObject, layer);
+                }
+            }
+        }
+
+        public static void SetTagOfAllChildren(GameObject objectToSetLayerOn, string layer)
+        {
+            objectToSetLayerOn.tag = layer;
+            if (objectToSetLayerOn.transform.childCount > 0)
+            {
+                foreach (Transform child in objectToSetLayerOn.transform)
+                {
+                    SetTagOfAllChildren(child.gameObject, layer);
+                }
+            }
         }
     }
 }

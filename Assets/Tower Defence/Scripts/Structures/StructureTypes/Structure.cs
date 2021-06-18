@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static HelperClasses.HelperFunctions;
 using Economy;
 
 namespace Structure
@@ -24,6 +25,9 @@ namespace Structure
         [System.NonSerialized]
         public bool isIntersecting;
 
+        [SerializeField]
+        protected Collider thisCollider;
+
         private bool preview = true;
         public bool Preview
         {
@@ -31,9 +35,23 @@ namespace Structure
             {
                 preview = value;
                 if (preview)
-                    gameObject.layer = LayerMask.NameToLayer("PreviewStructure");
+                {
+                    SetLayerOfAllChildren(gameObject, LayerMask.NameToLayer("PreviewStructure"));
+                    SetTagOfAllChildren(gameObject, "PreviewStructure");
+                    if (thisCollider)
+                        thisCollider.enabled = false;
+                    if (healthBar)
+                        healthBar.gameObject.SetActive(false);
+                }
                 else
-                    gameObject.layer = LayerMask.NameToLayer("Structure");
+                {
+                    SetLayerOfAllChildren(gameObject, LayerMask.NameToLayer("Structure"));
+                    SetTagOfAllChildren(gameObject, "Structure");
+                    if (thisCollider)
+                        thisCollider.enabled = true;
+                    if (healthBar)
+                        healthBar.gameObject.SetActive(true);
+                }
                 foreach (MeshRenderer meshRenderer in meshRenderers)
                 {
                     if (preview)
@@ -48,11 +66,11 @@ namespace Structure
             }
         }
 
-
+        [Header("-- Stats --")]
         [SerializeField, Tooltip("The amount of metal consumed when this structure is built")]
-        int metalCostToBuild;
+        private int metalCostToBuild;
         [SerializeField, Tooltip("The amount of energy consumed when this structure is activated")]
-        int energyToRun;
+        protected int energyToRun;
 
         public bool IsConnectedToCore
         {
@@ -74,7 +92,6 @@ namespace Structure
                 if (value < 0)
                 {
                     health = 0;
-                    Debug.Log("I should be dead");
                     Die();
                 }
                 else if (value > maxHealth)
@@ -86,6 +103,8 @@ namespace Structure
                 {
                     healthBar.SetHealth(value, MaxHealth);
                 }
+
+                healthBar.SetHealth(Health, maxHealth);
             }
         }
         public void Damage(float amount) => Health -= amount;
@@ -113,14 +132,9 @@ namespace Structure
             if (Preview)
             {
                 if (IntersectingOtherStructure() && metalCostToBuild < EconomyTracker.metal)
-                {
                     SetMaterial(disallowedPreviewMaterial);
-                }
                 else
-                {
                     SetMaterial(allowedPreviewMaterial);
-                }
-
             }
         }
 
@@ -147,18 +161,17 @@ namespace Structure
             }
         }
 
-        private void ConsumeEnergy()
-        {
-            Economy.EconomyTracker.TryIncrementEnergy(-energyToRun);
-        }
+        void initializeHealth() => Health = maxHealth;
 
         private void OnValidate()
         {
+            thisCollider = gameObject.GetComponentInChildren<Collider>();
             InitializeMeshRendering();
         }
 
         protected void StartStructure()
         {
+            initializeHealth();
             InitializeMeshRendering();
         }
 
@@ -166,6 +179,5 @@ namespace Structure
         {
             SetAllowedDisallowedMaterial();
         }
-
     }
 }

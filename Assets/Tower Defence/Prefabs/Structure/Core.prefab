@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 2215249746921111168}
   - component: {fileID: 2215249746921111231}
   - component: {fileID: 2215249746921111230}
-  m_Layer: 0
+  - component: {fileID: -3433579278426617235}
+  m_Layer: 9
   m_Name: Core
   m_TagString: EnemyTarget
   m_Icon: {fileID: 0}
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2215249746921111229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.54, y: 172.86, z: -21.87}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
@@ -90,8 +91,30 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2215249746921111229}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3433579278426617235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2215249746921111229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f01db00d51a45364f84ee77f36a4aa0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  realMaterial: {fileID: 0}
+  allowedPreviewMaterial: {fileID: 0}
+  disallowedPreviewMaterial: {fileID: 0}
+  radius: 5
+  height: 5
+  thisCollider: {fileID: 2215249746921111230}
+  metalCostToBuild: 0
+  energyToRun: 0
+  healthBar: {fileID: 0}
+  maxHealth: 1000

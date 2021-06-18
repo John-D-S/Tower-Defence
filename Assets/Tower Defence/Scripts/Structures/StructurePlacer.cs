@@ -131,6 +131,7 @@ namespace Structure
                 {
                     previewStructureInstance = Instantiate(selectedStructure, MouseRayHitPoint(LayerMask.GetMask("Terrain")), Quaternion.identity);
                     previewStructureInstanceScript = previewStructureInstance.GetComponent<Structure>();
+                    previewStructureInstanceScript.Preview = true;
                 }
                 else if (selectedStructure && previewStructureInstance)
                 {

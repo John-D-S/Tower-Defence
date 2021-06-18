@@ -5,11 +5,12 @@ using static HelperClasses.HelperFunctions;
 
 public class Spawner : MonoBehaviour
 {
-
     [SerializeField]
     private float enemySpawnRadius = 950f;
     [SerializeField]
     private GameObject Enemy;
+    [SerializeField]
+    private float coreSpawnRadius = 700f;
     [SerializeField]
     private GameObject Core;
     [SerializeField, Tooltip("The time between waves")]
@@ -19,11 +20,8 @@ public class Spawner : MonoBehaviour
     [SerializeField, Tooltip("relates to how quickly enemy difficulty and amount increases with each wave")]
     private float difficultyCurveExponent = 0.075f;
 
-    [SerializeField]
-    HealthBar healthBar;
-
     //the enemies spawned per wave
-    private int numberOfEnemiesToSpawn
+    private int NumberOfEnemiesToSpawn
     {
         get
         {
@@ -34,8 +32,6 @@ public class Spawner : MonoBehaviour
     }
 
     [SerializeField]
-    private float playerCoreSpawnRadius;
-    [SerializeField]
     private float lookRadius = 875f;
     
     void OnDrawGizmos()
@@ -44,12 +40,12 @@ public class Spawner : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
 
-    // Update is called once per frame
-    private void Start()
+    private void Awake()
     {
+        SpawnCore();
         StartCoroutine(WaveSpawner());
     }
-    
+
     private IEnumerator WaveSpawner()
     {
         while (true)
@@ -61,7 +57,7 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
-        int enemiesToSpawnNow = numberOfEnemiesToSpawn;
+        int enemiesToSpawnNow = NumberOfEnemiesToSpawn;
         float enemySpawnAngle = Random.Range(0, 360);
         for (int i = 0; i < enemiesToSpawnNow; i++)
         {
@@ -70,5 +66,13 @@ public class Spawner : MonoBehaviour
             Instantiate(Enemy, ConvertToVector3(SpawnPosition) + Vector3.up * spawnHeight, Quaternion.identity);
             yield return new WaitForSeconds(0.1f);
         }
+    }
+    
+    private void SpawnCore()
+    {
+        Vector2 spawnPos = Random.insideUnitCircle * coreSpawnRadius;
+        float spawnHeight = TargetHeight(spawnPos);
+        Vector3 coreSpawnPosition = ConvertToVector3(spawnPos) + Vector3.up * spawnHeight;
+        Instantiate(Core, coreSpawnPosition, Quaternion.identity);
     }
 }

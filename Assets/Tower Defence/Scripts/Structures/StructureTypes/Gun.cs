@@ -7,6 +7,7 @@ namespace Structure
 {
     public class Gun : Tower
     {
+        [Header("-- Projectile Settings --")]
         [SerializeField]
         private GameObject bullet;
         [SerializeField]
@@ -20,17 +21,34 @@ namespace Structure
         [SerializeField]
         private float bulletDamage= 10f;
 
-        private Collider thisCollider;
+        private void OnValidate()
+        {
+            if (bullet)
+            {
+                Bullet bulletScript = bullet.GetComponent<Bullet>();
+                if (bulletScript)
+                {
+                    bulletScript.spawningCollider = GetComponent<Collider>();
+                    bulletScript.bulletSpeed = bulletSpeed;
+                    bulletScript.spread = spread;
+                    bulletScript.bulletRadius = bulletRadius;
+                    bulletScript.targetTag = bulletHitTargetTag;
+                    bulletScript.bulletDamage = bulletDamage;
+                    bulletScript.bulletRange = range;
+                }
+                else
+                    bullet = null;
+            }
+        }
 
         public override void ShootProjectile()
         {
-            StartCoroutine(ShootBullet(thisCollider, turretBarrel.transform.position, turretBarrel.transform.rotation, bulletSpeed, bullet, bulletRadius, bulletDamage, spread, range, bulletHitTargetTag));
+            Instantiate(bullet, turretBarrel.transform.position, turretBarrel.transform.rotation);
         }
 
         private void Start()
         {
             StartStructure();
-            thisCollider = gameObject.GetComponent<Collider>();
         }
 
         private void Update()

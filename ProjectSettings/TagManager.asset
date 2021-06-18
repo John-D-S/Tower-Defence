@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Structure
-  - StructurePreview
   - EnemyTarget
   - Enemy
+  - PreviewStructure
+  - Structure
   layers:
   - Default
   - TransparentFX
@@ -18,7 +18,7 @@ TagManager:
   - Structure
   - PreviewStructure
   - Enemy
-  - 
+  - EnemyTarget
   - 
   - 
   - 
