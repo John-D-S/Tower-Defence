@@ -20,5 +20,10 @@ namespace Structure
                 Destroy(other);
             }
         }
+
+        private void OnDestroy()
+        {
+            Debug.Log("RIP");
+        }
     }
 }

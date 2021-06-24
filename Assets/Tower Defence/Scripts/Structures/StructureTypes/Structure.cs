@@ -9,11 +9,8 @@ namespace Structure
     public abstract class Structure : MonoBehaviour, IKillable
     {
         [Header("-- Material Settings --")]
-        [HideInInspector]
         public Material realMaterial;
-        [HideInInspector]
         public Material allowedPreviewMaterial;
-        [HideInInspector]
         public Material disallowedPreviewMaterial;
         private List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
 

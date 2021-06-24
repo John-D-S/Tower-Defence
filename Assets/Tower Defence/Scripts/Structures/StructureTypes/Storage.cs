@@ -3,35 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using Economy;
 
-public class Storage : MonoBehaviour
+namespace Structure
 {
-    [SerializeField]
-    private EconomyResource resourceToStore;
-    [SerializeField]
-    private int storageCapacity;
-    public int StorageCapacity
+    public class Storage : Structure
     {
-        get => storageCapacity;
-    }
-
-    private void Start()
-    {
-        switch (resourceToStore)
+        [Header("-- Storage Settings --")]
+        [SerializeField]
+        private EconomyResource resourceToStore;
+        [SerializeField]
+        private int storageCapacity;
+        public int StorageCapacity
         {
-            case EconomyResource.Metal:
-                EconomyTracker.activeMetalStorageStructures.Add(this);
-                break;
-            case EconomyResource.Energy:
-                EconomyTracker.activeEnergyStorageStructures.Add(this);
-                break;
+            get => storageCapacity;
         }
-    }
 
-    private void OnDestroy()
-    {
-        if (resourceToStore == EconomyResource.Energy)
-            EconomyTracker.activeEnergyStorageStructures.Remove(this);
-        else
-            EconomyTracker.activeMetalStorageStructures.Remove(this);
+        private void Start()
+        {
+            switch (resourceToStore)
+            {
+                case EconomyResource.Metal:
+                    EconomyTracker.activeMetalStorageStructures.Add(this);
+                    break;
+                case EconomyResource.Energy:
+                    EconomyTracker.activeEnergyStorageStructures.Add(this);
+                    break;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (resourceToStore == EconomyResource.Energy)
+                EconomyTracker.activeEnergyStorageStructures.Remove(this);
+            else
+                EconomyTracker.activeMetalStorageStructures.Remove(this);
+        }
     }
 }

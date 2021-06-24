@@ -7,6 +7,7 @@ namespace Structure
 {
     public class Generator : Structure
     {
+        [Header("-- Generation Settings --")]
         [SerializeField]
         private EconomyResource generatedResource;
         [SerializeField]
@@ -16,7 +17,7 @@ namespace Structure
 
         private float SecondsToGenerateResource
         {
-            get => resoucesGeneratedPerMinute * 0.0166666f;
+            get => (1 / resoucesGeneratedPerMinute) * 60f;
         }
 
         void TryGenerateResource()
@@ -25,25 +26,31 @@ namespace Structure
             {
                 StartCoroutine(GenerateResource());
             }
+            Debug.Log(SecondsToGenerateResource);
         }
 
         private IEnumerator GenerateResource()
         {
             canGenerateResource = false;
+            Debug.Log($"Tried to Generate {generatedResource}");
             if (generatedResource == EconomyResource.Energy)
             {
-                EconomyTracker.TryIncrementEnergy(resoucesGeneratedPerMinute);
+                EconomyTracker.TryIncrementEnergy(1);
             }
             else
             {
-                EconomyTracker.TryIncrementMetal(resoucesGeneratedPerMinute);
+                EconomyTracker.TryIncrementMetal(1);
             }
             yield return new WaitForSeconds(SecondsToGenerateResource);
+            canGenerateResource = true;
         }
 
         void FixedUpdate()
         {
-            TryGenerateResource();
+            if (!Preview)
+            {
+                TryGenerateResource();
+            }
         }
     }
 }

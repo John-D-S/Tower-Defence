@@ -379,6 +379,14 @@ MonoBehaviour:
   structureButtonInfos:
   - structureIcon: {fileID: 21300000, guid: 445a151f765478f43b33d3b7d28b1df7, type: 3}
     structure: {fileID: 3833119609746957529, guid: ac9926a7ae426c34ba67922830682f28, type: 3}
+  - structureIcon: {fileID: 21300000, guid: f66afe53bb3c1084d8fa8d46e35aefec, type: 3}
+    structure: {fileID: 3833119609746957529, guid: d9f3390cfac483e4fa4a84d7a363134c, type: 3}
+  - structureIcon: {fileID: 21300000, guid: 8740201ee5fe39a4a9911e866b75730a, type: 3}
+    structure: {fileID: 3833119609746957529, guid: ed187750f8a0ffe4d9231163e7f90825, type: 3}
+  - structureIcon: {fileID: 21300000, guid: 17381accf92037141a388ee62db23767, type: 3}
+    structure: {fileID: 3833119609746957529, guid: 7f952bd4aef4b84408f1588551d45e76, type: 3}
+  - structureIcon: {fileID: 21300000, guid: e3fdadaa2ca40d54ca3011631263d0ac, type: 3}
+    structure: {fileID: 3833119609746957529, guid: c9b8b6c837645554e9099aff51129986, type: 3}
   structureButtonObject: {fileID: 7037222968358994789, guid: de7f9a0b57e631b4090b5fdb138278e8, type: 3}
   structureSelectionPanel: {fileID: 1375571385}
   allowedPreviewMaterial: {fileID: 2100000, guid: 68bc473b1b6f9f34fb1a988f60a54ce8, type: 2}
@@ -1151,7 +1159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b086e58c78541e142bbf95cd009b11bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KeepSceneViewActive: 1
+  KeepSceneViewActive: 0
 --- !u!4 &1154297784
 Transform:
   m_ObjectHideFlags: 0

@@ -21,8 +21,8 @@ namespace Economy
         public static int baseMaxMetal;
         public static int baseMaxEnergy;
         
-        public static List<Storage> activeMetalStorageStructures;
-        public static List<Storage> activeEnergyStorageStructures;
+        public static List<Storage> activeMetalStorageStructures = new List<Storage>();
+        public static List<Storage> activeEnergyStorageStructures = new List<Storage>();
         public static int MaxMetal
         {
             get
@@ -88,7 +88,7 @@ namespace Economy
         [SerializeField]
         private int baseEnergyPerSecond = 1;
 
-
+        [Header("-- Base Resources --")]
         [SerializeField]
         private int baseMaxMetal = 100;
         [SerializeField]
@@ -120,13 +120,13 @@ namespace Economy
         {
             if (metalHudBar.sprite && energyHudBar.sprite)
             {
-                metalHudBar.fillAmount = (float)EconomyTracker.metal / (float)EconomyTracker.baseMaxMetal;
-                energyHudBar.fillAmount = (float)EconomyTracker.energy / (float)EconomyTracker.baseMaxEnergy;
+                metalHudBar.fillAmount = (float)EconomyTracker.metal / (float)EconomyTracker.MaxMetal;
+                energyHudBar.fillAmount = (float)EconomyTracker.energy / (float)EconomyTracker.MaxEnergy;
             }
             if (metalHudText && energyHudText)
             {
-                metalHudText.text = $"Metal: {EconomyTracker.metal} / {EconomyTracker.baseMaxEnergy}";
-                energyHudText.text = $"Energy: {EconomyTracker.energy} / {EconomyTracker.baseMaxEnergy}";
+                metalHudText.text = $"Metal: {EconomyTracker.metal} / {EconomyTracker.MaxEnergy}";
+                energyHudText.text = $"Energy: {EconomyTracker.energy} / {EconomyTracker.MaxEnergy}";
             }
         }
     }
