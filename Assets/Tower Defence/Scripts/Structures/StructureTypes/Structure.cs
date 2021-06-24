@@ -80,10 +80,17 @@ namespace Structure
         [SerializeField]
         private float maxHealth = 100;
         public float MaxHealth { get => maxHealth; set => maxHealth = value; }
-        private float health;
+        private float health = -2;
         public float Health
         {
-            get => health;
+            get
+            {
+                if (health < -1)
+                {
+                    health = maxHealth;
+                }
+                return health;
+            }
             set
             {
                 if (value < 0)

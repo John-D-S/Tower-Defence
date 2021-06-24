@@ -17,7 +17,12 @@ namespace Structure
 
         private float SecondsToGenerateResource
         {
-            get => (1 / resoucesGeneratedPerMinute) * 60f;
+            get
+            {
+                float returnValue = (1f / (float)resoucesGeneratedPerMinute) * 60f;
+                Debug.Log(returnValue);
+                return returnValue;
+            }
         }
 
         void TryGenerateResource()
@@ -26,7 +31,6 @@ namespace Structure
             {
                 StartCoroutine(GenerateResource());
             }
-            Debug.Log(SecondsToGenerateResource);
         }
 
         private IEnumerator GenerateResource()
