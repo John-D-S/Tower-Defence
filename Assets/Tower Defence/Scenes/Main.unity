@@ -421,9 +421,9 @@ MonoBehaviour:
   metalHudText: {fileID: 860529434}
   energyHudBar: {fileID: 860529437}
   energyHudText: {fileID: 860529436}
-  startingMetal: 50
+  startingMetal: 100
   startingEnergy: 50
-  baseMetalPerSecond: 1
+  baseMetalPerSecond: 0
   baseEnergyPerSecond: 1
   baseMaxMetal: 100
   baseMaxEnergy: 100

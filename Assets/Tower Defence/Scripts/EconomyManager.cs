@@ -98,6 +98,8 @@ namespace Economy
         {
             EconomyTracker.baseMaxMetal = baseMaxMetal;
             EconomyTracker.baseMaxEnergy = baseMaxEnergy;
+            EconomyTracker.TryIncrementMetal(startingMetal);
+            EconomyTracker.TryIncrementEnergy(startingEnergy);
         }
 
         private IEnumerator BaseGenerate()
