@@ -1,6 +1,7 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static StaticObjects;
 
 namespace Structure
 {
@@ -8,7 +9,14 @@ namespace Structure
     {
         private void Start()
         {
-            //Preview = false;
+            theCore = this;
+            theCameraMovement.gameObject.transform.position = transform.position;
+            StartStructure();
+        }
+
+        protected override void UpdateConnectedToCore()
+        {
+            isConnectedToCore = true;
         }
 
         private void FixedUpdate()

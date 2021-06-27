@@ -7,6 +7,7 @@ using Controls;
 
 public static class StaticObjects
 {
+    public static Core theCore;
     public static StructureSelectionPanel theStructureSelectionPanel;
     public static StructurePlacer theStructurePlacer;
     public static CameraMovement theCameraMovement;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static HelperClasses.HelperFunctions;
+using static StaticObjects;
 using Economy;
 
 namespace Structure
@@ -68,12 +69,94 @@ namespace Structure
         private int metalCostToBuild;
         [SerializeField, Tooltip("The amount of energy consumed when this structure is activated")]
         protected int energyToRun;
+        
+        #region Core Connection
+        private float checkConnectionRadius = 20;
 
-        public bool IsConnectedToCore
+        static Dictionary<GameObject, Structure> currentStructures = new Dictionary<GameObject, Structure>();
+        
+        private List<Structure> nearbyStructures = new List<Structure>();
+        
+        private bool nearbyStructuresChecked;
+        private IEnumerator TemporarilySetNearbyStructuresCheckedTrue()
         {
-            //insert code to check if this structure is linked directly or by proxy to the core.
-            get => true;
+            nearbyStructuresChecked = true;
+            yield return new WaitForFixedUpdate();
+            nearbyStructuresChecked = false;
         }
+
+        private bool NearbyStructuresHaveBeenChecked
+        {
+            get
+            {
+                return nearbyStructuresChecked;
+            }
+        }
+
+        public void FindNearbyStructures()
+        {
+            //a list of all structure Colliders within checkConnectionRadius
+            List<Collider> nearbyStructureColliders = new List<Collider>(Physics.OverlapSphere(transform.position, checkConnectionRadius, LayerMask.GetMask(new string[] { "Structure", "EnemyTarget" })));
+            List<GameObject> nearbyStructureGameObjects = new List<GameObject>();
+            foreach (Collider collider in nearbyStructureColliders)
+            {
+                nearbyStructureGameObjects.Add(collider.gameObject);
+            }
+
+            //removing old structures
+            foreach (Structure structure in nearbyStructures)
+            {
+                //if a structure that used to be nearby is no longer there, remove it from the list of nearby structures
+                if (!nearbyStructureGameObjects.Contains(structure.gameObject))
+                {
+                    nearbyStructures.Remove(structure);
+                }
+            }
+
+            //adding new structures
+            foreach (Collider structureCollider in nearbyStructureColliders)
+            {
+                //the structure collider's gameobject
+                GameObject structureGameObject = structureCollider.gameObject;
+                //The structure component attatched to structureGameObject
+                Structure structureColliderStructure;
+                //if this nearby structure is not yet recorded in current structures, add it.
+                if (!currentStructures.ContainsKey(structureCollider.gameObject))
+                {
+                    structureColliderStructure = structureCollider.gameObject.GetComponent<Structure>();
+                    currentStructures[structureCollider.gameObject] = structureColliderStructure;
+                }
+                else
+                    structureColliderStructure = currentStructures[structureGameObject];
+            }
+
+        }
+
+        /// <summary>
+        /// checks if any nearby structures are activated. If so, set self to activated and 
+        /// </summary>
+        protected virtual void UpdateConnectedToCore()
+        {
+            StartCoroutine(TemporarilySetNearbyStructuresCheckedTrue());
+            FindNearbyStructures();
+            foreach (Structure structure in nearbyStructures)
+            {
+                if (structure.isConnectedToCore)
+                {
+                    isConnectedToCore = true;
+                }
+            }
+            foreach (Structure structure in nearbyStructures)
+            {
+                if (!structure.nearbyStructuresChecked)
+                {
+                    structure.UpdateConnectedToCore();
+                }
+            }
+        }
+        public bool isConnectedToCore;
+        #endregion
+
 
         [SerializeField]
         HealthBar healthBar;
@@ -177,11 +260,17 @@ namespace Structure
         {
             initializeHealth();
             InitializeMeshRendering();
+            theCore.UpdateConnectedToCore();
         }
 
         protected void UpdateStructure()
         {
             SetAllowedDisallowedMaterial();
+        }
+
+        private void OnDestroy()
+        {
+            Core.
         }
     }
 }
