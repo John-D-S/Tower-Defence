@@ -49,6 +49,8 @@ namespace Structure
                         thisCollider.enabled = true;
                     if (healthBar)
                         healthBar.gameObject.SetActive(true);
+                    currentStructures[gameObject] = this;
+                    theCore.UpdateConnectedStructures();
                 }
                 foreach (MeshRenderer meshRenderer in meshRenderers)
                 {
@@ -73,26 +75,9 @@ namespace Structure
         #region Core Connection
         private float checkConnectionRadius = 20;
 
-        static Dictionary<GameObject, Structure> currentStructures = new Dictionary<GameObject, Structure>();
+        protected static Dictionary<GameObject, Structure> currentStructures = new Dictionary<GameObject, Structure>();
         
         private List<Structure> nearbyStructures = new List<Structure>();
-        
-        private bool nearbyStructuresChecked;
-        private IEnumerator TemporarilySetNearbyStructuresCheckedTrue()
-        {
-            nearbyStructuresChecked = true;
-            yield return new WaitForFixedUpdate();
-            nearbyStructuresChecked = false;
-        }
-
-        private bool NearbyStructuresHaveBeenChecked
-        {
-            get
-            {
-                return nearbyStructuresChecked;
-            }
-        }
-
         public void FindNearbyStructures()
         {
             //a list of all structure Colliders within checkConnectionRadius
@@ -103,7 +88,7 @@ namespace Structure
                 nearbyStructureGameObjects.Add(collider.gameObject);
             }
 
-            //removing old structures
+            //removing old structures that no longer exist within checkConnectionRadius
             foreach (Structure structure in nearbyStructures)
             {
                 //if a structure that used to be nearby is no longer there, remove it from the list of nearby structures
@@ -112,48 +97,39 @@ namespace Structure
                     nearbyStructures.Remove(structure);
                 }
             }
+            Debug.Log(nearbyStructureGameObjects.Count);
 
-            //adding new structures
-            foreach (Collider structureCollider in nearbyStructureColliders)
+            //adding new structures that have appeared within checkConnection Radius
+            foreach (GameObject structureGameObject in nearbyStructureGameObjects)
             {
-                //the structure collider's gameobject
-                GameObject structureGameObject = structureCollider.gameObject;
                 //The structure component attatched to structureGameObject
                 Structure structureColliderStructure;
                 //if this nearby structure is not yet recorded in current structures, add it.
-                if (!currentStructures.ContainsKey(structureCollider.gameObject))
+                if (!currentStructures.ContainsKey(structureGameObject))
                 {
-                    structureColliderStructure = structureCollider.gameObject.GetComponent<Structure>();
-                    currentStructures[structureCollider.gameObject] = structureColliderStructure;
+                    structureColliderStructure = structureGameObject.GetComponent<Structure>();
+                    currentStructures[structureGameObject] = structureColliderStructure;
+                    Debug.Log("structure should have been added");//THE STRUCTURE IS NOT GETTING ADDED FIX ASAP
                 }
                 else
                     structureColliderStructure = currentStructures[structureGameObject];
             }
-
         }
 
-        /// <summary>
-        /// checks if any nearby structures are activated. If so, set self to activated and 
-        /// </summary>
-        protected virtual void UpdateConnectedToCore()
+        protected virtual void BecomeConnected()
         {
-            StartCoroutine(TemporarilySetNearbyStructuresCheckedTrue());
+            isConnectedToCore = true;
             FindNearbyStructures();
             foreach (Structure structure in nearbyStructures)
             {
-                if (structure.isConnectedToCore)
+                Debug.Log("nearby structure");
+                if (!structure.isConnectedToCore)
                 {
-                    isConnectedToCore = true;
-                }
-            }
-            foreach (Structure structure in nearbyStructures)
-            {
-                if (!structure.nearbyStructuresChecked)
-                {
-                    structure.UpdateConnectedToCore();
+                    structure.BecomeConnected();
                 }
             }
         }
+
         public bool isConnectedToCore;
         #endregion
 
@@ -239,7 +215,7 @@ namespace Structure
             return false;
         }
 
-        private void InitializeMeshRendering()
+        protected void InitializeMeshRendering()
         {
             meshRenderers.Clear();
             foreach (MeshRenderer renderer in gameObject.GetComponentsInChildren<MeshRenderer>(true))
@@ -248,7 +224,7 @@ namespace Structure
             }
         }
 
-        void initializeHealth() => Health = maxHealth;
+        protected void InitializeHealth() => Health = maxHealth;
 
         private void OnValidate()
         {
@@ -258,19 +234,34 @@ namespace Structure
 
         protected void StartStructure()
         {
-            initializeHealth();
+            InitializeHealth();
             InitializeMeshRendering();
-            theCore.UpdateConnectedToCore();
+            //currentStructures[gameObject] = this;
+            //theCore.UpdateConnectedStructures();
         }
-
+        
         protected void UpdateStructure()
         {
             SetAllowedDisallowedMaterial();
         }
 
+        private void OnDrawGizmos()
+        {
+            if (isConnectedToCore)
+                Gizmos.color = Color.green * new Color(0, 1, 0, 0.25f);
+            else
+                Gizmos.color = Color.red * new Color(1, 0, 0, 0.25f);
+
+            if (!Preview)
+            {
+                Gizmos.DrawSphere(transform.position, 5);
+            }
+        }
+
         private void OnDestroy()
         {
-            Core.
+            currentStructures.Remove(gameObject);
+            theCore.UpdateConnectedStructures();
         }
     }
 }

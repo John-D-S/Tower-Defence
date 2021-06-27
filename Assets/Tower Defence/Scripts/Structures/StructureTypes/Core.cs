@@ -11,12 +11,19 @@ namespace Structure
         {
             theCore = this;
             theCameraMovement.gameObject.transform.position = transform.position;
-            StartStructure();
+            InitializeHealth();
+            InitializeMeshRendering();
+            currentStructures[gameObject] = this;
+            BecomeConnected();
         }
 
-        protected override void UpdateConnectedToCore()
+        public void UpdateConnectedStructures()
         {
-            isConnectedToCore = true;
+            foreach (KeyValuePair<GameObject, Structure> gameObjectStructurePair in currentStructures)
+            {
+                gameObjectStructurePair.Value.isConnectedToCore = false;
+            }
+            BecomeConnected();
         }
 
         private void FixedUpdate()
