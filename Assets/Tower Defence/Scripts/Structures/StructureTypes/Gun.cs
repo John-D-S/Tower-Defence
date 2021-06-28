@@ -54,7 +54,7 @@ namespace Structure
         private void Update()
         {
             UpdateStructure();
-            if (!Preview)
+            if (!Preview && isConnectedToCore)
                 UpdateTower();
         }
     }

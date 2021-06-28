@@ -13,7 +13,6 @@ namespace Structure
             theCameraMovement.gameObject.transform.position = transform.position;
             InitializeHealth();
             InitializeMeshRendering();
-            currentStructures[gameObject] = this;
             BecomeConnected();
         }
 

@@ -20,14 +20,13 @@ namespace Structure
             get
             {
                 float returnValue = (1f / (float)resoucesGeneratedPerMinute) * 60f;
-                Debug.Log(returnValue);
                 return returnValue;
             }
         }
 
         void TryGenerateResource()
         {
-            if (canGenerateResource)
+            if (canGenerateResource && isConnectedToCore)
             {
                 StartCoroutine(GenerateResource());
             }
@@ -36,7 +35,7 @@ namespace Structure
         private IEnumerator GenerateResource()
         {
             canGenerateResource = false;
-            Debug.Log($"Tried to Generate {generatedResource}");
+            //Debug.Log($"Tried to Generate {generatedResource}");
             if (generatedResource == EconomyResource.Energy)
             {
                 EconomyTracker.TryIncrementEnergy(1);
@@ -55,6 +54,11 @@ namespace Structure
             {
                 TryGenerateResource();
             }
+        }
+
+        private void Update()
+        {
+            UpdateStructure();
         }
     }
 }

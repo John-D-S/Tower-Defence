@@ -30,7 +30,8 @@ namespace Economy
                 int returnValue = baseMaxMetal;
                 foreach (Storage storageStructure in activeMetalStorageStructures)
                 {
-                    returnValue += storageStructure.StorageCapacity;
+                    if (storageStructure.isConnectedToCore)
+                        returnValue += storageStructure.StorageCapacity;
                 }
                 return returnValue;
             }
@@ -42,7 +43,8 @@ namespace Economy
                 int returnValue = baseMaxEnergy;
                 foreach (Storage storageStructure in activeEnergyStorageStructures)
                 {
-                    returnValue += storageStructure.StorageCapacity;
+                    if (storageStructure.isConnectedToCore)
+                        returnValue += storageStructure.StorageCapacity;
                 }
                 return returnValue;
             }

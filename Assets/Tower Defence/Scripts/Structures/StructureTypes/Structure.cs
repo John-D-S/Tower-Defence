@@ -24,7 +24,13 @@ namespace Structure
         public bool isIntersecting;
 
         [SerializeField]
+        private float coreConnectionRadius = 20;
+
+        [SerializeField]
         protected Collider thisCollider;
+
+        [System.NonSerialized, HideInInspector]
+        public MeshRenderer connectionIndicator;
 
         private bool preview = true;
         public bool Preview
@@ -52,13 +58,11 @@ namespace Structure
                     currentStructures[gameObject] = this;
                     theCore.UpdateConnectedStructures();
                 }
-                foreach (MeshRenderer meshRenderer in meshRenderers)
-                {
-                    if (preview)
-                        SetMaterial(allowedPreviewMaterial);
-                    else
-                        SetMaterial(realMaterial);
-                }
+
+                if (preview)
+                    SetMaterial(allowedPreviewMaterial);
+                else
+                    SetMaterial(realMaterial);
             }
             get
             {
@@ -73,7 +77,6 @@ namespace Structure
         protected int energyToRun;
         
         #region Core Connection
-        private float checkConnectionRadius = 20;
 
         protected static Dictionary<GameObject, Structure> currentStructures = new Dictionary<GameObject, Structure>();
         
@@ -102,7 +105,7 @@ namespace Structure
         public void FindNearbyStructures()
         {
             //a list of all structure Colliders within checkConnectionRadius
-            List<Collider> nearbyStructureColliders = new List<Collider>(Physics.OverlapSphere(transform.position, checkConnectionRadius, LayerMask.GetMask(new string[] { "Structure", "EnemyTarget" })));
+            List<Collider> nearbyStructureColliders = new List<Collider>(Physics.OverlapSphere(transform.position, coreConnectionRadius, LayerMask.GetMask(new string[] { "Structure", "EnemyTarget" })));
             List<GameObject> nearbyStructureGameObjects = new List<GameObject>();
             foreach (Collider collider in nearbyStructureColliders)
             {
@@ -126,6 +129,7 @@ namespace Structure
 
         protected void BecomeConnected()
         {
+            currentStructures[gameObject] = this;
             isConnectedToCore = true;
             Invoke("ConnectNearbyStructures", Time.fixedDeltaTime);
         }
@@ -135,7 +139,6 @@ namespace Structure
             FindNearbyStructures();
             foreach (Structure structure in nearbyStructures)
             {
-                Debug.Log("nearby structure");
                 if (!structure.isConnectedToCore)
                 {
                     structure.BecomeConnected();
@@ -143,9 +146,9 @@ namespace Structure
             }
         }
 
+        [HideInInspector]
         public bool isConnectedToCore;
         #endregion
-
 
         [SerializeField]
         HealthBar healthBar;
@@ -190,7 +193,10 @@ namespace Structure
         private void SetMaterial(Material _material)
         {
             foreach (MeshRenderer meshRenderer in meshRenderers)
-                meshRenderer.material = _material;
+            {
+                if (meshRenderer != connectionIndicator)
+                    meshRenderer.material = _material;
+            }
         }
 
         public void TryPlaceStructure(Vector3 _position)
@@ -255,7 +261,10 @@ namespace Structure
         
         protected void UpdateStructure()
         {
-            SetAllowedDisallowedMaterial();
+            if (Preview)
+            {
+                SetAllowedDisallowedMaterial();
+            }
         }
 
         private void OnDrawGizmos()

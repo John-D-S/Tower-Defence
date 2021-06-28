@@ -37,5 +37,10 @@ namespace Structure
             else
                 EconomyTracker.activeMetalStorageStructures.Remove(this);
         }
+
+        private void Update()
+        {
+            UpdateStructure();
+        }
     }
 }

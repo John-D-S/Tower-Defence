@@ -7,6 +7,8 @@ MonoImporter:
   - realMaterial: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   - allowedPreviewMaterial: {fileID: 2100000, guid: 68bc473b1b6f9f34fb1a988f60a54ce8, type: 2}
   - disallowedPreviewMaterial: {fileID: 2100000, guid: 4b99f62fdd5a6f14eadded4ae9c4e256, type: 2}
+  - connectedLineRendererMaterial: {fileID: 2100000, guid: ce3a409abec64074fa769df2eb9c6f9f, type: 2}
+  - disconnectedLineRendererMaterial: {fileID: 2100000, guid: 9ddd7a7eaa46d7b4384f5c1288563a5c, type: 2}
   - thisCollider: {instanceID: 0}
   - healthBar: {instanceID: 0}
   executionOrder: 0

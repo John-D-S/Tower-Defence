@@ -69,8 +69,10 @@ public class Enemy : MonoBehaviour, IKillable
 
     private Vector2 direction2D;
     private Vector3 direction3D;
-    
+
     [Header("Health Settings")]
+    [SerializeField, Tooltip("how many minutes until the enemy self destructs")]
+    private float lifeTime = 5;
     [SerializeField]
     HealthBar healthBar;
 
@@ -253,25 +255,6 @@ public class Enemy : MonoBehaviour, IKillable
         }
     }
     
-    private void Start()
-    {
-        if (!thisCollider)
-        {
-            thisCollider = gameObject.GetComponent<Collider>();
-            Debug.Log("collider is now set");
-        }
-        health = maxHealth;
-        foreach (GameObject obj in gameObject.scene.GetRootGameObjects())
-        {
-            if (obj.tag == aiTargetTag)
-            {
-                aiTarget = obj.transform;
-                aiTargetCollider = obj.GetComponent<Collider>();
-                break;
-            }
-        }
-    }
-
     void FindNearbyObjects()
     {
         nearbyEnemies.Clear();
@@ -290,9 +273,31 @@ public class Enemy : MonoBehaviour, IKillable
         }
     }
 
+    private void Start()
+    {
+        if (!thisCollider)
+        {
+            thisCollider = gameObject.GetComponent<Collider>();
+            Debug.Log("collider is now set");
+        }
+        health = maxHealth;
+        foreach (GameObject obj in gameObject.scene.GetRootGameObjects())
+        {
+            if (obj.tag == aiTargetTag)
+            {
+                aiTarget = obj.transform;
+                aiTargetCollider = obj.GetComponent<Collider>();
+                break;
+            }
+        }
+
+        //memento mori
+        Destroy(this, lifeTime * 60f);
+    }
+
+
     private void FixedUpdate()
     {
-
         //AI and movement
         FindNearbyObjects();
         CalculateDirection(aiVisionPointNumber, aiFieldOfView);

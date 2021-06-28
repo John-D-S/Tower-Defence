@@ -112,11 +112,15 @@ MonoBehaviour:
   realMaterial: {fileID: 0}
   allowedPreviewMaterial: {fileID: 0}
   disallowedPreviewMaterial: {fileID: 0}
+  connectedLineRendererMaterial: {fileID: 2100000, guid: ce3a409abec64074fa769df2eb9c6f9f, type: 2}
+  disconnectedLineRendererMaterial: {fileID: 2100000, guid: 9ddd7a7eaa46d7b4384f5c1288563a5c, type: 2}
   radius: 5
   height: 5
+  coreConnectionRadius: 20
   thisCollider: {fileID: 2215249746921111230}
   metalCostToBuild: 0
   energyToRun: 0
+  isConnectedToCore: 0
   healthBar: {fileID: 5724735370813651713}
   maxHealth: 500
 --- !u!1001 &8069883004768253327

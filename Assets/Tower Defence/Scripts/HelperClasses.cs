@@ -232,14 +232,14 @@ public class HelperClasses : MonoBehaviour
             }
         }
 
-        public static void SetTagOfAllChildren(GameObject objectToSetLayerOn, string layer)
+        public static void SetTagOfAllChildren(GameObject objectToSetTagOn, string tag)
         {
-            objectToSetLayerOn.tag = layer;
-            if (objectToSetLayerOn.transform.childCount > 0)
+            objectToSetTagOn.tag = tag;
+            if (objectToSetTagOn.transform.childCount > 0)
             {
-                foreach (Transform child in objectToSetLayerOn.transform)
+                foreach (Transform child in objectToSetTagOn.transform)
                 {
-                    SetTagOfAllChildren(child.gameObject, layer);
+                    SetTagOfAllChildren(child.gameObject, tag);
                 }
             }
         }
