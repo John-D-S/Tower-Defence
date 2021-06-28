@@ -127,7 +127,7 @@ namespace Economy
             }
             if (metalHudText && energyHudText)
             {
-                metalHudText.text = $"Metal: {EconomyTracker.metal} / {EconomyTracker.MaxEnergy}";
+                metalHudText.text = $"Metal: {EconomyTracker.metal} / {EconomyTracker.MaxMetal}";
                 energyHudText.text = $"Energy: {EconomyTracker.energy} / {EconomyTracker.MaxEnergy}";
             }
         }

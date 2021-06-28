@@ -77,6 +77,27 @@ namespace Structure
 
         protected static Dictionary<GameObject, Structure> currentStructures = new Dictionary<GameObject, Structure>();
         
+        public static void RemoveStructureFromRecords(GameObject structureGameObject)
+        {
+            Structure structureToRemove = currentStructures[structureGameObject];
+            foreach (KeyValuePair<GameObject, Structure> gOStructurePair in currentStructures)
+            {
+                if (gOStructurePair.Value != structureToRemove)
+                {
+                    gOStructurePair.Value.RemoveFromNearbyStructures(structureToRemove);
+                }
+            }
+            currentStructures.Remove(structureGameObject);
+        }
+
+        public void RemoveFromNearbyStructures(Structure structureToRemove)
+        {
+            if (nearbyStructures.Contains(structureToRemove))
+            {
+                nearbyStructures.Remove(structureToRemove);
+            }
+        }
+
         private List<Structure> nearbyStructures = new List<Structure>();
         public void FindNearbyStructures()
         {
@@ -87,22 +108,6 @@ namespace Structure
             {
                 nearbyStructureGameObjects.Add(collider.gameObject);
             }
-
-            //removing old structures that no longer exist within checkConnectionRadius
-            if (nearbyStructures.Count > 1)
-            {
-                //the .ToArray() is here so that the list that is being iterated over is not modified within the loop because that causes an error.
-                //.ToArray creates an entirely new iterable variable.
-                foreach (Structure structure in nearbyStructures.ToArray())
-                {
-                    //if a structure that used to be nearby is no longer there, remove it from the list of nearby structures
-                    if (!nearbyStructureGameObjects.Contains(structure.gameObject))
-                    {
-                        nearbyStructures.Remove(structure);
-                    }
-                }
-            }
-            Debug.Log(nearbyStructureGameObjects.Count);
 
             //adding new structures that have appeared within checkConnection Radius
             foreach (GameObject structureGameObject in nearbyStructureGameObjects)
@@ -116,13 +121,17 @@ namespace Structure
                     currentStructures[structureGameObject] = structureComponent;
                     nearbyStructures.Add(structureComponent);
                 }
-                
             }
         }
 
-        protected virtual void BecomeConnected()
+        protected void BecomeConnected()
         {
             isConnectedToCore = true;
+            Invoke("ConnectNearbyStructures", Time.fixedDeltaTime);
+        }
+
+        private void ConnectNearbyStructures()
+        {
             FindNearbyStructures();
             foreach (Structure structure in nearbyStructures)
             {
@@ -264,10 +273,13 @@ namespace Structure
 
         private void OnDestroy()
         {
-            currentStructures.Remove(gameObject);
-            if (theCore)
+            if (!Preview)
             {
-                theCore.UpdateConnectedStructures();
+                RemoveStructureFromRecords(gameObject);
+                if (theCore)
+                {
+                    theCore.UpdateConnectedStructures();
+                }
             }
         }
     }
