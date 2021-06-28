@@ -89,12 +89,17 @@ namespace Structure
             }
 
             //removing old structures that no longer exist within checkConnectionRadius
-            foreach (Structure structure in nearbyStructures)
+            if (nearbyStructures.Count > 1)
             {
-                //if a structure that used to be nearby is no longer there, remove it from the list of nearby structures
-                if (!nearbyStructureGameObjects.Contains(structure.gameObject))
+                //the .ToArray() is here so that the list that is being iterated over is not modified within the loop because that causes an error.
+                //.ToArray creates an entirely new iterable variable.
+                foreach (Structure structure in nearbyStructures.ToArray())
                 {
-                    nearbyStructures.Remove(structure);
+                    //if a structure that used to be nearby is no longer there, remove it from the list of nearby structures
+                    if (!nearbyStructureGameObjects.Contains(structure.gameObject))
+                    {
+                        nearbyStructures.Remove(structure);
+                    }
                 }
             }
             Debug.Log(nearbyStructureGameObjects.Count);
@@ -103,16 +108,15 @@ namespace Structure
             foreach (GameObject structureGameObject in nearbyStructureGameObjects)
             {
                 //The structure component attatched to structureGameObject
-                Structure structureColliderStructure;
-                //if this nearby structure is not yet recorded in current structures, add it.
-                if (!currentStructures.ContainsKey(structureGameObject))
+                Structure structureComponent;
+                //if this nearby structure is not yet recorded in nearbyStructures, add it.
+                if (!nearbyStructures.Contains(currentStructures[structureGameObject]))
                 {
-                    structureColliderStructure = structureGameObject.GetComponent<Structure>();
-                    currentStructures[structureGameObject] = structureColliderStructure;
-                    Debug.Log("structure should have been added");//THE STRUCTURE IS NOT GETTING ADDED FIX ASAP
+                    structureComponent = structureGameObject.GetComponent<Structure>();
+                    currentStructures[structureGameObject] = structureComponent;
+                    nearbyStructures.Add(structureComponent);
                 }
-                else
-                    structureColliderStructure = currentStructures[structureGameObject];
+                
             }
         }
 
@@ -261,7 +265,10 @@ namespace Structure
         private void OnDestroy()
         {
             currentStructures.Remove(gameObject);
-            theCore.UpdateConnectedStructures();
+            if (theCore)
+            {
+                theCore.UpdateConnectedStructures();
+            }
         }
     }
 }
