@@ -114,6 +114,9 @@ public class Enemy : MonoBehaviour, IKillable
     public void Heal(float amount) => Health += amount;
     public void Die() => Destroy(gameObject);
 
+    [SerializeField]
+    private int rewardMetal = 10;
+
     private Collider thisCollider;
 
     private void setRotationOnGround()
@@ -151,6 +154,7 @@ public class Enemy : MonoBehaviour, IKillable
                 }
             }
         }
+        Debug.Log($"nearbyStructures.count : {nearbyStructures.Count}");
         if (nearbyStructures.Count > 0f)
         {
             foreach (Collider structureCollider in nearbyStructures)
@@ -158,7 +162,7 @@ public class Enemy : MonoBehaviour, IKillable
                 if (structureCollider)
                 {
                     float distanceToStructureCollider = Vector3.Distance(structureCollider.transform.position, transform.position);
-                    weight *= Mathf.Lerp((-Vector2.Dot(ConvertToVector2(structureCollider.transform.position) - ConvertToVector2(transform.position), _direction) + 1), 1, distanceToStructureCollider / aiVisionRadius);
+                    weight *= Mathf.Lerp((Vector2.Dot(ConvertToVector2(transform.position) - ConvertToVector2(structureCollider.transform.position), _direction) + 1), 1, Mathf.Pow(distanceToStructureCollider / aiVisionRadius, 2f));
                 }
             }
         }
@@ -265,7 +269,7 @@ public class Enemy : MonoBehaviour, IKillable
             if (enemyCollider != thisCollider)
                 nearbyEnemies.Add(enemyCollider);
         }
-        Collider[] nearbyStructuresArray = Physics.OverlapSphere(transform.position, aiVisionRadius, LayerMask.GetMask("EnemyTarget"));
+        Collider[] nearbyStructuresArray = Physics.OverlapSphere(transform.position, aiVisionRadius, LayerMask.GetMask("Structure", "EnemyTarget"));
         bool addCoreCollider = Physics.CheckSphere(transform.position, aiVisionRadius, LayerMask.GetMask(aiTargetTag));
         foreach (Collider structureCollider in nearbyStructuresArray)
         {
@@ -307,5 +311,10 @@ public class Enemy : MonoBehaviour, IKillable
 
         //shooting
         AimAndShoot();
+    }
+
+    private void OnDestroy()
+    {
+        Economy.EconomyTracker.TryIncrementMetal(rewardMetal);
     }
 }

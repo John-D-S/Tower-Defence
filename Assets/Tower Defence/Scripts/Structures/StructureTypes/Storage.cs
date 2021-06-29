@@ -19,6 +19,7 @@ namespace Structure
 
         private void Start()
         {
+            StartStructure();
             switch (resourceToStore)
             {
                 case EconomyResource.Metal:

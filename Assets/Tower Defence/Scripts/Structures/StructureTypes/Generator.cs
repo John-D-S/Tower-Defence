@@ -48,6 +48,11 @@ namespace Structure
             canGenerateResource = true;
         }
 
+        private void Start()
+        {
+            StartStructure();
+        }
+
         void FixedUpdate()
         {
             if (!Preview)
