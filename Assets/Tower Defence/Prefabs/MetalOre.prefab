@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2722692147830332489}
   - component: {fileID: 156505982602373251}
   - component: {fileID: 1580078462601688069}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MetalOre
   m_TagString: Untagged
   m_Icon: {fileID: 0}

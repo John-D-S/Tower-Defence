@@ -15,12 +15,9 @@ public class HelperClasses : MonoBehaviour
 
         public static IEnumerator ShootBullet(Collider spawningCollider, Vector3 _startPosition, Quaternion _direction, float _bulletSpeed, GameObject _bullet, float _bulletRadius, float _bulletDamage, float _spread, float _range, string _targetTag)
         {
-            //Debug.Log($"attemted Firing at {_targetTag}");
             GameObject bulletInstance = Instantiate(_bullet, _startPosition, _direction * RandomSpread(_spread));
             bulletInstance.transform.localScale = Vector3.one * _bulletRadius * 2;
             float distance = 0;
-            if (bulletInstance)
-                Debug.Log($"attemted Firing at {_targetTag}");
             while (distance < _range)
             {
                 yield return new WaitForFixedUpdate();
@@ -48,19 +45,8 @@ public class HelperClasses : MonoBehaviour
 
         public static float RotationTowardsTargetOnAxis(Transform objectToRotate, Vector3 target, Vector3 constraintAxis)
         {
-
             float angleToRotate = Vector3.SignedAngle(objectToRotate.forward, objectToRotate.position - target, constraintAxis);
             return angleToRotate;
-
-            /*
-            Vector3 pos = objectToRotate.position;
-            //this is the angle between the line from target to target + constraintAxis and the line from target to pos.
-            float axisPosAngle = Vector3.Angle(constraintAxis, target - pos);
-            float targetPosDistance = Vector3.Distance(target, pos);
-            float targetRotPosDistance = targetPosDistance * Mathf.Cos(axisPosAngle);
-            Vector3 targetRotPos = target + constraintAxis.normalized * targetRotPosDistance;
-            float angleToRotPos = Vector3.SignedAngle(objectToRotate.forward, objectToRotate.position - targetRotPos, constraintAxis);
-            */
         }
 
         public static void AimAtTarget(Transform _target, GameObject _attatchedStructure, ref GameObject _turretBase, ref GameObject _turretBarrel)

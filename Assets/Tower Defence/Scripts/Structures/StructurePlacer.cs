@@ -123,10 +123,8 @@ namespace Structure
 
         private void Update()
         {
-            //if the pointer is not over any gui
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                //Debug.Log(true);
                 if (selectedStructure && ! previewStructureInstance)
                 {
                     previewStructureInstance = Instantiate(selectedStructure, MouseRayHitPoint(LayerMask.GetMask("Terrain", "Ore")), Quaternion.identity);

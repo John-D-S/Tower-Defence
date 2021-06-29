@@ -269,8 +269,6 @@ namespace Structure
         {
             InitializeHealth();
             InitializeMeshRendering();
-            //currentStructures[gameObject] = this;
-            //theCore.UpdateConnectedStructures();
         }
         
         protected void UpdateStructure()

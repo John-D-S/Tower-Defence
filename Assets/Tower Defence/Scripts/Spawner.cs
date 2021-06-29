@@ -2,17 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static HelperClasses.HelperFunctions;
+using static StaticObjects;
 
 public class Spawner : MonoBehaviour
 {
+    [Header("-- Core Spawning --")]
     [SerializeField]
-    private float enemySpawnRadius = 950f;
+    private GameObject Core;
+    [SerializeField]
+    private float coreSpawnRadius = 650f;
+
+    [Header("-- Ore Spawning --")]
+    [SerializeField]
+    private GameObject ore;
+    [SerializeField]
+    private float oreDepthBelowSurface = 9f;
+    [SerializeField]
+    private float oreSpawnGridSpacing = 75f;
+    [SerializeField]
+    private float oreSpawnRadius = 700f;
+
+    [Header("-- Enemy Spawning --")]
     [SerializeField]
     private GameObject Enemy;
     [SerializeField]
-    private float coreSpawnRadius = 700f;
-    [SerializeField]
-    private GameObject Core;
+    private float enemySpawnRadius = 950f;
     [SerializeField, Tooltip("The time between waves")]
     private float enemySpawnPeriod;
     [SerializeField]
@@ -43,6 +57,7 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         SpawnCore();
+        SpawnOre();
         StartCoroutine(WaveSpawner());
     }
 
@@ -73,6 +88,34 @@ public class Spawner : MonoBehaviour
         Vector2 spawnPos = Random.insideUnitCircle * coreSpawnRadius;
         float spawnHeight = TargetHeight(spawnPos);
         Vector3 coreSpawnPosition = ConvertToVector3(spawnPos) + Vector3.up * spawnHeight;
-        Instantiate(Core, coreSpawnPosition, Quaternion.identity);
+        theCore = Instantiate(Core, coreSpawnPosition, Quaternion.identity).GetComponent<Structure.Core>();
+    }
+
+    private void SpawnOre()
+    {
+        int oreSpawnGridSideCount = Mathf.FloorToInt(oreSpawnRadius * 2 / oreSpawnGridSpacing);
+        float maxRandomOffset = oreSpawnGridSpacing * 0.5f;
+        for (int x = 0; x < oreSpawnGridSideCount; x++)
+        {
+            for (int z = 0; z < oreSpawnGridSideCount; z++)
+            {
+                float xPos = (x * oreSpawnGridSpacing) - (0.5f * oreSpawnGridSideCount * oreSpawnGridSpacing);
+                float zPos = (z * oreSpawnGridSpacing) - (0.5f * oreSpawnGridSideCount * oreSpawnGridSpacing);
+                if (Vector2.Distance(new Vector2(xPos, zPos), Vector2.zero) <= oreSpawnRadius)
+                {
+                    float xPosRandomVariation = Random.Range(-maxRandomOffset, maxRandomOffset);
+                    float zPosRandomVariation = Random.Range(-maxRandomOffset, maxRandomOffset);
+                    xPos += xPosRandomVariation;
+                    zPos += zPosRandomVariation;
+                    if (Vector2.Distance(new Vector2(xPos, zPos), ConvertToVector2(theCore.transform.position)) > 25)
+                    {
+                        float yPos = TargetHeight(new Vector2(xPos, zPos)) - oreDepthBelowSurface;
+                        Vector3 orePosition = new Vector3(xPos, yPos, zPos);
+                        Quaternion oreRotation = Random.rotation;
+                        Instantiate(ore, orePosition, oreRotation);
+                    }
+                }
+            }
+        }
     }
 }

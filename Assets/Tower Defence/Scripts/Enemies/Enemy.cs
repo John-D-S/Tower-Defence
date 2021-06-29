@@ -154,7 +154,7 @@ public class Enemy : MonoBehaviour, IKillable
                 }
             }
         }
-        Debug.Log($"nearbyStructures.count : {nearbyStructures.Count}");
+
         if (nearbyStructures.Count > 0f)
         {
             foreach (Collider structureCollider in nearbyStructures)
@@ -191,7 +191,6 @@ public class Enemy : MonoBehaviour, IKillable
 
         for (int i = 0; i < _pointNumber; i++)
         {
-            //Debug.Log(Angle2Direction(i * angleIncrement));
             possibleDirections.Add(Angle2Direction(startingAngle + i * angleIncrement));
         }
         float currentHighestWeight = 0;
@@ -282,7 +281,6 @@ public class Enemy : MonoBehaviour, IKillable
         if (!thisCollider)
         {
             thisCollider = gameObject.GetComponent<Collider>();
-            Debug.Log("collider is now set");
         }
         health = maxHealth;
         foreach (GameObject obj in gameObject.scene.GetRootGameObjects())
