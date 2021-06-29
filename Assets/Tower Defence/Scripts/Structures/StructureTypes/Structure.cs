@@ -292,7 +292,7 @@ namespace Structure
             }
         }
 
-        private void OnDestroy()
+        protected void StructureOnDestroy()
         {
             if (!Preview)
             {

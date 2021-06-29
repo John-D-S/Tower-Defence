@@ -62,5 +62,10 @@ namespace Structure
         {
             enemyLayer = LayerMask.GetMask("Enemy");
         }
+
+        private void OnDestroy()
+        {
+            StructureOnDestroy();
+        }
     }
 }

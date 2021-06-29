@@ -37,6 +37,7 @@ namespace Structure
                 EconomyTracker.activeEnergyStorageStructures.Remove(this);
             else
                 EconomyTracker.activeMetalStorageStructures.Remove(this);
+            StructureOnDestroy();
         }
 
         private void Update()

@@ -294,7 +294,7 @@ public class Enemy : MonoBehaviour, IKillable
         }
 
         //memento mori
-        Destroy(this, lifeTime * 60f);
+        Destroy(this.gameObject, lifeTime * 60f);
     }
 
 

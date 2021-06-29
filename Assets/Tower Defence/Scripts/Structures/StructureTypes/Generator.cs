@@ -65,6 +65,11 @@ namespace Structure
         {
             UpdateStructure();
         }
+
+        private void OnDestroy()
+        {
+            StructureOnDestroy();
+        }
     }
 }
 

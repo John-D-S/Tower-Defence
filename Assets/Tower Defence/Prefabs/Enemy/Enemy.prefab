@@ -423,8 +423,10 @@ MonoBehaviour:
   turretBase: {fileID: 2376137425391797236}
   turretBarrel: {fileID: 593363818516173739}
   coreDamage: 10
+  lifeTime: 10
   healthBar: {fileID: 1977272222454864003}
   maxHealth: 100
+  rewardMetal: 10
 --- !u!65 &5402025786851041895
 BoxCollider:
   m_ObjectHideFlags: 0
