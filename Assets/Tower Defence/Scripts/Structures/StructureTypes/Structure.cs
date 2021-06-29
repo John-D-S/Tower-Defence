@@ -26,7 +26,7 @@ namespace Structure
         public bool isIntersecting;
 
         [SerializeField]
-        private float coreConnectionRadius = 20;
+        private float coreConnectionRadius = 10f;
 
         [SerializeField]
         protected Collider thisCollider;

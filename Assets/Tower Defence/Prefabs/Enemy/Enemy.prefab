@@ -413,7 +413,7 @@ MonoBehaviour:
   aiTargetWeight: 3
   aiTargetTag: EnemyTarget
   range: 50
-  fireRate: 5
+  fireRate: 10
   bullet: {fileID: 7423836921931420716, guid: 4eeb98c10d313014a9c3d39ba9df9b28, type: 3}
   bulletSpeed: 50
   spread: 5
@@ -425,7 +425,7 @@ MonoBehaviour:
   coreDamage: 10
   lifeTime: 10
   healthBar: {fileID: 1977272222454864003}
-  maxHealth: 100
+  maxHealth: 150
   rewardMetal: 10
 --- !u!65 &5402025786851041895
 BoxCollider:

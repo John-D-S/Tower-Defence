@@ -280,13 +280,13 @@ MonoBehaviour:
   allowedGroundLayer: Terrain
   radius: 0.5
   height: 3
-  coreConnectionRadius: 20
+  coreConnectionRadius: 10
   thisCollider: {fileID: 3833119609746957531}
   metalCostToBuild: 15
   energyToRun: 1
   isConnectedToCore: 0
   healthBar: {fileID: 5632168957651797055}
-  maxHealth: 1000
+  maxHealth: 100
   range: 50
   fireRate: 5
   MetalConsumption: 0

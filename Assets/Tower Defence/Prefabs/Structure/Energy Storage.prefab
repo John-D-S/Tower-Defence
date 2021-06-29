@@ -116,13 +116,13 @@ MonoBehaviour:
   allowedGroundLayer: Terrain
   radius: 0.5
   height: 3
-  coreConnectionRadius: 20
+  coreConnectionRadius: 10
   thisCollider: {fileID: 3833119609746957531}
   metalCostToBuild: 10
   energyToRun: 0
   isConnectedToCore: 0
   healthBar: {fileID: 5632168957651797055}
-  maxHealth: 100
+  maxHealth: 50
   resourceToStore: 1
   storageCapacity: 50
 --- !u!1001 &7831830023863541004
