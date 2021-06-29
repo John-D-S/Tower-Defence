@@ -166,6 +166,28 @@ public class HelperClasses : MonoBehaviour
         }
         #endregion
 
+        public static LayerMask MouseRayHitMask()
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                return hit.collider.gameObject.layer;
+            }
+            return 0;
+        }
+
+        public static LayerMask MouseRayHitMask(LayerMask _layerMask)
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layerMask))
+            {
+                return hit.collider.gameObject.layer;
+            }
+            return 0;
+        }
+
         /// <summary>
         /// Converts a vector 2 into a point in space on the horizontal plane at y = 0.
         /// </summary>

@@ -16,6 +16,8 @@ namespace Structure
         private List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
 
         [Header("-- Area Settings --")]
+        [SerializeField, Tooltip("What tag is this structure is allowed to be placed on")]
+        public string allowedGroundLayer = "Terrain";
         [SerializeField]
         private float radius = 0.5f;
         [SerializeField]
@@ -31,6 +33,16 @@ namespace Structure
 
         [System.NonSerialized, HideInInspector]
         public MeshRenderer connectionIndicator;
+
+        public bool CanBePlaced
+        {
+            get
+            {
+                Ray ray = new Ray(transform.position + Vector3.up, Vector3.down);
+                bool isOnTopOfAllowedLayer = Physics.Raycast(ray, 1.1f, ~LayerMask.NameToLayer(allowedGroundLayer));
+                return (!IntersectingOtherStructure() && metalCostToBuild < EconomyTracker.metal && isOnTopOfAllowedLayer);
+            }
+        }
 
         private bool preview = true;
         public bool Preview
@@ -213,10 +225,10 @@ namespace Structure
         {
             if (Preview)
             {
-                if (IntersectingOtherStructure() && metalCostToBuild < EconomyTracker.metal)
-                    SetMaterial(disallowedPreviewMaterial);
-                else
+                if (CanBePlaced)
                     SetMaterial(allowedPreviewMaterial);
+                else
+                    SetMaterial(disallowedPreviewMaterial);
             }
         }
 
@@ -227,7 +239,9 @@ namespace Structure
                 Vector3 point0 = transform.position + Vector3.up * (height * 0.5f - radius);
                 Vector3 point1 = transform.position - Vector3.up * (height * 0.5f - radius);
                 if (Physics.OverlapCapsule(point0, point1, radius, LayerMask.GetMask("Structure")).Length > 0)
+                {
                     return true;
+                }
                 else
                     return false;
             }

@@ -129,23 +129,23 @@ namespace Structure
                 //Debug.Log(true);
                 if (selectedStructure && ! previewStructureInstance)
                 {
-                    previewStructureInstance = Instantiate(selectedStructure, MouseRayHitPoint(LayerMask.GetMask("Terrain")), Quaternion.identity);
+                    previewStructureInstance = Instantiate(selectedStructure, MouseRayHitPoint(LayerMask.GetMask("Terrain", "Ore")), Quaternion.identity);
                     previewStructureInstanceScript = previewStructureInstance.GetComponent<Structure>();
                     previewStructureInstanceScript.Preview = true;
                 }
                 else if (selectedStructure && previewStructureInstance)
                 {
-                    previewStructureInstance.transform.position = MouseRayHitPoint(LayerMask.GetMask("Terrain"));
+                    previewStructureInstance.transform.position = MouseRayHitPoint(LayerMask.GetMask("Terrain", "Ore"));
                 }
 
 
                 if (previewStructureInstance)
                 {
-                    if (!previewStructureInstanceScript.IntersectingOtherStructure())
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        if (Input.GetMouseButtonDown(0))
+                        if (previewStructureInstanceScript.CanBePlaced)
                         {
-                            selectedStructure.GetComponent<Structure>().TryPlaceStructure(MouseRayHitPoint(LayerMask.GetMask("Terrain")));
+                            selectedStructure.GetComponent<Structure>().TryPlaceStructure(MouseRayHitPoint(LayerMask.GetMask("Terrain", "Ore")));
                         }
                     }
                 }
