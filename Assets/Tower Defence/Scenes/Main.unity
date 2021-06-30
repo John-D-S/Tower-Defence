@@ -554,7 +554,7 @@ MonoBehaviour:
   oreDepthBelowSurface: 4.5
   oreSpawnGridSpacing: 75
   oreSpawnRadius: 700
-  Enemy: {fileID: 4019116356801477812, guid: 15cdf6f6c5e66b94087007a5e9f73f49, type: 3}
+  Enemy: {fileID: 5857914175970875783, guid: 6f0f791572ed2604eb3943998524e4c3, type: 3}
   enemySpawnRadius: 950
   enemySpawnPeriod: 60
   baseSpawnRate: 3
