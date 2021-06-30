@@ -8,6 +8,9 @@ using UnityEngine.Audio;
 
 namespace Menu
 {
+    /// <summary>
+    /// holds the Static menuHandler
+    /// </summary>
     public static class TheMenuHandler
     {
         public static MenuHandler theMenuHandler;
@@ -16,30 +19,32 @@ namespace Menu
     public class MenuHandler : MonoBehaviour
     {
         [Header("-- Scene Name Variables --")]
-        [SerializeField]
+        [SerializeField, Tooltip("The name of the Menu Scene")]
         private string menuSceneName = "Menu";
-        [SerializeField]
+        [SerializeField, Tooltip("The name of the Game Scene")]
         private string gameSceneName = "Main";
 
         [Header("-- Resolution Settings --")]
+        [Tooltip("the resolution dropdown in the options menu")]
         public TMP_Dropdown resolutionDropdown;
         private Resolution[] resolutions;
 
-        [Header("-- Audio Objects --")]
-        [SerializeField]
-        private AudioMixer sFXAudio;
-        [SerializeField]
-        private AudioMixer musicAudio;
+        [Header("-- Audio --")]
+        [Tooltip("The master audio mixer")]
+        public AudioMixer masterMixer;
 
         [Header("-- Menu Objects --")]
-        [SerializeField]
+        [SerializeField, Tooltip("The options menu.")]
         private GameObject OptionsMenu;
-        [SerializeField]
+        [SerializeField, Tooltip("The pause/main menu that is not the options menu")]
         private GameObject HomeMenu;
 
-        private bool paused = false;
-
         #region Pausing
+        private bool paused = false;
+        
+        /// <summary>
+        /// pauses the game
+        /// </summary>
         public void Pause()
         {
             Time.timeScale = 0;
@@ -48,6 +53,9 @@ namespace Menu
             paused = true;
         }
 
+        /// <summary>
+        /// unpauses the gam
+        /// </summary>
         public void Unpause()
         {
             paused = false;
@@ -56,6 +64,9 @@ namespace Menu
             Time.timeScale = 1;
         }
 
+        /// <summary>
+        /// if the options menu is open, go back to the menu, if not exit that menu
+        /// </summary>
         public void MenuGoBack()
         {
             if (OptionsMenu.activeInHierarchy)
@@ -71,7 +82,9 @@ namespace Menu
         #endregion
 
         #region Options
-
+        /// <summary>
+        /// toggles the options menu being activeInHierarchy
+        /// </summary>
         public void ToggleOptionsMenu()
         {
             if (HomeMenu.activeInHierarchy && !OptionsMenu.activeInHierarchy)
@@ -84,6 +97,9 @@ namespace Menu
             }
         }
 
+        /// <summary>
+        /// sets the options menu as active and the home menu as inactive
+        /// </summary>
         public void OpenOptionsMenu()
         {
             if (OptionsMenu && HomeMenu)
@@ -93,6 +109,9 @@ namespace Menu
             }
         }
 
+        /// <summary>
+        /// sets the options menu to be inactive and the home menu to be active
+        /// </summary>
         public void CloseOptionsMenu()
         {
             if (OptionsMenu && HomeMenu)
@@ -105,9 +124,9 @@ namespace Menu
         #region Volume
         public void ChangeSFXVolume(float _volume)
         {
-            if (sFXAudio)
+            if (masterMixer)
             {
-                sFXAudio.SetFloat("volume", _volume);
+                masterMixer.SetFloat("SFXVolume", _volume);
                 PlayerPrefs.SetFloat("SFXVolume", _volume);
                 PlayerPrefs.Save();
             }
@@ -116,35 +135,27 @@ namespace Menu
 
         public void ChangeMusicVolume(float _volume)
         {
-            if (musicAudio)
+            if (masterMixer)
             {
-                musicAudio.SetFloat("volume", _volume);
+                masterMixer.SetFloat("MusicVolume", _volume);
                 PlayerPrefs.SetFloat("MusicVolume", _volume);
                 PlayerPrefs.Save();
             }
-            else Debug.Log(_volume);
+            else Debug.Log(masterMixer);
         }
 
         public void SetMute(bool isMuted)
         {
-            if (musicAudio && sFXAudio)
+            if (masterMixer)
             {
                 if (isMuted)
-                {
-                    musicAudio.SetFloat("isMutedVolume", -80);
-                    sFXAudio.SetFloat("isMutedVolume", -80);
-                    PlayerPrefs.SetInt("Muted", 1);
-                    PlayerPrefs.Save();
-                }
+                    masterMixer.SetFloat("MasterVolume", -80f);
                 else
-                {
-                    musicAudio.SetFloat("isMutedVolume", 0);
-                    sFXAudio.SetFloat("isMutedVolume", 0);
-                    PlayerPrefs.SetInt("Muted", 0);
-                    PlayerPrefs.Save();
-                }
+                    masterMixer.SetFloat("MasterVolume", 0f);
+                PlayerPrefs.SetInt("IsMuted", isMuted ? 1 : 0);
+                PlayerPrefs.Save();
+                Debug.Log("IsMuted: " + isMuted);
             }
-            else Debug.Log("IsMuted: " + isMuted);
         }
         #endregion
 
@@ -160,6 +171,8 @@ namespace Menu
             if (Application.isEditor)
             {
                 Screen.fullScreen = isFullscreen;
+                PlayerPrefs.SetInt("IsFullscreen", isFullscreen ? 1 : 0);
+                PlayerPrefs.Save();
             }
         }
 
@@ -168,15 +181,27 @@ namespace Menu
         #endregion
 
         #region SceneSwitching
+        /// <summary>
+        /// Loads the game scene
+        /// </summary>
         public void StartGame() => SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single);
+        /// <summary>
+        /// Loads the main menu scene
+        /// </summary>
         public void ReturnToMainMenu() => SceneManager.LoadScene(menuSceneName, LoadSceneMode.Single);
         #endregion
 
         #region Initialization
+        /// <summary>
+        /// Sets all the options in the resolutions Dropdown and sets te function.
+        /// </summary>
         private void InitializeResolutions()
         {
+            // set the list of resolutions to all the possible resolutions
             resolutions = Screen.resolutions;
+            // clear the options in the dropdown
             resolutionDropdown.ClearOptions();
+            // initialise the resolution options as a new list of strings
             List<string> resolutionOptions = new List<string>();
             int currentResolutionIndex = 0;
             for (int i = 0; i < resolutions.Length; i++)
@@ -185,39 +210,53 @@ namespace Menu
                 resolutionOptions.Add(option);
                 if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
                 {
-                    //this was previously currentResolutionIndex = 1;, which would set it to the lowest resolution every time you went to the main menu - John.
                     currentResolutionIndex = i;
                 }
             }
+            // add all the resolutions in the resolution Options list
             resolutionDropdown.AddOptions(resolutionOptions);
+            //set the currently sellected resolution to the current resolution of the screen
             resolutionDropdown.value = currentResolutionIndex;
+            //refresh the shown value so that it displays correctly
             resolutionDropdown.RefreshShownValue();
         }
 
+        /// <summary>
+        /// initializes all the volume variables from playerprefs
+        /// </summary>
         private void InitializeVolume()
         {
             if (PlayerPrefs.HasKey("MusicVolume"))
-                ChangeMusicVolume(PlayerPrefs.GetFloat("Volume"));
+                ChangeMusicVolume(PlayerPrefs.GetFloat("MusicVolume"));
             if (PlayerPrefs.HasKey("SFXVolume"))
-                ChangeSFXVolume(PlayerPrefs.GetFloat("Volume"));
+                ChangeSFXVolume(PlayerPrefs.GetFloat("SFXVolume"));
             if (PlayerPrefs.HasKey("IsMuted"))
-                SetMute(PlayerPrefs.GetInt("IsMuted") != 0);
+                SetMute(PlayerPrefs.GetInt("IsMuted") == 1);
         }
         #endregion
 
         #region Saving
+        /// <summary>
+        /// doesn't work
+        /// </summary>
         public void Save()
         {
             Debug.Log("Not Yet Implemented");
         }
 
+        /// <summary>
+        /// doesn't work
+        /// </summary>
         public void Load()
         {
             Debug.Log("Not Yet Implemented");
         }
-
         #endregion
 
+        /// <summary>
+        /// if in the game scene, set the timescale to 1 and go to the menu scene
+        /// if in the menu scene, quit the game
+        /// </summary>
         public void Quit()
         {
             Time.timeScale = 1;
@@ -226,7 +265,9 @@ namespace Menu
             else
             {
                 Application.Quit();
+#if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
+#endif
             }
         }
 
@@ -236,10 +277,14 @@ namespace Menu
                 MenuGoBack();
         }
 
+        private void Start()
+        {
+            InitializeVolume();
+        }
+
         private void Awake()
         {
             InitializeResolutions();
-            InitializeVolume();
             TheMenuHandler.theMenuHandler = this;
         }
     }

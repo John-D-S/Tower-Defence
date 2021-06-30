@@ -117,7 +117,7 @@ namespace Structure
         
         private void Awake()
         {
-            StaticObjects.theStructurePlacer = this;
+            StaticObjectHolder.theStructurePlacer = this;
             InitializeStructureButtons();
         }
 

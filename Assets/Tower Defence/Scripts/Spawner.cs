@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static HelperClasses.HelperFunctions;
-using static StaticObjects;
+using static StaticObjectHolder;
 
 public class Spawner : MonoBehaviour
 {

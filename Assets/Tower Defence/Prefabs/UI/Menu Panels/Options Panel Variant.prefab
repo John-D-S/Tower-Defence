@@ -9,8 +9,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7283071368584622137, guid: 53f562232846cd64da7bee01bae85020, type: 3}
       propertyPath: m_text
-      value: Mute
+      value: Fullscreen
       objectReference: {fileID: 0}
+    - target: {fileID: 7283071368584622137, guid: 53f562232846cd64da7bee01bae85020, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: ef91996fd7b065c47afdb4add08ab0d0, type: 2}
     - target: {fileID: 7283071368584622142, guid: 53f562232846cd64da7bee01bae85020, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -294,9 +298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9176455934487571966, guid: 774c64792f51fba4c99ac375f164babb, type: 3}
       propertyPath: m_text
-      value: 'Music
-
-'
+      value: Music
       objectReference: {fileID: 0}
     - target: {fileID: 9176455935245404630, guid: 774c64792f51fba4c99ac375f164babb, type: 3}
       propertyPath: m_Name
@@ -533,7 +535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6694201485078194797, guid: 8a9b6146be875cf49b9bf1cf7703e3d4, type: 3}
       propertyPath: m_Name
-      value: Options Panel
+      value: Options Panel Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6694201485078194797, guid: 8a9b6146be875cf49b9bf1cf7703e3d4, type: 3}
       propertyPath: m_IsActive
@@ -1082,7 +1084,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7283071368584622137, guid: 53f562232846cd64da7bee01bae85020, type: 3}
       propertyPath: m_text
-      value: Full Screen
+      value: Fullscreen
       objectReference: {fileID: 0}
     - target: {fileID: 7283071368584622142, guid: 53f562232846cd64da7bee01bae85020, type: 3}
       propertyPath: m_AnchorMax.y

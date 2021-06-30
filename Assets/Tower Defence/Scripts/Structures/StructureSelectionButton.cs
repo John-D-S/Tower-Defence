@@ -51,7 +51,7 @@ namespace Structure
 
         private void Awake()
         {
-            structurePlacer = StaticObjects.theStructurePlacer;
+            structurePlacer = StaticObjectHolder.theStructurePlacer;
             structureButton.onClick.AddListener(SelectStructure);
         }
 

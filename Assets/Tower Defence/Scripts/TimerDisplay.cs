@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using static StaticObjectHolder;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TimerDisplay : MonoBehaviour
@@ -15,6 +16,8 @@ public class TimerDisplay : MonoBehaviour
 
     void Update()
     {
-        timerText.text = Mathf.RoundToInt(Time.time).ToString();
+        int time = Mathf.RoundToInt(Time.time);
+        timerText.text = time.ToString();
+        theScoreSystem.Score = time;
     }
 }

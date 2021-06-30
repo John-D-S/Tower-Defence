@@ -10,7 +10,7 @@ namespace Structure
 
         private void Awake()
         {
-            StaticObjects.theStructureSelectionPanel = this;
+            StaticObjectHolder.theStructureSelectionPanel = this;
         }
 
         private void Start()

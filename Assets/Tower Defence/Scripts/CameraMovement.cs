@@ -112,7 +112,7 @@ namespace Controls
         private void Awake()
         {
             //initialize theCameraMovement as this.
-            StaticObjects.theCameraMovement = this;
+            StaticObjectHolder.theCameraMovement = this;
         }
 
         // Update is called once per frame

@@ -17,9 +17,10 @@ namespace Menu
 
     public class MenuButton : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Tooltip("The Type of Button This Is")]
         private MenuButtonType buttonType = MenuButtonType.Start;
         
+        //The button and button text
         [SerializeField, HideInInspector]
         private Button button;
         [SerializeField, HideInInspector]
@@ -29,15 +30,19 @@ namespace Menu
 
         private void OnValidate()
         {
+
             if (!button)
                 button = GetComponent<Button>();
             if (!toggleText)
                 toggleText = GetComponentInChildren<TextMeshProUGUI>();
 
+            //set the text of the button to be the selected MenuButtonType text
             toggleText.text = buttonType.ToString().Replace("_", " ");
+            //remove all the listners of the button because that will cause an error
             button.onClick.RemoveAllListeners();
         }
 
+        //i dont think any of this is used
         #region FindParentObjectWithTag()
         GameObject FindParentObjectWithTag(string _tag)
         {
@@ -62,12 +67,15 @@ namespace Menu
 
         private void Start()
         {
+            //set the menu handler
             menuHandler = TheMenuHandler.theMenuHandler;
+            //set the onclick listener
             button.onClick.AddListener(PerformFunction);
         }
 
         private void PerformFunction()
         {
+            //perform the appropriate function of the button according to the selected buttontype
             switch (buttonType)
             {
                 case MenuButtonType.Start:

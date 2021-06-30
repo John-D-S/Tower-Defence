@@ -291,4 +291,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonType: 0
   button: {fileID: 4972283273237231093}
-  buttonText: {fileID: 4972283272231598743}
+  toggleText: {fileID: 4972283272231598743}

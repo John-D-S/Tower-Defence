@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static StaticObjectHolder;
 using static HelperClasses.HelperFunctions;
 using static HelperClasses.WeaponFunctions;
 
@@ -300,15 +301,18 @@ public class Enemy : MonoBehaviour, IKillable
 
     private void FixedUpdate()
     {
-        //AI and movement
-        FindNearbyObjects();
-        CalculateDirection(aiVisionPointNumber, aiFieldOfView);
-        transform.position = new Vector3(transform.position.x, TargetHeight(ConvertToVector2(transform.position)), transform.position.z);
-        transform.position = transform.position + transform.forward * maxVelocity * Time.deltaTime;
-        setRotationOnGround();
+        if (theCore)
+        {
+            //AI and movement
+            FindNearbyObjects();
+            CalculateDirection(aiVisionPointNumber, aiFieldOfView);
+            transform.position = new Vector3(transform.position.x, TargetHeight(ConvertToVector2(transform.position)), transform.position.z);
+            transform.position = transform.position + transform.forward * maxVelocity * Time.deltaTime;
+            setRotationOnGround();
 
-        //shooting
-        AimAndShoot();
+            //shooting
+            AimAndShoot();
+        }
     }
 
     private void OnDestroy()

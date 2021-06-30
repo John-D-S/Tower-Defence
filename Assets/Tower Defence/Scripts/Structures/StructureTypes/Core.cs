@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static StaticObjects;
+using static StaticObjectHolder;
 
 namespace Structure
 {
@@ -41,6 +41,7 @@ namespace Structure
         
         private void OnDestroy()
         {
+            theScoreSystem.SaveScore();
             SceneManager.LoadScene("Menu", LoadSceneMode.Single);
         }
     }
