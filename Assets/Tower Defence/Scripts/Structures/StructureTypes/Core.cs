@@ -1,6 +1,7 @@
  using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static StaticObjects;
 
 namespace Structure
@@ -37,9 +38,10 @@ namespace Structure
                 }
             }
         }
+        
         private void OnDestroy()
         {
-            
+            SceneManager.LoadScene("Menu", LoadSceneMode.Single);
         }
     }
 }

@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Core: {fileID: 2215249746921111229, guid: 935a834bb8ce1714791e24e5468e99f6, type: 3}
-  coreSpawnRadius: 650
+  coreSpawnRadius: 600
   ore: {fileID: 1814098719924242774, guid: 44c8d7f58f4b7d140a54c4fc4bb93969, type: 3}
   oreDepthBelowSurface: 4.5
   oreSpawnGridSpacing: 75
@@ -448,8 +448,8 @@ MonoBehaviour:
   Enemy: {fileID: 4019116356801477812, guid: 15cdf6f6c5e66b94087007a5e9f73f49, type: 3}
   enemySpawnRadius: 950
   enemySpawnPeriod: 30
-  baseSpawnRate: 2
-  difficultyCurveExponent: 0.15
+  baseSpawnRate: 3
+  difficultyCurveExponent: 0.13
   lookRadius: 750
 --- !u!114 &576028607
 MonoBehaviour:
