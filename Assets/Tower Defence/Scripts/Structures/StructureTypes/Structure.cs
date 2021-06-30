@@ -40,7 +40,7 @@ namespace Structure
             {
                 Ray ray = new Ray(transform.position + Vector3.up, Vector3.down);
                 bool isOnTopOfAllowedLayer = Physics.Raycast(ray, 1.1f, ~LayerMask.NameToLayer(allowedGroundLayer));
-                return (!IntersectingOtherStructure() && metalCostToBuild < EconomyTracker.metal && isOnTopOfAllowedLayer);
+                return (!IntersectingOtherStructure() && metalCostToBuild <= EconomyTracker.metal && isOnTopOfAllowedLayer);
             }
         }
 

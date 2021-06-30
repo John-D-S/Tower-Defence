@@ -127,7 +127,10 @@ MonoBehaviour:
   healthBar: {fileID: 5632168957651797055}
   maxHealth: 50
   generatedResource: 0
-  resoucesGeneratedPerMinute: 10
+  numberOfResourcesGenerated: 2
+  secondsToGenerateResource: 10
+  consumeResource: 0
+  numberOfResourcesToConsume: 1
 --- !u!1 &5124168893094951096
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,18 +11,17 @@ namespace Structure
         [SerializeField]
         private EconomyResource generatedResource;
         [SerializeField]
-        private int resoucesGeneratedPerMinute;
+        private int numberOfResourcesGenerated = 2;
+        [SerializeField]
+        private int secondsToGenerateResource = 10;
+        [Header("-- Consumption Settings --")]
+        [SerializeField]
+        private bool consumeResource;
+        [SerializeField]
+        private int numberOfResourcesToConsume = 1;
+        private int numberOfStoredResourcesToBeConsumed = 0;
 
         bool canGenerateResource = true;
-
-        private float SecondsToGenerateResource
-        {
-            get
-            {
-                float returnValue = (1f / (float)resoucesGeneratedPerMinute) * 60f;
-                return returnValue;
-            }
-        }
 
         void TryGenerateResource()
         {
@@ -35,16 +34,35 @@ namespace Structure
         private IEnumerator GenerateResource()
         {
             canGenerateResource = false;
+            bool alreadyAtMaxResource = generatedResource == EconomyResource.Energy ? EconomyTracker.energy >= EconomyTracker.MaxEnergy : EconomyTracker.metal >= EconomyTracker.MaxMetal;
+            if (consumeResource && !alreadyAtMaxResource)
+            {
+                if (generatedResource == EconomyResource.Energy)
+                    if (EconomyTracker.TryIncrementMetal(-numberOfResourcesToConsume))
+                        numberOfStoredResourcesToBeConsumed = numberOfResourcesToConsume;
+                else
+                    if (EconomyTracker.TryIncrementEnergy(-numberOfResourcesToConsume))
+                        numberOfStoredResourcesToBeConsumed = numberOfResourcesToConsume;
+            }
+            if (!consumeResource || numberOfStoredResourcesToBeConsumed == numberOfResourcesToConsume)
+            {
+                if (generatedResource == EconomyResource.Energy)
+                {
+                    if (EconomyTracker.TryIncrementEnergy(numberOfResourcesGenerated))
+                    {
+                        numberOfStoredResourcesToBeConsumed = 0;
+                    }
+                }
+                else
+                {
+                    if (EconomyTracker.TryIncrementMetal(numberOfResourcesGenerated))
+                    {
+                        numberOfStoredResourcesToBeConsumed = 0;
+                    }
+                }
+            }
+            yield return new WaitForSeconds(secondsToGenerateResource);
             //Debug.Log($"Tried to Generate {generatedResource}");
-            if (generatedResource == EconomyResource.Energy)
-            {
-                EconomyTracker.TryIncrementEnergy(1);
-            }
-            else
-            {
-                EconomyTracker.TryIncrementMetal(1);
-            }
-            yield return new WaitForSeconds(SecondsToGenerateResource);
             canGenerateResource = true;
         }
 

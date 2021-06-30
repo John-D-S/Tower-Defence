@@ -54,11 +54,19 @@ namespace Economy
         public static bool TryIncrementResource(int incrementAmount, ref int resourceToIncrement, int maxResource)
         {
             int resultantAmount = resourceToIncrement + incrementAmount;
-            if (resultantAmount < 0 || resultantAmount > maxResource)
-                return false;
-            else
+            if (resourceToIncrement < maxResource && resultantAmount >= maxResource)
+            {
+                resourceToIncrement = maxResource;
+                return true;
+            }
+            else if (resultantAmount >= 0 && resultantAmount < maxResource)
+            {
                 resourceToIncrement = resultantAmount;
-            return true;
+                return true;
+            }
+            if (resultantAmount > maxResource)
+                resourceToIncrement = maxResource;
+            return false;
         }
 
         public static bool TryIncrementMetal(int _metalIncrementAmount) => TryIncrementResource(_metalIncrementAmount, ref metal, MaxMetal);
