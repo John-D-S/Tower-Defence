@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3833119609746957534}
   - component: {fileID: 3833119609746957533}
   - component: {fileID: 3833119609746957532}
-  - component: {fileID: 3833119609746957531}
+  - component: {fileID: 665543735298795137}
   - component: {fileID: 4566756345923168477}
   m_Layer: 7
   m_Name: Energy Storage
@@ -85,19 +85,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3833119609746957531
-BoxCollider:
+--- !u!136 &665543735298795137
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3833119609746957529}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.5
+  m_Height: 4.1
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.18, z: 0}
 --- !u!114 &4566756345923168477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,7 +118,7 @@ MonoBehaviour:
   radius: 0.5
   height: 3
   coreConnectionRadius: 10
-  thisCollider: {fileID: 3833119609746957531}
+  thisCollider: {fileID: 665543735298795137}
   metalCostToBuild: 10
   energyToRun: 0
   isConnectedToCore: 0
