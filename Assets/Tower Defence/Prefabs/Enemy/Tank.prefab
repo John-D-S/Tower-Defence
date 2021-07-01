@@ -212,7 +212,7 @@ MonoBehaviour:
   maxVelocity: 5
   aiVisionRadius: 3
   aiFieldOfView: 45
-  aiVisionPointNumber: 36
+  aiVisionPointNumber: 8
   aiTargetWeight: 3
   aiTargetTag: EnemyTarget
   range: 50
@@ -227,7 +227,7 @@ MonoBehaviour:
   turretBarrel: {fileID: 4096745945652065228}
   coreDamage: 10
   lifeTime: 10
-  healthBar: {fileID: 1977272222454864003, guid: 15cdf6f6c5e66b94087007a5e9f73f49, type: 3}
+  healthBar: {fileID: 1001599630135679105}
   maxHealth: 150
   rewardMetal: 10
 --- !u!65 &4323795925718239071
@@ -399,3 +399,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
   m_PrefabInstance: {fileID: 3272364468712773135}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1001599630135679105 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2346273886059515534, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
+  m_PrefabInstance: {fileID: 3272364468712773135}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d791951ebd3a4314caf781c7f43b4e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
