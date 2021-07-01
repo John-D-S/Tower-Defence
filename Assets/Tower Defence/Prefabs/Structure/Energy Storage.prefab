@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3833119609746957529}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2159965483007997719, guid: d00de2adfe9b0c4428753e34dc0fe73d, type: 3}
 --- !u!23 &3833119609746957532
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0317a12705bb9344d83eda276188e9d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  realMaterial: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  realMaterial: {fileID: 2100000, guid: edc268bd029b6554a971a7ec4574a6f1, type: 2}
   allowedPreviewMaterial: {fileID: 2100000, guid: 68bc473b1b6f9f34fb1a988f60a54ce8, type: 2}
   disallowedPreviewMaterial: {fileID: 2100000, guid: 4b99f62fdd5a6f14eadded4ae9c4e256, type: 2}
   allowedGroundLayer: Terrain
@@ -162,7 +162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6415306388077052885, guid: f1ec76daa6d535648b86bfc6ea4f200a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 6415306388077052885, guid: f1ec76daa6d535648b86bfc6ea4f200a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -236,7 +236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515534, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: heightAboveParent
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_RootOrder
@@ -248,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_LocalPosition.z
