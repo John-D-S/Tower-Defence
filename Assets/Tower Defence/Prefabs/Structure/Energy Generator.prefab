@@ -95,8 +95,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  m_Radius: 0.5
-  m_Height: 3
+  m_Radius: 1.5
+  m_Height: 9
   m_Direction: 1
   m_Center: {x: 0, y: -0.25, z: 0}
 --- !u!114 &2910386231807149483
@@ -115,9 +115,9 @@ MonoBehaviour:
   allowedPreviewMaterial: {fileID: 2100000, guid: 68bc473b1b6f9f34fb1a988f60a54ce8, type: 2}
   disallowedPreviewMaterial: {fileID: 2100000, guid: 4b99f62fdd5a6f14eadded4ae9c4e256, type: 2}
   allowedGroundLayer: Terrain
-  radius: 0.5
-  height: 3
-  coreConnectionRadius: 10
+  radius: 1.5
+  height: 9
+  coreConnectionRadius: 15
   thisCollider: {fileID: 7114038736942754779}
   metalCostToBuild: 10
   energyToRun: 0
@@ -166,7 +166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6415306388077052885, guid: f1ec76daa6d535648b86bfc6ea4f200a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.5
+      value: 5.75
       objectReference: {fileID: 0}
     - target: {fileID: 6415306388077052885, guid: f1ec76daa6d535648b86bfc6ea4f200a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -240,7 +240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515534, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: heightAboveParent
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_RootOrder
@@ -252,7 +252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_LocalPosition.z

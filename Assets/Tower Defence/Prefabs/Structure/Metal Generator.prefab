@@ -95,10 +95,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  m_Radius: 0.5
-  m_Height: 6.59
+  m_Radius: 1.5
+  m_Height: 15
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!114 &-7177809594796299678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,9 +115,9 @@ MonoBehaviour:
   allowedPreviewMaterial: {fileID: 2100000, guid: 68bc473b1b6f9f34fb1a988f60a54ce8, type: 2}
   disallowedPreviewMaterial: {fileID: 2100000, guid: 4b99f62fdd5a6f14eadded4ae9c4e256, type: 2}
   allowedGroundLayer: Ore
-  radius: 0.5
-  height: 3
-  coreConnectionRadius: 10
+  radius: 1.5
+  height: 9
+  coreConnectionRadius: 15
   thisCollider: {fileID: 393763422325160785}
   metalCostToBuild: 10
   energyToRun: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   healthBar: {fileID: 5632168957651797055}
   maxHealth: 50
   generatedResource: 0
-  numberOfResourcesGenerated: 2
+  numberOfResourcesGenerated: 5
   secondsToGenerateResource: 10
   consumeResource: 0
   numberOfResourcesToConsume: 1
@@ -166,7 +166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6415306388077052885, guid: f1ec76daa6d535648b86bfc6ea4f200a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.25
+      value: 8.25
       objectReference: {fileID: 0}
     - target: {fileID: 6415306388077052885, guid: f1ec76daa6d535648b86bfc6ea4f200a, type: 3}
       propertyPath: m_LocalPosition.z
