@@ -529,6 +529,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7538990449224500148, guid: e1cb6f8f6e1331b44aced6c6fa88641b, type: 3}
+      propertyPath: m_text
+      value: Crater Defense
+      objectReference: {fileID: 0}
     - target: {fileID: 8504596989810503494, guid: e1cb6f8f6e1331b44aced6c6fa88641b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
