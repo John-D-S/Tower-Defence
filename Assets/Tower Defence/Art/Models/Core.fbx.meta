@@ -23,7 +23,7 @@ ModelImporter:
     second: RocketConnecter|RocketSupport1Action.001
   - first:
       74: -623603649343465320
-    second: Scene
+    second: Core
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -53,11 +53,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Scene
+      name: Core
       takeName: Scene
       internalID: 0
       firstFrame: 0
-      lastFrame: 120
+      lastFrame: 250
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

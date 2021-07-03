@@ -1317,7 +1317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b086e58c78541e142bbf95cd009b11bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KeepSceneViewActive: 0
+  KeepSceneViewActive: 1
 --- !u!4 &1154297784
 Transform:
   m_ObjectHideFlags: 0
