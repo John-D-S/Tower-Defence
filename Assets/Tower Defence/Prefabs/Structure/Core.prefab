@@ -123,18 +123,7 @@ MonoBehaviour:
   isConnectedToCore: 0
   healthBar: {fileID: 5724735370813651713}
   maxHealth: 250
---- !u!114 &4391974485665084445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8599524441163683523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9341199f95c56104280cb83ddeb4148c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  coreDeathAnimation: {fileID: 4161783058896817965}
 --- !u!111 &4161783058896817965
 Animation:
   m_ObjectHideFlags: 0

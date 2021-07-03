@@ -8,6 +8,29 @@ namespace Structure
 {
     public class Core : Structure
     {
+        [SerializeField]
+        private Animation coreDeathAnimation;
+
+        bool isDead = false;
+
+        IEnumerator DeathSequence(float duration)
+        {
+            coreDeathAnimation.Play();
+            yield return new WaitForSeconds(duration);
+            Destroy(gameObject);
+        }
+
+        public override void Die()
+        {
+            if (!isDead)
+            {
+                isDead = true;
+                float deathAnimationDuration = coreDeathAnimation.clip.length;
+                StartCoroutine(DeathSequence(deathAnimationDuration));
+            }
+
+        }
+
         private void Start()
         {
             theCore = this;

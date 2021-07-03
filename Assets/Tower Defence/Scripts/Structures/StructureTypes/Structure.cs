@@ -200,7 +200,7 @@ namespace Structure
         }
         public void Damage(float amount) => Health -= amount;
         public void Heal(float amount) => Health += amount;
-        public void Die() => Destroy(gameObject);
+        public virtual void Die() => Destroy(gameObject);
 
         private void SetMaterial(Material _material)
         {
