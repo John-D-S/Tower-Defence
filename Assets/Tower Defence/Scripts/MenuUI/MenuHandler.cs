@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.Audio;
 
@@ -41,6 +42,13 @@ namespace Menu
 
         #region Pausing
         private bool paused = false;
+        public bool Paused
+        {
+            get
+            {
+                return paused;
+            }
+        }
         
         /// <summary>
         /// pauses the game
@@ -69,6 +77,7 @@ namespace Menu
         /// </summary>
         public void MenuGoBack()
         {
+            EventSystem.current.SetSelectedGameObject(null);
             if (OptionsMenu.activeInHierarchy)
                 CloseOptionsMenu();
             else

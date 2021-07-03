@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Menu.TheMenuHandler;
 
 namespace Structure
 {
@@ -57,7 +58,12 @@ namespace Structure
 
         private void Update()
         {
-            if (selected && EventSystem.current.currentSelectedGameObject != structureButton.gameObject)
+            if (selected && theMenuHandler.Paused)
+            {
+                Debug.Log("DeselectStructure should have been called");
+                DeselectStructure();
+            }
+            if (selected && structureInfo.structure != null && EventSystem.current.currentSelectedGameObject != structureButton.gameObject)
             {
                 EventSystem.current.SetSelectedGameObject(structureButton.gameObject);
             }
