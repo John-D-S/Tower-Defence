@@ -143,7 +143,6 @@ namespace Structure
                     {
                         if (previewStructureInstanceScript.CanBePlaced)
                         {
-                            Debug.Log("Structure should be placed");
                             selectedStructure.GetComponent<Structure>().TryPlaceStructure(MouseRayHitPoint(LayerMask.GetMask("Terrain", "Ore")));
                         }
                     }

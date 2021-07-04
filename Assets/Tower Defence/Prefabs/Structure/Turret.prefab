@@ -203,9 +203,10 @@ MonoBehaviour:
   thisCollider: {fileID: 2418009174397266119}
   metalCostToBuild: 15
   energyToRun: 1
-  isConnectedToCore: 0
   healthBar: {fileID: 5632168957651797055}
   maxHealth: 100
+  regenerationAmount: 2
+  isConnectedToCore: 0
   range: 50
   fireRate: 5
   MetalConsumption: 0
@@ -214,7 +215,7 @@ MonoBehaviour:
   bullet: {fileID: 7423836921931420716, guid: e63c8c7b0de38384284a247d0ace2d1a, type: 3}
   bulletSpeed: 100
   spread: 2.5
-  bulletRadius: 0.1
+  bulletRadius: 0.3
   bulletHitTargetTag: Enemy
   bulletDamage: 10
 --- !u!1 &4141868349817286691

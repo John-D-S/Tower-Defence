@@ -87,7 +87,81 @@ namespace Structure
         private int metalCostToBuild;
         [SerializeField, Tooltip("The amount of energy consumed when this structure is activated")]
         protected int energyToRun;
-        
+
+        [SerializeField]
+        HealthBar healthBar;
+        [SerializeField]
+        private float maxHealth = 100;
+        public float MaxHealth { get => maxHealth; set => maxHealth = value; }
+        private float health = -2;
+        public float Health
+        {
+            get
+            {
+                if (health < -1)
+                {
+                    health = maxHealth;
+                }
+                return health;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    health = 0;
+                    Die();
+                }
+                else if (value > maxHealth)
+                    health = maxHealth;
+                else
+                    health = value;
+
+                if (healthBar)
+                {
+                    healthBar.SetHealth(value, MaxHealth);
+                }
+
+                healthBar.SetHealth(Health, maxHealth);
+            }
+        }
+
+        [SerializeField, Tooltip("how many HP to heal per second")]
+        private int regenerationAmount = 1;
+        private bool isRegenerating = false;
+
+        public virtual void Damage(float amount)
+        {
+            Health -= amount;
+            TryStartRegeneration();
+        }
+        public void Heal(float amount) => Health += amount;
+        public virtual void Die() => Destroy(gameObject);
+
+        #region Regeneration
+        private IEnumerator StartRegeneration()
+        {
+            isRegenerating = true;
+            while (health != maxHealth)
+            {
+                if (EconomyTracker.metal > regenerationAmount)
+                {
+                    Heal(regenerationAmount);
+                    EconomyTracker.TryIncrementMetal(regenerationAmount);
+                }
+                yield return new WaitForSeconds(1);
+            }
+            isRegenerating = false;
+        }
+
+        private void TryStartRegeneration()
+        {
+            if (!isRegenerating)
+            {
+                StartCoroutine(StartRegeneration());
+            }
+        }
+        #endregion
+
         #region Core Connection
 
         protected static Dictionary<GameObject, Structure> currentStructures = new Dictionary<GameObject, Structure>();
@@ -161,46 +235,6 @@ namespace Structure
         [HideInInspector]
         public bool isConnectedToCore;
         #endregion
-
-        [SerializeField]
-        HealthBar healthBar;
-        [SerializeField]
-        private float maxHealth = 100;
-        public float MaxHealth { get => maxHealth; set => maxHealth = value; }
-        private float health = -2;
-        public float Health
-        {
-            get
-            {
-                if (health < -1)
-                {
-                    health = maxHealth;
-                }
-                return health;
-            }
-            set
-            {
-                if (value < 0)
-                {
-                    health = 0;
-                    Die();
-                }
-                else if (value > maxHealth)
-                    health = maxHealth;
-                else
-                    health = value;
-
-                if (healthBar)
-                {
-                    healthBar.SetHealth(value, MaxHealth);
-                }
-
-                healthBar.SetHealth(Health, maxHealth);
-            }
-        }
-        public void Damage(float amount) => Health -= amount;
-        public void Heal(float amount) => Health += amount;
-        public virtual void Die() => Destroy(gameObject);
 
         private void SetMaterial(Material _material)
         {

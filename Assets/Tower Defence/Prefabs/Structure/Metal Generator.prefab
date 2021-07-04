@@ -121,9 +121,10 @@ MonoBehaviour:
   thisCollider: {fileID: 393763422325160785}
   metalCostToBuild: 10
   energyToRun: 0
-  isConnectedToCore: 0
   healthBar: {fileID: 5632168957651797055}
   maxHealth: 50
+  regenerationAmount: 2
+  isConnectedToCore: 0
   generatedResource: 0
   numberOfResourcesGenerated: 5
   secondsToGenerateResource: 10

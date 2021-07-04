@@ -215,14 +215,14 @@ MonoBehaviour:
   aiVisionPointNumber: 8
   aiTargetWeight: 3
   aiTargetTag: EnemyTarget
-  range: 50
-  fireRate: 10
+  range: 35
+  fireRate: 5
   bullet: {fileID: 7423836921931420716, guid: 4eeb98c10d313014a9c3d39ba9df9b28, type: 3}
   bulletSpeed: 50
   spread: 5
   bulletRadius: 0.1
   bulletHitTargetTag: Structure
-  bulletDamage: 10
+  bulletDamage: 15
   turretBase: {fileID: 4507632246880146169}
   turretBarrel: {fileID: 4096745945652065228}
   coreDamage: 10

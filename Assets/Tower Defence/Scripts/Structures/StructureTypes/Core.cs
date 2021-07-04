@@ -28,7 +28,11 @@ namespace Structure
                 float deathAnimationDuration = coreDeathAnimation.clip.length;
                 StartCoroutine(DeathSequence(deathAnimationDuration));
             }
+        }
 
+        public override void Damage(float amount)
+        {
+            Health -= amount;
         }
 
         private void Start()
