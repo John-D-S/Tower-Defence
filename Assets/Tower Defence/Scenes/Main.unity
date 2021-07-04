@@ -554,7 +554,129 @@ MonoBehaviour:
   oreDepthBelowSurface: 4.5
   oreSpawnGridSpacing: 75
   oreSpawnRadius: 700
-  Enemy: {fileID: 5857914175970875783, guid: 6f0f791572ed2604eb3943998524e4c3, type: 3}
+  enemies:
+  - enemy: {fileID: 5857914175970875783, guid: 2a5f1d2b90313fd47961a88021d31ffb, type: 3}
+    enemyValue: 1
+    spawnWeightAgainstEnemySpawnVolume:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 10
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.3701285
+      - serializedVersion: 3
+        time: 30
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.35973558
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  - enemy: {fileID: 5857914175970875783, guid: 9c8ac0e3eccb5484bbda3a028b21966c, type: 3}
+    enemyValue: 3
+    spawnWeightAgainstEnemySpawnVolume:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 30.521072
+        value: 10.004332
+        inSlope: 0.000002850759
+        outSlope: 0.000002850759
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 59.938988
+        value: 0.00011394924
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  - enemy: {fileID: 5857914175970875783, guid: 4a87aa5303837f84f8cdea56a534ce8a, type: 3}
+    enemyValue: 9
+    spawnWeightAgainstEnemySpawnVolume:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 30
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 75
+        value: 10
+        inSlope: 0.000002850759
+        outSlope: 0.000002850759
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 120
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  - enemy: {fileID: 5857914175970875783, guid: 6f0f791572ed2604eb3943998524e4c3, type: 3}
+    enemyValue: 24
+    spawnWeightAgainstEnemySpawnVolume:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 75
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 240
+        value: 10
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
   enemySpawnRadius: 950
   enemySpawnPeriod: 60
   baseSpawnRate: 3

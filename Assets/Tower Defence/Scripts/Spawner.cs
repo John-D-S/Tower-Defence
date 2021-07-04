@@ -4,6 +4,15 @@ using UnityEngine;
 using static HelperClasses.HelperFunctions;
 using static StaticObjectHolder;
 
+[System.Serializable]
+public class EnemyInfo
+{
+    public GameObject enemy;
+    [Tooltip("The value of the enemy. An enemy with a value of 5 is worth 5 enemies with an enemy value of 1")]
+    public int enemyValue;
+    public AnimationCurve spawnWeightAgainstEnemySpawnVolume;
+}
+
 public class Spawner : MonoBehaviour
 {
     [Header("-- Core Spawning --")]
@@ -24,7 +33,7 @@ public class Spawner : MonoBehaviour
 
     [Header("-- Enemy Spawning --")]
     [SerializeField]
-    private GameObject Enemy;
+    private List<EnemyInfo> enemies;
     [SerializeField]
     private float enemySpawnRadius = 950f;
     [SerializeField, Tooltip("The time between waves")]
@@ -61,6 +70,36 @@ public class Spawner : MonoBehaviour
         StartCoroutine(WaveSpawner());
     }
 
+    private List<GameObject> EnemiesToSpawn()
+    {
+        List<GameObject> returnList = new List<GameObject>();
+        int currentNumberOfEnemiesToSpawn = NumberOfEnemiesToSpawn;
+        List<float> enemyWeights = new List<float>();
+        foreach (EnemyInfo enemyInfo in enemies)
+        {
+            enemyWeights.Add(enemyInfo.spawnWeightAgainstEnemySpawnVolume.Evaluate(currentNumberOfEnemiesToSpawn));
+        }
+        float totalEnemyWeight = 0;
+        foreach (float enemyWeight in enemyWeights)
+        {
+            totalEnemyWeight += enemyWeight;
+        }
+        float enemyValueMultiplier = currentNumberOfEnemiesToSpawn / totalEnemyWeight;
+        List<int> numberOfEachEnemyToSpawn = new List<int>();
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            numberOfEachEnemyToSpawn.Add(Mathf.RoundToInt(Mathf.CeilToInt(enemyWeights[i] * enemyValueMultiplier) / enemies[i].enemyValue));
+        }
+        for (int i = 0; i < numberOfEachEnemyToSpawn.Count; i++)
+        {
+            for (int j = 0; j < numberOfEachEnemyToSpawn[i]; j++)
+            {
+                returnList.Add(enemies[i].enemy);
+            }
+        }
+        return returnList;
+    }
+
     private IEnumerator WaveSpawner()
     {
         while (true)
@@ -72,13 +111,13 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
-        int enemiesToSpawnNow = NumberOfEnemiesToSpawn;
+        List<GameObject> enemiesToSpawn = EnemiesToSpawn();
         float enemySpawnAngle = Random.Range(0, 360);
-        for (int i = 0; i < enemiesToSpawnNow; i++)
+        foreach (GameObject enemy in enemiesToSpawn)
         {
             Vector2 SpawnPosition = enemySpawnRadius * Angle2Direction(enemySpawnAngle + Random.Range(-2.5f, 2.5f));
             float spawnHeight = TargetHeight(SpawnPosition);
-            Instantiate(Enemy, ConvertToVector3(SpawnPosition) + Vector3.up * spawnHeight, Quaternion.identity);
+            Instantiate(enemy, ConvertToVector3(SpawnPosition) + Vector3.up * spawnHeight, Quaternion.identity);
             yield return new WaitForSeconds(0.1f);
         }
     }
