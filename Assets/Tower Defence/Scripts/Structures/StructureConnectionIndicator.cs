@@ -33,7 +33,7 @@ namespace Structure
             if (connectionIndicator)
             {
                 //Debug.Log($"is connected to core: {isConnectedToCore}");
-                if (AttatchedStructure.isConnectedToCore)
+                if (AttatchedStructure.CanFunction)
                 {
                     connectionIndicator.material = connectedIndicatorMaterial;
                 }

@@ -265,6 +265,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1598157245}
     m_Modifications:
+    - target: {fileID: 366565454606256226, guid: df0f45b1ac0dea542819decb805ffe2f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 366565454606256226, guid: df0f45b1ac0dea542819decb805ffe2f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 366565454606256226, guid: df0f45b1ac0dea542819decb805ffe2f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 497904624}
+    - target: {fileID: 366565454606256226, guid: df0f45b1ac0dea542819decb805ffe2f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 366565454606256226, guid: df0f45b1ac0dea542819decb805ffe2f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 366565454606256226, guid: df0f45b1ac0dea542819decb805ffe2f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Saving.SaveLoadSystem, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 366565454606256226, guid: df0f45b1ac0dea542819decb805ffe2f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6528664296511623017, guid: df0f45b1ac0dea542819decb805ffe2f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -679,7 +707,7 @@ MonoBehaviour:
       m_RotationOrder: 0
   enemySpawnRadius: 950
   enemySpawnPeriod: 60
-  startSpawnRate: 5
+  startSpawnRate: 1
   baseSpawnRate: 3
   difficultyCurveExponent: 0.13
   lookRadius: 750

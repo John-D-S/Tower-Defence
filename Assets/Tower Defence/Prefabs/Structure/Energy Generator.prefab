@@ -127,7 +127,7 @@ MonoBehaviour:
   timeUntilStorageDoesntWork: 5
   isConnectedToCore: 0
   generatedResource: 1
-  numberOfResourcesGenerated: 2
+  numberOfResourcesGenerated: 3
   secondsToGenerateResource: 10
   consumeResource: 1
   numberOfResourcesToConsume: 2
