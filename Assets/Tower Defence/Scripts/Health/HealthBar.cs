@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static StaticObjectHolder;
 using TMPro;
 
 public class HealthBar : MonoBehaviour
@@ -46,6 +47,11 @@ public class HealthBar : MonoBehaviour
         SetPosition();
     }
 
+    private void Start()
+    {
+        theVisibilityManager.healthBars.Add(this);
+        gameObject.SetActive(theVisibilityManager.showHealthBars);
+    }
 
     private void Update()
     {

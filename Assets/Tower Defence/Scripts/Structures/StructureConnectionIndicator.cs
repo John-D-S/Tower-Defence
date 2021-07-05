@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using static StaticObjectHolder;
 using UnityEngine;
 
 
@@ -21,6 +22,9 @@ namespace Structure
             connectionIndicator = GetComponent<MeshRenderer>();
             AttatchedStructure = transform.parent.GetComponent<Structure>();
             AttatchedStructure.connectionIndicator = connectionIndicator;
+
+            theVisibilityManager.structureConnectionIndicators.Add(this);
+            gameObject.SetActive(theVisibilityManager.showStructureConnectionIndicators);
         }
 
         public void UpdateConnectionIndicator()

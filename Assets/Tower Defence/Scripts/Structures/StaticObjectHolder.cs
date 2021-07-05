@@ -8,6 +8,7 @@ using Saving;
 
 public static class StaticObjectHolder
 {
+    public static VisibilityManager theVisibilityManager;
     public static Core theCore;
     public static StructureSelectionPanel theStructureSelectionPanel;
     public static StructurePlacer theStructurePlacer;
