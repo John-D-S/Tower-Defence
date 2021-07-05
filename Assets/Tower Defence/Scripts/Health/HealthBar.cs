@@ -56,6 +56,7 @@ public class HealthBar : MonoBehaviour
     private void Update()
     {
         SetPosition();
-        gameObject.transform.LookAt(Camera.main.transform);
+        //this is far more performant than gameObject.transform.LookAt(Camera.main.transform);
+        gameObject.transform.rotation = Camera.main.transform.rotation;
     }
 }
