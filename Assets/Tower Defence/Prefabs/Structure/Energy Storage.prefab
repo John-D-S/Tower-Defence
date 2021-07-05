@@ -119,15 +119,15 @@ MonoBehaviour:
   height: 9
   coreConnectionRadius: 15
   thisCollider: {fileID: 665543735298795137}
-  metalCostToBuild: 10
+  metalCostToBuild: 25
   energyToRun: 0
   healthBar: {fileID: 5632168957651797055}
   maxHealth: 50
   regenerationAmount: 2
+  timeUntilStorageDoesntWork: 5
   isConnectedToCore: 0
   resourceToStore: 1
   storageCapacity: 50
-  timeUntilStorageDoesntWork: 5
 --- !u!1001 &7831830023863541004
 PrefabInstance:
   m_ObjectHideFlags: 0

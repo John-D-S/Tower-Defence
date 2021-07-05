@@ -201,11 +201,12 @@ MonoBehaviour:
   height: 9
   coreConnectionRadius: 15
   thisCollider: {fileID: 2418009174397266119}
-  metalCostToBuild: 15
-  energyToRun: 1
+  metalCostToBuild: 50
+  energyToRun: 5
   healthBar: {fileID: 5632168957651797055}
   maxHealth: 100
   regenerationAmount: 2
+  timeUntilStorageDoesntWork: 5
   isConnectedToCore: 0
   range: 50
   fireRate: 5

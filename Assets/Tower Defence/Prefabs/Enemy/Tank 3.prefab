@@ -212,7 +212,7 @@ MonoBehaviour:
   maxVelocity: 5
   aiVisionRadius: 3
   aiFieldOfView: 45
-  aiVisionPointNumber: 8
+  aiVisionPointNumber: 4
   aiTargetWeight: 3
   aiTargetTag: EnemyTarget
   range: 35
@@ -228,7 +228,7 @@ MonoBehaviour:
   coreDamage: 10
   lifeTime: 10
   healthBar: {fileID: 1001599630135679105}
-  maxHealth: 450
+  maxHealth: 1350
   rewardMetal: 160
 --- !u!65 &4323795925718239071
 BoxCollider:

@@ -212,7 +212,7 @@ MonoBehaviour:
   maxVelocity: 5
   aiVisionRadius: 3
   aiFieldOfView: 45
-  aiVisionPointNumber: 8
+  aiVisionPointNumber: 4
   aiTargetWeight: 3
   aiTargetTag: EnemyTarget
   range: 35

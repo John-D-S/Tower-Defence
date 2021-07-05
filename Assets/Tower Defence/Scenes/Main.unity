@@ -530,12 +530,12 @@ MonoBehaviour:
   metalHudText: {fileID: 860529434}
   energyHudBar: {fileID: 860529437}
   energyHudText: {fileID: 860529436}
-  startingMetal: 100
-  startingEnergy: 50
-  baseMetalPerSecond: 0
-  baseEnergyPerSecond: 1
-  baseMaxMetal: 100
-  baseMaxEnergy: 100
+  startingMetal: 250
+  startingEnergy: 250
+  baseMetalPerSecond: 2
+  baseEnergyPerSecond: 2
+  baseMaxMetal: 250
+  baseMaxEnergy: 250
 --- !u!114 &497904622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -570,8 +570,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0.3701285
       - serializedVersion: 3
-        time: 30
-        value: 0
+        time: 40
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -596,8 +596,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 30.521072
-        value: 10.004332
+        time: 40
+        value: 10
         inSlope: 0.000002850759
         outSlope: 0.000002850759
         tangentMode: 0
@@ -605,8 +605,8 @@ MonoBehaviour:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 59.938988
-        value: 0.00011394924
+        time: 80
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -622,7 +622,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 30
+        time: 0
         value: 0
         inSlope: 0
         outSlope: 0
@@ -631,7 +631,7 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 75
+        time: 80
         value: 10
         inSlope: 0.000002850759
         outSlope: 0.000002850759
@@ -640,8 +640,8 @@ MonoBehaviour:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 120
-        value: 0
+        time: 160
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -657,7 +657,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 75
+        time: 0
         value: 0
         inSlope: 0
         outSlope: 0
@@ -666,7 +666,7 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 240
+        time: 160
         value: 10
         inSlope: 0
         outSlope: 0
@@ -679,6 +679,7 @@ MonoBehaviour:
       m_RotationOrder: 0
   enemySpawnRadius: 950
   enemySpawnPeriod: 60
+  startSpawnRate: 5
   baseSpawnRate: 3
   difficultyCurveExponent: 0.13
   lookRadius: 750

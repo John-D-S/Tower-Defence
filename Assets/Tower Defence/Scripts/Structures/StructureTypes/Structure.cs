@@ -162,6 +162,31 @@ namespace Structure
         }
         #endregion
 
+        [SerializeField, Tooltip("how many seconds after being disconnected is the storage structure no longer able to store resources")]
+        private float timeUntilStorageDoesntWork = 5f;
+        private bool canFunction = false;
+        public bool CanFunction
+        {
+            get => canFunction;
+        }
+        private float timeSinceDisconnected = 0;
+        void UpdateCanFunction()
+        {
+            if (isConnectedToCore)
+            {
+                canFunction = true;
+                timeSinceDisconnected = 0;
+            }
+            else if (timeSinceDisconnected < timeUntilStorageDoesntWork)
+            {
+                timeSinceDisconnected += Time.fixedDeltaTime;
+            }
+            else
+            {
+                canFunction = false;
+            }
+        }
+
         #region Core Connection
 
         protected static Dictionary<GameObject, Structure> currentStructures = new Dictionary<GameObject, Structure>();
@@ -307,6 +332,7 @@ namespace Structure
         
         protected void UpdateStructure()
         {
+            UpdateCanFunction();
             if (Preview)
             {
                 SetAllowedDisallowedMaterial();
@@ -336,6 +362,11 @@ namespace Structure
                     theCore.UpdateConnectedStructures();
                 }
             }
+        }
+
+        private void FixedUpdate()
+        {
+            UpdateCanFunction();
         }
     }
 }

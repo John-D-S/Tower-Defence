@@ -25,7 +25,7 @@ namespace Structure
 
         void TryGenerateResource()
         {
-            if (canGenerateResource && isConnectedToCore)
+            if (canGenerateResource && CanFunction)
             {
                 StartCoroutine(GenerateResource());
             }

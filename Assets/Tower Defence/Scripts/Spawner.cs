@@ -39,6 +39,8 @@ public class Spawner : MonoBehaviour
     [SerializeField, Tooltip("The time between waves")]
     private float enemySpawnPeriod;
     [SerializeField]
+    private float startSpawnRate = 5f;
+    [SerializeField]
     private float baseSpawnRate;
     [SerializeField, Tooltip("relates to how quickly enemy difficulty and amount increases with each wave")]
     private float difficultyCurveExponent = 0.075f;
@@ -49,7 +51,7 @@ public class Spawner : MonoBehaviour
         get
         {
             float exponent = difficultyCurveExponent * Time.time / 60f;
-            return (int)(baseSpawnRate * Mathf.Pow(2, exponent));
+            return (int)(startSpawnRate + baseSpawnRate * Mathf.Pow(2, exponent));
         }
         set { }
     }
