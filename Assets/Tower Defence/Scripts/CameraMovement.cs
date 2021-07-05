@@ -16,6 +16,8 @@ namespace Controls
         private float pivotHeight = 5;
         [SerializeField, Tooltip("The speed the camera moves when controlled by the keyboard.")]
         private float moveSpeed = 1;
+        [SerializeField, Tooltip("The amount the camera lerps when controlled by the mouse.")]
+        private float cameraLerpSpeed = 5f;
         [SerializeField, Tooltip("The starting position of the pivot object")]
         private Vector2 defaultPivotPostion = Vector2.zero;
 
@@ -57,7 +59,7 @@ namespace Controls
         void Move(Vector2 _offset)
         {
             Vector3 targetPosition = transform.position + ConvertToVector3(_offset);
-            gameObject.transform.position = Vector3.Lerp(transform.position, targetPosition, 0.1f);
+            gameObject.transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * cameraLerpSpeed);
         }
 
         /// <summary>
@@ -114,8 +116,7 @@ namespace Controls
             //initialize theCameraMovement as this.
             StaticObjectHolder.theCameraMovement = this;
         }
-
-        // Update is called once per frame
+        
         void Update()
         {
             //stop the camera controls if the game is paused
@@ -141,7 +142,7 @@ namespace Controls
             {
                 Vector3 flattenedForwardVector = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
                 Vector3 targetOffset = (transform.right * Input.GetAxisRaw("Horizontal") + flattenedForwardVector * Input.GetAxisRaw("Vertical")) * moveSpeed * targetCameraDistance;
-                transform.position = Vector3.Lerp(transform.position, transform.position + targetOffset, 0.1f);
+                transform.position = Vector3.Lerp(transform.position, transform.position + targetOffset, Time.deltaTime * cameraLerpSpeed);
             }
 
             //if the middle mouse button is pressed, lock the cursor.
@@ -170,7 +171,7 @@ namespace Controls
                 targetCameraDistance = Mathf.Clamp(targetCameraDistance, MinDistance, MaxDistance);
             }
             //lerp the camera to the set distance to make zooming in and out smoother.
-            attatchedCamera.transform.localPosition = Vector3.Lerp(attatchedCamera.transform.localPosition, Vector3.back * targetCameraDistance, 0.1f);
+            attatchedCamera.transform.localPosition = Vector3.Lerp(attatchedCamera.transform.localPosition, Vector3.back * targetCameraDistance, Time.deltaTime * cameraLerpSpeed);
             
             EnforceBoundaries();
             //set the height of the pivot.
