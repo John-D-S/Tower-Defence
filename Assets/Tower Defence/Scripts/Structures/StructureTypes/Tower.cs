@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static HelperClasses.WeaponFunctions;
 
-namespace Structure
+namespace Structures
 {
     public abstract class Tower : Structure
     {

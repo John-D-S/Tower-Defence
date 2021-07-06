@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static StaticObjectHolder;
 
-namespace Structure
+namespace Structures
 {
     public class Core : Structure
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using static HelperClasses.HelperFunctions;
 
-namespace Structure
+namespace Structures
 {
     [System.Serializable]
     public class StructureInfo

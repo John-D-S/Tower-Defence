@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Economy;
 
-namespace Structure
+namespace Structures
 {
     public class Generator : Structure
     {

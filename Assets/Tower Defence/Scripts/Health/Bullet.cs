@@ -22,15 +22,17 @@ public class Bullet : MonoBehaviour
 
     [SerializeField]
     private TrailRenderer trailRenderer;
+    [SerializeField]
+    private GameObject hitEffect;
 
     private void Start()
     {
         if (trailRenderer)
             trailRenderer.widthMultiplier = bulletRadius * 2;
-        StartCoroutine(ActLikeABullet(spawningCollider, gameObject, bulletRadius, bulletRange, bulletSpeed, spread, bulletDamage, targetTag));
+        StartCoroutine(ActLikeABullet(spawningCollider, gameObject, bulletRadius, bulletRange, bulletSpeed, spread, bulletDamage, targetTag, hitEffect));
     }
 
-    public static IEnumerator ActLikeABullet(Collider spawningCollider, GameObject bullet, float bulletRadius, float bulletRange, float bulletSpeed, float bulletSpread, float bulletDamage, string targetTag)
+    public static IEnumerator ActLikeABullet(Collider spawningCollider, GameObject bullet, float bulletRadius, float bulletRange, float bulletSpeed, float bulletSpread, float bulletDamage, string targetTag, GameObject hitEffect)
     {
         bullet.transform.localScale = Vector3.one * bulletRadius * 2;
         bullet.transform.localRotation *= RandomSpread(bulletSpread);
@@ -38,7 +40,7 @@ public class Bullet : MonoBehaviour
         while (distance < bulletRange)
         {
             yield return new WaitForFixedUpdate();
-            float distanceDelta = Time.deltaTime * bulletSpeed;
+            float distanceDelta = Time.fixedDeltaTime * bulletSpeed;
             RaycastHit hitInfo;
             if (Physics.SphereCast(new Ray(bullet.transform.position, bullet.transform.forward), bulletRadius, out hitInfo, distanceDelta))
             {
@@ -47,10 +49,17 @@ public class Bullet : MonoBehaviour
                 {
                     IKillable objectToDamage = hitInfo.collider.GetComponentInParent<IKillable>();
                     if (objectToDamage != null)
+                    {
                         objectToDamage.Damage(bulletDamage);
+                        GameObject instantiatedhitEffect = Instantiate(hitEffect, hitInfo.point, Quaternion.FromToRotation(Vector3.forward, Vector3.Lerp(bullet.transform.forward, hitInfo.normal, 0.6f)));
+                        instantiatedhitEffect.transform.localScale = Vector3.one * bulletRadius * 2;
+                        break;
+                    }
                 }
                 else if (hitInfo.collider != spawningCollider)
                 {
+                    GameObject instantiatedhitEffect = Instantiate(hitEffect, hitInfo.point, Quaternion.FromToRotation(Vector3.forward, Vector3.Lerp(bullet.transform.forward, hitInfo.normal, 0.6f)));
+                    instantiatedhitEffect.transform.localScale = Vector3.one * bulletRadius * 2;
                     break;
                 }
             }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3833119609746957532}
   - component: {fileID: 7114038736942754779}
   - component: {fileID: 2910386231807149483}
+  - component: {fileID: -7621965060830177805}
   m_Layer: 7
   m_Name: Energy Generator
   m_TagString: PreviewStructure
@@ -131,6 +132,21 @@ MonoBehaviour:
   secondsToGenerateResource: 10
   consumeResource: 1
   numberOfResourcesToConsume: 2
+--- !u!114 &-7621965060830177805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833119609746957529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434ef9518736034eb5e722f99951508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionSize: 1
+  explosionEffect: {fileID: 3461682342779427190, guid: 2164f32b342959646b84c36a5861f2b1, type: 3}
+  structureComponent: {fileID: 2910386231807149483}
 --- !u!1001 &7923218819059963882
 PrefabInstance:
   m_ObjectHideFlags: 0

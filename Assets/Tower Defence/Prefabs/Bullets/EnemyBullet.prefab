@@ -202,4 +202,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a1001169446f864b9b76719697f39ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawningCollider: {fileID: 0}
+  bulletSpeed: 0
+  spread: 0
+  bulletRadius: 0
+  targetTag: 
+  bulletDamage: 0
+  bulletRange: 0
   trailRenderer: {fileID: 7047969099068342084}
+  hitEffect: {fileID: 6806256686070623677, guid: db105e314f87ecb49bdfba8628e55dab, type: 3}

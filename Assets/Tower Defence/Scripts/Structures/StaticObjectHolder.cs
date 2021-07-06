@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Structure;
+using Structures;
 using Economy;
 using Controls;
 using Saving;

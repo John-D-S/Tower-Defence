@@ -129,7 +129,7 @@ public class Spawner : MonoBehaviour
         Vector2 spawnPos = Random.insideUnitCircle * coreSpawnRadius;
         float spawnHeight = TargetHeight(spawnPos);
         Vector3 coreSpawnPosition = ConvertToVector3(spawnPos) + Vector3.up * spawnHeight;
-        theCore = Instantiate(Core, coreSpawnPosition, Quaternion.identity).GetComponent<Structure.Core>();
+        theCore = Instantiate(Core, coreSpawnPosition, Quaternion.identity).GetComponent<Structures.Core>();
     }
 
     private void SpawnOre()

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3833119609746957532}
   - component: {fileID: 665543735298795137}
   - component: {fileID: 4566756345923168477}
+  - component: {fileID: 3758024642869086373}
   m_Layer: 7
   m_Name: Energy Storage
   m_TagString: PreviewStructure
@@ -128,6 +129,21 @@ MonoBehaviour:
   isConnectedToCore: 0
   resourceToStore: 1
   storageCapacity: 50
+--- !u!114 &3758024642869086373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833119609746957529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434ef9518736034eb5e722f99951508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionSize: 1
+  explosionEffect: {fileID: 3461682342779427190, guid: 2164f32b342959646b84c36a5861f2b1, type: 3}
+  structureComponent: {fileID: 4566756345923168477}
 --- !u!1001 &7831830023863541004
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static HelperClasses.WeaponFunctions;
 
-namespace Structure
+namespace Structures
 {
     public class Gun : Tower
     {
@@ -13,6 +13,8 @@ namespace Structure
         [SerializeField]
         private float bulletSpeed = 50f;
         [SerializeField]
+        private float tipOfBarrelOffset = 4f;
+        [SerializeField]
         private float spread = 5f;
         [SerializeField]
         private float bulletRadius = 0.25f;
@@ -20,6 +22,10 @@ namespace Structure
         private string bulletHitTargetTag;
         [SerializeField]
         private float bulletDamage= 10f;
+
+        [Header("-- Effect Settings --")]
+        [SerializeField]
+        private GameObject fireEffect;
 
         private void OnValidate()
         {
@@ -43,7 +49,9 @@ namespace Structure
 
         public override void ShootProjectile()
         {
-            Instantiate(bullet, turretBarrel.transform.position, turretBarrel.transform.rotation);
+            Vector3 bulletStartPosition = turretBarrel.transform.position + turretBarrel.transform.rotation * Vector3.forward * tipOfBarrelOffset;
+            Instantiate(fireEffect, bulletStartPosition, turretBarrel.transform.rotation);
+            Instantiate(bullet, bulletStartPosition, turretBarrel.transform.rotation);
         }
 
         private void Start()

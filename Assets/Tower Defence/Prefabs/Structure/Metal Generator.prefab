@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3833119609746957532}
   - component: {fileID: 393763422325160785}
   - component: {fileID: -7177809594796299678}
+  - component: {fileID: -7509471980299080281}
   m_Layer: 7
   m_Name: Metal Generator
   m_TagString: PreviewStructure
@@ -131,6 +132,21 @@ MonoBehaviour:
   secondsToGenerateResource: 10
   consumeResource: 0
   numberOfResourcesToConsume: 1
+--- !u!114 &-7509471980299080281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833119609746957529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434ef9518736034eb5e722f99951508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionSize: 1
+  explosionEffect: {fileID: 3461682342779427190, guid: 2164f32b342959646b84c36a5861f2b1, type: 3}
+  structureComponent: {fileID: -7177809594796299678}
 --- !u!1001 &5544831134906582047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -242,7 +258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515534, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: heightAboveParent
-      value: 4.5
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_RootOrder
@@ -254,7 +270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.5
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 2346273886059515535, guid: 4ab5723e29db0824d9204b04531a0f46, type: 3}
       propertyPath: m_LocalPosition.z

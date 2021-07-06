@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Structure;
+using Structures;
 using static StaticObjectHolder;
 
 public class VisibilityManager : MonoBehaviour
 {
+    [HideInInspector]
     public bool showHealthBars = true;
+    [HideInInspector]
     public List<HealthBar> healthBars = new List<HealthBar>();
 
+    [HideInInspector]
     public bool showStructureConnectionIndicators = true;
+    [HideInInspector]
     public List<StructureConnectionIndicator> structureConnectionIndicators = new List<StructureConnectionIndicator>();
 
     private void Awake()

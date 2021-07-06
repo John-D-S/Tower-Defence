@@ -5,7 +5,7 @@ using static HelperClasses.HelperFunctions;
 using static StaticObjectHolder;
 using Economy;
 
-namespace Structure
+namespace Structures
 {
     public abstract class Structure : MonoBehaviour, IKillable
     {

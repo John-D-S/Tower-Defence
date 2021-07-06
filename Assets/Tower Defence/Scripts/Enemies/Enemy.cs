@@ -43,6 +43,8 @@ public class Enemy : MonoBehaviour, IKillable
     [SerializeField]
     private float bulletSpeed = 50f;
     [SerializeField]
+    private float tipOfBarrelOffset = 4f;
+    [SerializeField]
     private float spread = 5f;
     [SerializeField]
     private float bulletRadius = 0.25f;
@@ -117,6 +119,12 @@ public class Enemy : MonoBehaviour, IKillable
 
     [SerializeField]
     private int rewardMetal = 10;
+
+    [Header("-- Effect Settings --")]
+    [SerializeField]
+    private float fireEffectScale = 1;
+    [SerializeField]
+    private GameObject fireEffect;
 
     private Collider thisCollider;
 
@@ -226,7 +234,10 @@ public class Enemy : MonoBehaviour, IKillable
             AimAtTarget(target, gameObject, ref turretBase, ref turretBarrel);
             if (canFire)
             {
-                Instantiate(bullet, turretBarrel.transform.position, turretBarrel.transform.rotation);
+                Vector3 bulletStartPosition = turretBarrel.transform.position + turretBarrel.transform.rotation * Vector3.forward * tipOfBarrelOffset;
+                GameObject instantiatedFireEffect = Instantiate(fireEffect, bulletStartPosition, turretBarrel.transform.rotation);
+                instantiatedFireEffect.transform.localScale = Vector3.one * fireEffectScale;
+                Instantiate(bullet, bulletStartPosition, turretBarrel.transform.rotation);
                 StartCoroutine(FireCooldown());
             }
         }

@@ -4,7 +4,7 @@ using static StaticObjectHolder;
 using UnityEngine;
 
 
-namespace Structure
+namespace Structures
 {
     [RequireComponent(typeof(MeshRenderer))]
     public class StructureConnectionIndicator : MonoBehaviour

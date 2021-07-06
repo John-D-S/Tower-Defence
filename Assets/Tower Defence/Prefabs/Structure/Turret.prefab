@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 3833119609746957532}
   - component: {fileID: 2418009174397266119}
   - component: {fileID: 3833119609746957530}
+  - component: {fileID: 4343571311239045540}
   m_Layer: 7
   m_Name: Turret
   m_TagString: PreviewStructure
@@ -202,7 +203,7 @@ MonoBehaviour:
   coreConnectionRadius: 15
   thisCollider: {fileID: 2418009174397266119}
   metalCostToBuild: 50
-  energyToRun: 4
+  energyToRun: 5
   healthBar: {fileID: 5632168957651797055}
   maxHealth: 100
   regenerationAmount: 2
@@ -215,10 +216,27 @@ MonoBehaviour:
   turretBarrel: {fileID: 2636242569814168786}
   bullet: {fileID: 7423836921931420716, guid: e63c8c7b0de38384284a247d0ace2d1a, type: 3}
   bulletSpeed: 100
+  tipOfBarrelOffset: 4
   spread: 2.5
   bulletRadius: 0.3
   bulletHitTargetTag: Enemy
   bulletDamage: 10
+  fireEffect: {fileID: 848792181647287891, guid: 1c99cdca2569eb44b990eb68023f8823, type: 3}
+--- !u!114 &4343571311239045540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833119609746957529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434ef9518736034eb5e722f99951508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionSize: 1.5
+  explosionEffect: {fileID: 3461682342779427190, guid: 2164f32b342959646b84c36a5861f2b1, type: 3}
+  structureComponent: {fileID: 3833119609746957530}
 --- !u!1 &4141868349817286691
 GameObject:
   m_ObjectHideFlags: 0
