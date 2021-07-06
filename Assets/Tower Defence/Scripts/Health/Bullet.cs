@@ -57,11 +57,7 @@ public class Bullet : MonoBehaviour
                     }
                 }
                 else if (hitInfo.collider != spawningCollider)
-                {
-                    GameObject instantiatedhitEffect = Instantiate(hitEffect, hitInfo.point, Quaternion.FromToRotation(Vector3.forward, Vector3.Lerp(bullet.transform.forward, hitInfo.normal, 0.6f)));
-                    instantiatedhitEffect.transform.localScale = Vector3.one * bulletRadius * 2;
                     break;
-                }
             }
             bullet.transform.position += bullet.transform.forward * distanceDelta;
             distance += distanceDelta;
