@@ -46,11 +46,11 @@ namespace Structures
         private List<StructureInfo> structureButtonInfos;
         [SerializeField, Tooltip("The prefab of the tower selection button. It must have the StructureSelectionButton component on it")]
         private GameObject structureButtonObject;
-        
+
         [SerializeField]
         private StructureSelectionPanel structureSelectionPanel;
         private List<StructureSelectionButton> structureSelectionButtons;
-        
+
         [Header("-- Structure Options --")]
         [SerializeField]
         private Material allowedPreviewMaterial;
@@ -63,6 +63,9 @@ namespace Structures
 
         private GameObject previewStructureInstance;
         private Structure previewStructureInstanceScript;
+        [Header("-- Structure Placement Effect Settings --")]
+        [SerializeField]
+        private GameObject PlaceStructureEffect;
 
         IEnumerator Destroy(GameObject go)
         {
@@ -143,7 +146,9 @@ namespace Structures
                     {
                         if (previewStructureInstanceScript.CanBePlaced)
                         {
-                            selectedStructure.GetComponent<Structure>().TryPlaceStructure(MouseRayHitPoint(LayerMask.GetMask("Terrain", "Ore")));
+                            Vector3 position = MouseRayHitPoint(LayerMask.GetMask("Terrain", "Ore"));
+                            selectedStructure.GetComponent<Structure>().TryPlaceStructure(position);
+                            Instantiate(PlaceStructureEffect, position, Quaternion.identity);
                         }
                     }
                 }

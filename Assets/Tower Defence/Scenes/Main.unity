@@ -978,6 +978,7 @@ MonoBehaviour:
   structureSelectionPanel: {fileID: 1375571385}
   allowedPreviewMaterial: {fileID: 2100000, guid: 68bc473b1b6f9f34fb1a988f60a54ce8, type: 2}
   disallowedPreviewMaterial: {fileID: 2100000, guid: 4b99f62fdd5a6f14eadded4ae9c4e256, type: 2}
+  PlaceStructureEffect: {fileID: 7497250389027852189, guid: 0515046d3d461a9488cd750af38f6600, type: 3}
 --- !u!4 &497904620
 Transform:
   m_ObjectHideFlags: 0
