@@ -297,7 +297,7 @@ namespace Structures
             {
                 Vector3 point0 = transform.position + Vector3.up * (height * 0.5f - radius);
                 Vector3 point1 = transform.position - Vector3.up * (height * 0.5f - radius);
-                if (Physics.OverlapCapsule(point0, point1, radius, LayerMask.GetMask("Structure")).Length > 0)
+                if (Physics.OverlapCapsule(point0, point1, radius, LayerMask.GetMask("Structure", "EnemyTarget")).Length > 0)
                 {
                     return true;
                 }
