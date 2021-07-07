@@ -2461,7 +2461,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 963194228}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 4096
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0
@@ -3797,7 +3797,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1606428284}
   - component: {fileID: 1606428283}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: PostProcessVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3997,63 +3997,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2063837253}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &78328261698108446
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 78328262926033864, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_Name
-      value: CoreExplosionEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 78328262926033865, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 78328262926033865, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -97.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 78328262926033865, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 121.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 78328262926033865, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -127.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 78328262926033865, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 78328262926033865, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78328262926033865, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78328262926033865, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78328262926033865, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78328262926033865, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 78328262926033865, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
 --- !u!224 &2541116391466439621
 RectTransform:
   m_ObjectHideFlags: 0

@@ -8,15 +8,32 @@ namespace Structures
 {
     public class Core : Structure
     {
+        [Header("-- CoreDeathSettings --")]
         [SerializeField]
         private Animation coreDeathAnimation;
+        [SerializeField]
+        private GameObject CoreModel;
+        [SerializeField]
+        private ParticleSystem RocketExhaustEffect;
+        [SerializeField]
+        private GameObject CoreExplosionEffect;
+        [SerializeField]
+        private float coreExplosionWarmUpTime = 6.4f;
+        [SerializeField]
+        private float timeAfterCoreDestructionToEndLevel = 5f;
 
         bool isDead = false;
 
-        IEnumerator DeathSequence(float duration)
+        IEnumerator DeathSequence()
         {
+            float duration = coreDeathAnimation.clip.length;
             coreDeathAnimation.Play();
-            yield return new WaitForSeconds(duration);
+            yield return new WaitForSeconds(duration - 1f);
+            RocketExhaustEffect.Stop(true);
+            Instantiate(CoreExplosionEffect, gameObject.transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(coreExplosionWarmUpTime);
+            CoreModel.SetActive(false);
+            yield return new WaitForSeconds(timeAfterCoreDestructionToEndLevel);
             Destroy(gameObject);
         }
 
@@ -25,8 +42,7 @@ namespace Structures
             if (!isDead)
             {
                 isDead = true;
-                float deathAnimationDuration = coreDeathAnimation.clip.length;
-                StartCoroutine(DeathSequence(deathAnimationDuration));
+                StartCoroutine(DeathSequence());
             }
         }
 

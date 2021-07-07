@@ -128,6 +128,11 @@ MonoBehaviour:
   timeUntilStorageDoesntWork: 5
   isConnectedToCore: 0
   coreDeathAnimation: {fileID: 4161783058896817965}
+  CoreModel: {fileID: 8599524441163683523}
+  RocketExhaustEffect: {fileID: 8451288450568943317}
+  CoreExplosionEffect: {fileID: 78328262926033864, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
+  coreExplosionWarmUpTime: 6.4
+  timeAfterCoreDestructionToEndLevel: 10
 --- !u!1 &4979985673502943272
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 262585379858527628}
   - component: {fileID: 2856342034772071174}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: StructurePlacementCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,8 +249,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rocket Exhaust Effect
       objectReference: {fileID: 0}
+    - target: {fileID: 6995302240031902847, guid: c19b5f922d3f0c6439cb9d4085f83490, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c19b5f922d3f0c6439cb9d4085f83490, type: 3}
+--- !u!198 &8451288450568943317 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4172297402672188247, guid: c19b5f922d3f0c6439cb9d4085f83490, type: 3}
+  m_PrefabInstance: {fileID: 5525908429354990978}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8069883004768253327
 PrefabInstance:
   m_ObjectHideFlags: 0
