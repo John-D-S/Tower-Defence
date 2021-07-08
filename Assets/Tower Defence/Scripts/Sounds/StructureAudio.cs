@@ -14,13 +14,44 @@ public class StructureAudio : MonoBehaviour
     private float volumeLerpSpeed = 1;
 
     private float originalVolume;
-    private bool currentlyFullVolume;
-    private bool currentlyNoVolume;
+    private bool currentlyFullVolume = false;
+    private bool currentlyNoVolume = false;
+
+    float distanceFromPlayer;
+    IEnumerator UpdateAudioAudibility()
+    {
+        while (gameObject)
+        {
+            distanceFromPlayer = Vector3.Distance(transform.position, Camera.main.transform.position);
+            if (distanceFromPlayer <= structureAudio.maxDistance)
+            {
+                ToggleAudioSource(true);
+            }
+            else
+            {
+                ToggleAudioSource(false);
+            }
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    void ToggleAudioSource(bool isAudible)
+    {
+        if (!isAudible && structureAudio.isPlaying)
+        {
+            structureAudio.Pause();
+        }
+        else if (isAudible && !structureAudio.isPlaying)
+        {
+            structureAudio.Play();
+        }
+    }
 
     private void Start()
     {
         originalVolume = structureAudio.volume;
         structureAudio.volume = 0;
+        StartCoroutine(UpdateAudioAudibility());
     }
 
     private void FixedUpdate()

@@ -1,18 +1,25 @@
- using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 using static StaticObjectHolder;
 
 namespace Structures
 {
     public class Core : Structure
     {
+        [Header("-- CoreParts --")]
+        [SerializeField]
+        private GameObject CoreModel;
+        [SerializeField]
+        private AudioSource coreSound;
+        [SerializeField]
+        private AudioSource rocketSound;
+
         [Header("-- CoreDeathSettings --")]
         [SerializeField]
         private Animation coreDeathAnimation;
-        [SerializeField]
-        private GameObject CoreModel;
         [SerializeField]
         private ParticleSystem RocketExhaustEffect;
         [SerializeField]
@@ -28,6 +35,7 @@ namespace Structures
         {
             float duration = coreDeathAnimation.clip.length;
             coreDeathAnimation.Play();
+            StartCoroutine(TurnDownSound());
             yield return new WaitForSeconds(duration - 1f);
             RocketExhaustEffect.Stop(true);
             Instantiate(CoreExplosionEffect, gameObject.transform.position, Quaternion.identity);
@@ -35,6 +43,15 @@ namespace Structures
             CoreModel.SetActive(false);
             yield return new WaitForSeconds(timeAfterCoreDestructionToEndLevel);
             Destroy(gameObject);
+        }
+
+        IEnumerator TurnDownSound()
+        {
+            while (coreSound.volume > 0.001f)
+            {
+                coreSound.volume = Mathf.Lerp(coreSound.volume, 0, Time.fixedDeltaTime * 0.1f);
+                yield return new WaitForFixedUpdate();
+            }
         }
 
         public override void Die()

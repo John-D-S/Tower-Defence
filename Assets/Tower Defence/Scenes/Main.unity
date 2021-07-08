@@ -229,6 +229,7 @@ MonoBehaviour:
   minBlendRange: 100
   HighAltitudeAmbience: {fileID: 490578148}
   maxBlendRange: 210
+  blendLerpSpeed: 1
 --- !u!1001 &68761300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1021,13 +1022,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 8596373371831410843, guid: e338f85f2c6d62a43a2072080f37ae2a, type: 2}
   m_audioClip: {fileID: 8300000, guid: 3eaa739c711e18841859a1932d20349e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.565
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 256
+  Priority: 0
   DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 2000
@@ -1148,13 +1149,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 8596373371831410843, guid: e338f85f2c6d62a43a2072080f37ae2a, type: 2}
   m_audioClip: {fileID: 8300000, guid: ea97ef662d6a1da45a0887913230756a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 212
+  Priority: 0
   DopplerLevel: 0
   MinDistance: 10
   MaxDistance: 500
@@ -4264,13 +4265,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 8596373371831410843, guid: e338f85f2c6d62a43a2072080f37ae2a, type: 2}
   m_audioClip: {fileID: 8300000, guid: 863e73d1b0753c44e8d51aaa6bfc9332, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.75
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 166
+  Priority: 0
   DopplerLevel: 0
   MinDistance: 10
   MaxDistance: 500

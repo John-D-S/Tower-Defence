@@ -170,16 +170,23 @@ namespace Structures
             get => canFunction;
         }
         private float timeSinceDisconnected = 0;
-        void UpdateCanFunction()
+        private void UpdateCanFunction()
         {
-            if (isConnectedToCore)
+            if (health > 0)
             {
-                canFunction = true;
-                timeSinceDisconnected = 0;
-            }
-            else if (timeSinceDisconnected < timeUntilStorageDoesntWork)
-            {
-                timeSinceDisconnected += Time.fixedDeltaTime;
+                if (isConnectedToCore)
+                {
+                    canFunction = true;
+                    timeSinceDisconnected = 0;
+                }
+                else if (timeSinceDisconnected < timeUntilStorageDoesntWork)
+                {
+                    timeSinceDisconnected += Time.fixedDeltaTime;
+                }
+                else
+                {
+                    canFunction = false;
+                }
             }
             else
             {

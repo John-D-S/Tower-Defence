@@ -14,6 +14,8 @@ public class WorldAmbienceSoundEmmitter : MonoBehaviour
     private AudioSource HighAltitudeAmbience;
     [SerializeField]
     private float maxBlendRange;
+    [SerializeField]
+    private float blendLerpSpeed = 1;
 
     private float lowAltitudeAmbienceMaxVolume;
     private float highAltitudeAmbienceMaxVolume;
@@ -31,7 +33,7 @@ public class WorldAmbienceSoundEmmitter : MonoBehaviour
         transform.position = new Vector3(cameraPosition.x, terrainHeight, cameraPosition.z);
         float unscaledHighAltitudeAmbienceVolume = Mathf.Clamp01((terrainHeight - minBlendRange) / (maxBlendRange - minBlendRange));
         float unscaledlowAltitudeAmbienceVolume = Mathf.Abs(unscaledHighAltitudeAmbienceVolume - 1);
-        LowAltitudeAmbience.volume = unscaledlowAltitudeAmbienceVolume * lowAltitudeAmbienceMaxVolume;
-        HighAltitudeAmbience.volume = unscaledHighAltitudeAmbienceVolume * highAltitudeAmbienceMaxVolume;
+        LowAltitudeAmbience.volume = Mathf.Lerp(LowAltitudeAmbience.volume, unscaledlowAltitudeAmbienceVolume * lowAltitudeAmbienceMaxVolume, Time.fixedDeltaTime * blendLerpSpeed);
+        HighAltitudeAmbience.volume = Mathf.Lerp(HighAltitudeAmbience.volume, unscaledHighAltitudeAmbienceVolume * highAltitudeAmbienceMaxVolume, Time.fixedDeltaTime * blendLerpSpeed);
     }
 }

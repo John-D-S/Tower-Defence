@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8477874812579271103}
   - component: {fileID: 1291992403774110398}
+  - component: {fileID: 1447728181701020966}
   m_Layer: 0
   m_Name: StructureAudio
   m_TagString: Untagged
@@ -52,7 +53,7 @@ AudioSource:
   Priority: 150
   DopplerLevel: 0
   MinDistance: 1.5
-  MaxDistance: 75
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -64,12 +65,12 @@ AudioSource:
     - serializedVersion: 3
       time: 0.10339478
       value: 1
-      inSlope: -2.47855
-      outSlope: -2.47855
+      inSlope: -3.406647
+      outSlope: -3.406647
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.1174662
+      outWeight: 0.043652616
     - serializedVersion: 3
       time: 1
       value: 0
@@ -127,3 +128,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1447728181701020966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411485503583449596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8b43b6e3f6aed54a9e2a9e048eecdd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  structure: {fileID: 0}
+  structureAudio: {fileID: 1291992403774110398}
+  volumeLerpSpeed: 1

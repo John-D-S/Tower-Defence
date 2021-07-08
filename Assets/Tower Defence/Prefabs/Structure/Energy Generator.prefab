@@ -148,21 +148,6 @@ MonoBehaviour:
   explosionSize: 1
   explosionEffect: {fileID: 3461682342779427190, guid: 2164f32b342959646b84c36a5861f2b1, type: 3}
   structureComponent: {fileID: 2910386231807149483}
---- !u!114 &860100146412675360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5504538172779342692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8b43b6e3f6aed54a9e2a9e048eecdd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  structure: {fileID: 2910386231807149483}
-  structureAudio: {fileID: 6359077801629458470}
-  volumeLerpSpeed: 1
 --- !u!1001 &5319296171649751704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1291992403774110398, guid: cdba17afb7e6c224492314c9a0939bfa, type: 3}
       propertyPath: m_Volume
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1291992403774110398, guid: cdba17afb7e6c224492314c9a0939bfa, type: 3}
       propertyPath: MaxDistance
@@ -210,6 +195,10 @@ PrefabInstance:
       propertyPath: rolloffCustomCurve.m_Curve.Array.data[0].outWeight
       value: 0.06202866
       objectReference: {fileID: 0}
+    - target: {fileID: 1447728181701020966, guid: cdba17afb7e6c224492314c9a0939bfa, type: 3}
+      propertyPath: structure
+      value: 
+      objectReference: {fileID: 2910386231807149483}
     - target: {fileID: 8477874812579271103, guid: cdba17afb7e6c224492314c9a0939bfa, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -256,19 +245,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdba17afb7e6c224492314c9a0939bfa, type: 3}
---- !u!1 &5504538172779342692 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 411485503583449596, guid: cdba17afb7e6c224492314c9a0939bfa, type: 3}
-  m_PrefabInstance: {fileID: 5319296171649751704}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4356838559056104231 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8477874812579271103, guid: cdba17afb7e6c224492314c9a0939bfa, type: 3}
-  m_PrefabInstance: {fileID: 5319296171649751704}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &6359077801629458470 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 1291992403774110398, guid: cdba17afb7e6c224492314c9a0939bfa, type: 3}
   m_PrefabInstance: {fileID: 5319296171649751704}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7923218819059963882
