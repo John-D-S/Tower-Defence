@@ -19563,7 +19563,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 108
+  Priority: 1
   DopplerLevel: 0
   MinDistance: 15
   MaxDistance: 1000

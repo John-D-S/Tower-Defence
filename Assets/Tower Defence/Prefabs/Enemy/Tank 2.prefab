@@ -445,6 +445,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TankAudio
       objectReference: {fileID: 0}
+    - target: {fileID: 6274999265111404844, guid: 7b647edb29b8aa14f907235b0f6f6648, type: 3}
+      propertyPath: m_Pitch
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 6897378295224746025, guid: 7b647edb29b8aa14f907235b0f6f6648, type: 3}
       propertyPath: m_RootOrder
       value: 2
