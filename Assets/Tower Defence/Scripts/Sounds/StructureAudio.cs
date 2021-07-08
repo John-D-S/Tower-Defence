@@ -23,7 +23,7 @@ public class StructureAudio : MonoBehaviour
         while (gameObject)
         {
             distanceFromPlayer = Vector3.Distance(transform.position, Camera.main.transform.position);
-            if (distanceFromPlayer <= structureAudio.maxDistance)
+            if (distanceFromPlayer < structureAudio.maxDistance + 10)
             {
                 ToggleAudioSource(true);
             }
@@ -31,7 +31,7 @@ public class StructureAudio : MonoBehaviour
             {
                 ToggleAudioSource(false);
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 

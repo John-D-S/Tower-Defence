@@ -419,7 +419,7 @@ MonoBehaviour:
 
     -
     Turrets: Your only defence against the waves of incoming enemies. Fires 5 bullets
-    per second, with each bullet costing 4 energy. Costs 50 metal.
+    per second, with each bullet costing 5 energy. Costs 50 metal.
 
     - Generators:
     Consumes 2 metal to generate 3 energy every 10 seconds. costs 25 metal.
