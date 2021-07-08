@@ -34,9 +34,11 @@ namespace Structures
         IEnumerator DeathSequence()
         {
             float duration = coreDeathAnimation.clip.length;
-            coreDeathAnimation.Play();
             StartCoroutine(TurnDownSound());
-            yield return new WaitForSeconds(duration - 1f);
+            coreDeathAnimation.Play();
+            yield return new WaitForSeconds(2);
+            rocketSound.Play();
+            yield return new WaitForSeconds(duration - 3f);
             RocketExhaustEffect.Stop(true);
             Instantiate(CoreExplosionEffect, gameObject.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(coreExplosionWarmUpTime);
