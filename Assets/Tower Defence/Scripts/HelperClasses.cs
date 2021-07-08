@@ -201,6 +201,20 @@ public class HelperClasses : MonoBehaviour
             return 0;
         }
 
+        /// <summary>
+        /// Returns the Y height of colliders of objects with the Terrain layer at the given coordinates on the horizontal plane.
+        /// </summary>
+        public static float TargetHeight(Vector2 _targetPosition, float defaultHeight)
+        {
+            LayerMask terrain = LayerMask.GetMask("Terrain");
+            RaycastHit hit;
+            if (Physics.Raycast(ConvertToVector3(_targetPosition) + Vector3.up * 1000, Vector3.down, out hit, Mathf.Infinity, terrain))
+            {
+                return hit.point.y;
+            }
+            return defaultHeight;
+        }
+
         public static Vector3 GetGroundNormal(Vector2 _position)
         {
             LayerMask terrain = LayerMask.GetMask("Terrain");
