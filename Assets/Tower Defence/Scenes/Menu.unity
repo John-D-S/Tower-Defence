@@ -634,7 +634,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   songs:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 2c3249973e1e89d48826dcf544c1154e, type: 3}
+  - {fileID: 8300000, guid: 2d7b21c454dfd3a48b1502dc9a33e50d, type: 3}
+  - {fileID: 8300000, guid: 05f62eb6e009cc443a4d022921dcd478, type: 3}
+  - {fileID: 8300000, guid: f64c58ac0bfc5a443b1ef611d820d769, type: 3}
+  - {fileID: 8300000, guid: 728c5a978b1b3fc46ba05375b72d9e2d, type: 3}
+  - {fileID: 8300000, guid: 5774f2b23a986e544877500347cb7784, type: 3}
+  - {fileID: 8300000, guid: 23f3428e2f074da4eb03f950d79345b6, type: 3}
+  - {fileID: 8300000, guid: b3cb1915224dea04996bb8722172c46e, type: 3}
+  - {fileID: 8300000, guid: 31c45498441da0f4899ca3da3838296d, type: 3}
+  - {fileID: 8300000, guid: dab510331d6e4614d843d5d720bb90e7, type: 3}
+  - {fileID: 8300000, guid: c19dd4cd898945d47bf880e66d5ff0a2, type: 3}
+  - {fileID: 8300000, guid: 14d83b8f4feeb3d4e9e2648f27a26aa4, type: 3}
 --- !u!82 &1450592514
 AudioSource:
   m_ObjectHideFlags: 0

@@ -13,9 +13,21 @@ public class Music : MonoBehaviour
     private AudioClip currentSong;
     //the audioSource that plays the music.
     private AudioSource MusicPlayer;
+    private Queue<AudioClip> lastFiveSongs = new Queue<AudioClip>();
 
-    private void Start()
+    public static Music theBackgroundMusic;
+
+    private void Awake()
     {
+        //destroy this if theBackgroundMusic already exists in the scene
+        if (theBackgroundMusic != null && theBackgroundMusic != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        //set the static theBackgroundMusic variable to this
+        theBackgroundMusic = this;
+        //set this to not be destroyed when the scene changes so that the music does not stop.
         DontDestroyOnLoad(gameObject);
         MusicPlayer = GetComponent<AudioSource>();
         StartCoroutine(StartMusic());
@@ -30,8 +42,22 @@ public class Music : MonoBehaviour
         while (true)
         {
             MusicPlayer.Stop();
-            MusicPlayer.clip = songs[Random.Range(0, songs.Count)];
-            currentSong = MusicPlayer.clip;
+            //the music player will not choose a song in the lastFiveSongs queue to prevent repitition
+            List <AudioClip> availableSongs = new List<AudioClip>();
+            foreach (AudioClip song in songs)
+            {
+                if (!lastFiveSongs.Contains(song))
+                {
+                    availableSongs.Add(song);
+                }
+            }
+            currentSong = availableSongs[Random.Range(0, availableSongs.Count)];
+            lastFiveSongs.Enqueue(currentSong);
+            if (lastFiveSongs.Count > 5)
+            {
+                lastFiveSongs.Dequeue();
+            }
+            MusicPlayer.clip = currentSong;
             MusicPlayer.Play();
             yield return new WaitForSeconds(currentSong.length + 5);
         }
