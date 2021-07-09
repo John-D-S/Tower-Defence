@@ -6,9 +6,12 @@ using UnityEngine.Audio;
 [RequireComponent(typeof(AudioSource))]
 public class Music : MonoBehaviour
 {
-    [SerializeField]
+    [Header("-- Song Settings --")]
+    [SerializeField, Tooltip("A list of songs that will play")]
     private List<AudioClip> songs;
+    //the song that is currently playing
     private AudioClip currentSong;
+    //the audioSource that plays the music.
     private AudioSource MusicPlayer;
 
     private void Start()
@@ -18,8 +21,12 @@ public class Music : MonoBehaviour
         StartCoroutine(StartMusic());
     }
 
+    /// <summary>
+    /// start playing songs
+    /// </summary>
     private IEnumerator StartMusic()
     {
+        //play a random song until it stops, then play another
         while (true)
         {
             MusicPlayer.Stop();

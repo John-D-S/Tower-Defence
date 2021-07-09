@@ -6,11 +6,12 @@ using TMPro;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField]
+    [Header("-- HealthBarSettings --")]
+    [SerializeField, Header("The Bar")]
     public SpriteRenderer Bar;
-    [SerializeField]
+    [SerializeField, Header("The max width of the HealthBar")]
     private float healthBarMaxWidth;
-    [SerializeField]
+    [SerializeField, Header("The height above the gameobject to put the healthbar.")]
     private float heightAboveParent;
     private float HealthBarWidth
     {
@@ -32,7 +33,6 @@ public class HealthBar : MonoBehaviour
     public void SetHealth(float health, float maxHealth)
     {
         HealthBarWidth = healthBarMaxWidth * health / maxHealth;
-        //Bar.transform.position = new Vector3(healthBarMaxWidth * 0.5f + healthBarMaxWidth * 0.5f * health / maxHealth, Bar.transform.position.y, Bar.transform.position.z);
     }
 
     private void SetPosition()

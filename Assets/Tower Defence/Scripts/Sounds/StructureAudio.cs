@@ -6,18 +6,23 @@ using UnityEngine.Audio;
 
 public class StructureAudio : MonoBehaviour
 {
-    [SerializeField]
+    [Header("-- Structure Audio Settings --")]
+    [SerializeField, Tooltip("The Structure script of the associated structure")]
     private Structure structure;
-    [SerializeField]
+    [SerializeField, Tooltip("The audiosource that plays the structure's sound")]
     private AudioSource structureAudio;
-    [SerializeField]
+    [SerializeField, Tooltip("The speed at which the volume lerps up and down when the structure is activated or deactivated")]
     private float volumeLerpSpeed = 1;
 
+    //the starting volume of the structure
     private float originalVolume;
     private bool currentlyFullVolume = false;
     private bool currentlyNoVolume = false;
 
     float distanceFromPlayer;
+    /// <summary>
+    /// updates whether the audio is audible based on its distance from the main camera.
+    /// </summary>
     IEnumerator UpdateAudioAudibility()
     {
         while (gameObject)
@@ -35,6 +40,9 @@ public class StructureAudio : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// pauses or unpauses the audio according to isAudible
+    /// </summary>
     void ToggleAudioSource(bool isAudible)
     {
         if (!isAudible && structureAudio.isPlaying)
@@ -49,6 +57,7 @@ public class StructureAudio : MonoBehaviour
 
     private void Start()
     {
+        //initializing variables and starting the updateAudioAudibility coroutine
         originalVolume = structureAudio.volume;
         structureAudio.volume = 0;
         StartCoroutine(UpdateAudioAudibility());
@@ -56,6 +65,7 @@ public class StructureAudio : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //if the structure can function, raise the volume of the structure and if it can't, lower it.
         if (structure.CanFunction)
         {
             if (!currentlyFullVolume)
