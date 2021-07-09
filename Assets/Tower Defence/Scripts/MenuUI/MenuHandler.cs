@@ -139,7 +139,6 @@ namespace Menu
                 PlayerPrefs.SetFloat("SFXVolume", _volume);
                 PlayerPrefs.Save();
             }
-            else Debug.Log(_volume);
         }
 
         public void ChangeMusicVolume(float _volume)
@@ -150,7 +149,6 @@ namespace Menu
                 PlayerPrefs.SetFloat("MusicVolume", _volume);
                 PlayerPrefs.Save();
             }
-            else Debug.Log(masterMixer);
         }
 
         public void SetMute(bool isMuted)
