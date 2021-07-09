@@ -27,10 +27,11 @@ namespace Structures
         [SerializeField]
         private float coreExplosionWarmUpTime = 6.4f;
         [SerializeField]
-        private float timeAfterCoreDestructionToEndLevel = 5f;
+        private float timeAfterCoreDestructionToEndLevel = 2.5f;
 
         bool isDead = false;
 
+        bool allStructuresDestroyed = false;
         IEnumerator DeathSequence()
         {
             float duration = coreDeathAnimation.clip.length;
@@ -43,8 +44,28 @@ namespace Structures
             Instantiate(CoreExplosionEffect, gameObject.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(coreExplosionWarmUpTime);
             CoreModel.SetActive(false);
+            StartCoroutine(DestroyAllStructures());
+            while (allStructuresDestroyed == false)
+            {
+                yield return null;
+            }
             yield return new WaitForSeconds(timeAfterCoreDestructionToEndLevel);
             Destroy(gameObject);
+        }
+
+        IEnumerator DestroyAllStructures()
+        {
+            List<GameObject> allStructures = new List<GameObject>(currentStructures.Keys);
+            foreach (GameObject structureGO in allStructures)
+            {
+                if (structureGO && structureGO != gameObject)
+                {
+                    Debug.Log("structureExists and will be destoyed");
+                    Destroy(structureGO);
+                    yield return new WaitForSeconds(0.05f);
+                }
+            }
+            allStructuresDestroyed = true;
         }
 
         IEnumerator TurnDownSound()

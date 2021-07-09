@@ -135,7 +135,7 @@ MonoBehaviour:
   RocketExhaustEffect: {fileID: 8451288450568943317}
   CoreExplosionEffect: {fileID: 78328262926033864, guid: 83281f68f9093c14a8b78d32397670db, type: 3}
   coreExplosionWarmUpTime: 6.4
-  timeAfterCoreDestructionToEndLevel: 10
+  timeAfterCoreDestructionToEndLevel: 5
 --- !u!82 &312982835897077359
 AudioSource:
   m_ObjectHideFlags: 0
