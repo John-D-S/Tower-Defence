@@ -126,7 +126,7 @@ MonoBehaviour:
   healthBar: {fileID: 5632168957651797055}
   maxHealth: 50
   regenerationAmount: 2
-  timeUntilStorageDoesntWork: 5
+  timeUntilStructureDoesntWork: 5
   isConnectedToCore: 0
   generatedResource: 1
   numberOfResourcesGenerated: 3

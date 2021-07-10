@@ -739,7 +739,7 @@ GameObject:
   - component: {fileID: 593488597}
   - component: {fileID: 593488598}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Camera Rotatinator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -773,6 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 3
+  RandomStartRotation: 1
 --- !u!1 &642040638
 GameObject:
   m_ObjectHideFlags: 0

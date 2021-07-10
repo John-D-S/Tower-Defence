@@ -27,6 +27,9 @@ public class ExplodeOnDeath : MonoBehaviour
 
     private void OnDestroy()
     {
+        //instantiating an object when the scene is being switched will cause an error
+        if (!gameObject.scene.isLoaded)
+            return;
         //only explode if there is no structure component or if the structure component is in a preview state.
         if (!structureComponent || !structureComponent.Preview)
         {
