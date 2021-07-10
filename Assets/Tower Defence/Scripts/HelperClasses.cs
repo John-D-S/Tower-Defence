@@ -6,6 +6,9 @@ public class HelperClasses : MonoBehaviour
 {
     public static class WeaponFunctions
     {
+        /// <summary>
+        /// returns a quaternion which is randomly deviated from quaternion.identity by _spread degrees
+        /// </summary>
         public static Quaternion RandomSpread(float _spread)
         {
             float randomXSpread = Random.Range(-_spread, _spread) * 0.5f;
@@ -13,42 +16,18 @@ public class HelperClasses : MonoBehaviour
             return Quaternion.Euler(randomXSpread, randomYSpread, 0);
         }
 
-        public static IEnumerator ShootBullet(Collider spawningCollider, Vector3 _startPosition, Quaternion _direction, float _bulletSpeed, GameObject _bullet, float _bulletRadius, float _bulletDamage, float _spread, float _range, string _targetTag)
-        {
-            GameObject bulletInstance = Instantiate(_bullet, _startPosition, _direction * RandomSpread(_spread));
-            bulletInstance.transform.localScale = Vector3.one * _bulletRadius * 2;
-            float distance = 0;
-            while (distance < _range)
-            {
-                yield return new WaitForFixedUpdate();
-                float distanceDelta = Time.deltaTime * _bulletSpeed;
-                RaycastHit hitInfo;
-                if (Physics.SphereCast(new Ray(bulletInstance.transform.position, bulletInstance.transform.forward), _bulletRadius, out hitInfo, distanceDelta))
-                {
-                    //if the bullet hits the thing that it's supposed to, damage the thing
-                    if (hitInfo.collider.tag == _targetTag)
-                    {
-                        IKillable objectToDamage = hitInfo.collider.GetComponentInParent<IKillable>();
-                        if (objectToDamage != null)
-                            objectToDamage.Damage(_bulletDamage);
-                    }
-                    else if (hitInfo.collider != spawningCollider)
-                    {
-                        break;
-                    }
-                }
-                bulletInstance.transform.position += bulletInstance.transform.forward * distanceDelta;
-                distance += distanceDelta;
-            }
-            Destroy(bulletInstance);
-        }
-
+        /// <summary>
+        /// returns the number of degrees tor rotate a transform on an axis to face the transform's local z axis towards a target
+        /// </summary>
         public static float RotationTowardsTargetOnAxis(Transform objectToRotate, Vector3 target, Vector3 constraintAxis)
         {
             float angleToRotate = Vector3.SignedAngle(objectToRotate.forward, objectToRotate.position - target, constraintAxis);
             return angleToRotate;
         }
 
+        /// <summary>
+        /// aims the turret base and barrel toward the target.
+        /// </summary>
         public static void AimAtTarget(Transform _target, GameObject _attatchedStructure, ref GameObject _turretBase, ref GameObject _turretBarrel)
         {
             Vector3 targetPos = _target.position;
@@ -68,18 +47,24 @@ public class HelperClasses : MonoBehaviour
             _turretBarrel.transform.rotation = turretBarrelRotation;
         }
 
-        public static Transform NearestVisibleTarget(GameObject _turretBarrel, float _range, LayerMask _TargetLayer)
+        /// <summary>
+        /// finds the nearest visible transform on the _TargetLayer with a collider
+        /// </summary>
+        public static Transform NearestVisibleTarget(GameObject _turretBarrel, float _range, LayerMask _targetLayer)
         {
-            if (Physics.CheckSphere(_turretBarrel.transform.position, _range, _TargetLayer))
+            //check if there are any colliders within range
+            if (Physics.CheckSphere(_turretBarrel.transform.position, _range, _targetLayer))
             {
+                //iterate through each collider to find the nearest one
                 Collider currentNearestVisibleCollider = null;
                 float currentClosestDistance = Mathf.Infinity;
-                Collider[] inRangeEnemyColliders = Physics.OverlapSphere(_turretBarrel.transform.position, _range, _TargetLayer);
+                Collider[] inRangeEnemyColliders = Physics.OverlapSphere(_turretBarrel.transform.position, _range, _targetLayer);
                 foreach (Collider enemyCollider in inRangeEnemyColliders)
                 {
                     float distance = Vector3.Distance(enemyCollider.transform.position, _turretBarrel.transform.position);
                     if (distance < currentClosestDistance)
                     {
+                        //we only get colliders that we can get an unobstructed raycast to (the visible part of NearestVisibleTarget)
                         float enemyScale = enemyCollider.transform.localScale.y;
                         RaycastHit enemyHit;
                         //we are testing if we can see the top of the enemy because if we aim for the center, the terrain can get in the way easily
@@ -94,11 +79,13 @@ public class HelperClasses : MonoBehaviour
                         }
                     }
                 }
+                //return the nearest visible collider once they are all iterated through
                 if (currentNearestVisibleCollider)
                 {
                     return currentNearestVisibleCollider.transform;
                 }
             }
+            //if there are no visible targets in the radius, return null
             return null;
         }
     }
@@ -152,6 +139,9 @@ public class HelperClasses : MonoBehaviour
         }
         #endregion
 
+        /// <summary>
+        /// returns the layermask of the point under the cursor
+        /// </summary>
         public static LayerMask MouseRayHitMask()
         {
             RaycastHit hit;
@@ -163,6 +153,9 @@ public class HelperClasses : MonoBehaviour
             return 0;
         }
 
+        /// <summary>
+        /// returns the layermask of the point under the cursor as long as it is within the given _layermask
+        /// </summary>
         public static LayerMask MouseRayHitMask(LayerMask _layerMask)
         {
             RaycastHit hit;
@@ -215,6 +208,9 @@ public class HelperClasses : MonoBehaviour
             return defaultHeight;
         }
 
+        /// <summary>
+        /// returns the ground normal of the terrain at the position given on the x-z plane
+        /// </summary>
         public static Vector3 GetGroundNormal(Vector2 _position)
         {
             LayerMask terrain = LayerMask.GetMask("Terrain");
@@ -226,11 +222,19 @@ public class HelperClasses : MonoBehaviour
             return Vector3.up;
         }
 
+        /// <summary>
+        /// returns the 2d forward direction rotated about the z axis by _angle
+        /// </summary>
         public static Vector2 Angle2Direction(float _angle)
         {
             return ConvertToVector2(Quaternion.Euler(0, _angle, 0) * Vector3.forward);
         }
 
+        /// <summary>
+        /// converts a vector2 direction to the angle it would take to rotate it back to forward
+        /// </summary>
+        /// <param name="_direction"></param>
+        /// <returns></returns>
         public static float Direction2Angle(Vector2 _direction)
         {
             float angle = Vector3.Angle(new Vector3(0.0f, 1.0f, 0.0f), new Vector3(_direction.x, _direction.y, 0.0f));
@@ -242,6 +246,9 @@ public class HelperClasses : MonoBehaviour
             return angle;
         }
 
+        /// <summary>
+        /// set the layer of all children of the given gameobject
+        /// </summary>
         public static void SetLayerOfAllChildren(GameObject objectToSetLayerOn, LayerMask layer)
         {
             objectToSetLayerOn.layer = layer;
@@ -254,6 +261,9 @@ public class HelperClasses : MonoBehaviour
             }
         }
 
+        /// <summary>
+        /// set the tag of all children of the given gameobject
+        /// </summary>
         public static void SetTagOfAllChildren(GameObject objectToSetTagOn, string tag)
         {
             objectToSetTagOn.tag = tag;

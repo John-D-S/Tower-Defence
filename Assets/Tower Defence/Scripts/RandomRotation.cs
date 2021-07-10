@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RandomRotation : MonoBehaviour
 {
+    // apply a random y rotation to this gameObject on start
     void Start()
     {
         Vector3 currentEulerAngles = transform.rotation.eulerAngles;

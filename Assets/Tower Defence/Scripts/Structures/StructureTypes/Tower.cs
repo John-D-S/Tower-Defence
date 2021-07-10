@@ -28,6 +28,9 @@ namespace Structures
         #region Shooting
         public abstract void ShootProjectile();
 
+        /// <summary>
+        /// will shoot a bullet and start the fireCooldown if the canFire is true and Energy can be incremented by -energyToRun.
+        /// </summary>
         private void Fire()
         {
             if (canFire)
@@ -40,6 +43,9 @@ namespace Structures
             }
         }
 
+        /// <summary>
+        /// sets canFire to false for the cooldown time and then sets it back
+        /// </summary>
         private IEnumerator FireCooldown()
         {
             canFire = false;
@@ -48,6 +54,9 @@ namespace Structures
         }
         #endregion
 
+        /// <summary>
+        /// updates the nearest enemy and tries to aim and fire at them.
+        /// </summary>
         protected void UpdateTower()
         {
             Transform enemy = NearestVisibleTarget(turretBarrel, range, enemyLayer);

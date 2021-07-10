@@ -418,21 +418,21 @@ MonoBehaviour:
     costs. All structures must be linked to the core or they will not function.
 
     -
-    Turrets: Your only defence against the waves of incoming enemies. Fires 5 bullets
-    per second, with each bullet costing 5 energy. Costs 50 metal.
-
-    - Generators:
-    Consumes 2 metal to generate 3 energy every 10 seconds. costs 25 metal.
-
-    -
     Mines: Can only be placed on ore deposits and generate 5 metal every 10 seconds.
     Costs 25 metal.
 
-    - Batteries: Adds 50 to the max stored energy while connected
+    - Containers: Adds 50 to the max stored metal while connected
     to the core. Costs 25 metal.
 
-    - Containers: Adds 50 to the max stored metal
-    while connected to the core. Costs 25 metal.'
+    - Generators: Consumes 2 metal to generate
+    3 energy every 10 seconds. costs 25 metal.
+
+    - Batteries: Adds 50 to the max
+    stored energy while connected to the core. Costs 25 metal.
+
+    - Turrets: Your
+    only defence against the waves of incoming enemies. Fires 5 bullets per second,
+    with each bullet costing 5 energy. Costs 50 metal.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ef91996fd7b065c47afdb4add08ab0d0, type: 2}
   m_sharedMaterial: {fileID: -2491233369150868529, guid: ef91996fd7b065c47afdb4add08ab0d0, type: 2}

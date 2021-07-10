@@ -6,6 +6,9 @@ using Economy;
 using Controls;
 using Saving;
 
+/// <summary>
+/// holds static objects for use by other scripts
+/// </summary>
 public static class StaticObjectHolder
 {
     public static VisibilityManager theVisibilityManager;

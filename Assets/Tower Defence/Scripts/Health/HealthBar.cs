@@ -30,11 +30,17 @@ public class HealthBar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// set the fill amount of the healthbar
+    /// </summary>
     public void SetHealth(float health, float maxHealth)
     {
         HealthBarWidth = healthBarMaxWidth * health / maxHealth;
     }
 
+    /// <summary>
+    /// update how high the health bar is above it's parent based on heightAboveParent
+    /// </summary>
     private void SetPosition()
     {
         if (gameObject.transform.parent)
@@ -49,7 +55,9 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
+        //add this healthbar to the list of healthbars in theVisibility manager so that it's visibility will be updated properly according to theVisibilityManager
         theVisibilityManager.healthBars.Add(this);
+        //set this healthbar to be active according to the current visible state of healthbars in theVisibilityManager
         gameObject.SetActive(theVisibilityManager.showHealthBars);
     }
 

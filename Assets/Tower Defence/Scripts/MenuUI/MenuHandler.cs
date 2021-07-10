@@ -161,7 +161,6 @@ namespace Menu
                     masterMixer.SetFloat("MasterVolume", 0f);
                 PlayerPrefs.SetInt("IsMuted", isMuted ? 1 : 0);
                 PlayerPrefs.Save();
-                Debug.Log("IsMuted: " + isMuted);
             }
         }
         #endregion

@@ -18,11 +18,18 @@ namespace Economy
         public static int metal;
         public static int energy;
 
+        //the starting max amount of metal.
         public static int baseMaxMetal;
+        //the starting max amount of energy.
         public static int baseMaxEnergy;
         
+        //a list of all metal storage structures in the scene
         public static List<Storage> activeMetalStorageStructures = new List<Storage>();
+        //a list of all energy storage structures in the scene
         public static List<Storage> activeEnergyStorageStructures = new List<Storage>();
+        /// <summary>
+        /// returns the sum of all max metals in active energy storageStructures.
+        /// </summary>
         public static int MaxMetal
         {
             get
@@ -36,6 +43,9 @@ namespace Economy
                 return returnValue;
             }
         }
+        /// <summary>
+        /// returns the sum of all max metals in active energy storageStructures.
+        /// </summary>
         public static int MaxEnergy
         {
             get
@@ -50,60 +60,75 @@ namespace Economy
             }
         }
 
-
+        /// <summary>
+        /// increments the resource up or down by a certain amount and returns whether or not the resource was changed.
+        /// </summary>
+        /// <param name="incrementAmount">The amount to increment the resource by</param>
+        /// <param name="resourceToIncrement">The resource to increment</param>
+        /// <param name="maxResource">the maximum amount of said resource</param>
         public static bool TryIncrementResource(int incrementAmount, ref int resourceToIncrement, int maxResource)
         {
+            //the current amount of the given resorce plus the amount to increment it by
             int resultantAmount = resourceToIncrement + incrementAmount;
+            //if the current amount is less than the max resource and the resultant amount is greater than it, set the resource to the maxResource and return true
             if (resourceToIncrement < maxResource && resultantAmount >= maxResource)
             {
                 resourceToIncrement = maxResource;
                 return true;
-            }
+            }//if the resultant amount is greater than or equal to 0 and the resultant amount is less than the max resource then set the resource to increment to resultantAmount
             else if (resultantAmount >= 0 && resultantAmount < maxResource)
             {
                 resourceToIncrement = resultantAmount;
                 return true;
-            }
+            }//if the resultant amount is greater than the max resource and neither of the above conditions were met, just set resourceToIncrement to maxResource and return false.
             if (resultantAmount > maxResource)
                 resourceToIncrement = maxResource;
             return false;
         }
 
+        /// <summary>
+        /// increments metal by _metalIncrementAmount
+        /// </summary>
         public static bool TryIncrementMetal(int _metalIncrementAmount) => TryIncrementResource(_metalIncrementAmount, ref metal, MaxMetal);
-        
+        /// <summary>
+        /// increments metal by _metalIncrementAmount
+        /// </summary>        
         public static bool TryIncrementEnergy(int _energyIncrementAmount) => TryIncrementResource(_energyIncrementAmount, ref energy, MaxEnergy);
     }
 
     public class EconomyManager : MonoBehaviour
     {
         [Header("-- Economy Bars --")]
-        [SerializeField]
+        [SerializeField, Tooltip("The HUD bar that visually displays the amount of metal stored")]
         private Image metalHudBar;
-        [SerializeField]
+        [SerializeField, Tooltip("The text that displays the amount of metal stored")]
         private TextMeshProUGUI metalHudText;
-        [SerializeField]
+        [SerializeField, Tooltip("The HUD bar that visually displays the amount of energy stored")]
         private Image energyHudBar;
-        [SerializeField]
+        [SerializeField, Tooltip("The text that displays the amount of energy stored")]
         private TextMeshProUGUI energyHudText;
 
         [Header("-- Starting Values --")]
-        [SerializeField]
+        [SerializeField, Tooltip("The amount of metal the player starts off with.")]
         private int startingMetal = 50;
-        [SerializeField]
+        [SerializeField, Tooltip("The amount of energy the player starts off with.")]
         private int startingEnergy = 50;
 
 
-        [SerializeField]
+        [SerializeField, Tooltip("The amount of Metal that is generated per second by default")]
         private int baseMetalPerSecond = 1;
-        [SerializeField]
+        [SerializeField, Tooltip("The amount of energy that is generated per second by default")]
         private int baseEnergyPerSecond = 1;
 
         [Header("-- Base Resources --")]
-        [SerializeField]
+        [SerializeField, Tooltip("The base amount of max metal storage the player has to start out with.")]
         private int baseMaxMetal = 100;
-        [SerializeField]
+        [SerializeField, Tooltip("The base amount of max energy storage the player has to start out with.")]
         private int baseMaxEnergy = 100;
 
+        /// <summary>
+        /// Sets all the base/default economy values
+        /// </summary>
         private void InitializeBaseMaxEconomy()
         {
             EconomyTracker.baseMaxMetal = baseMaxMetal;
@@ -112,6 +137,7 @@ namespace Economy
             EconomyTracker.TryIncrementEnergy(startingEnergy);
         }
 
+        //generate the base generation amount of eac resource each second
         private IEnumerator BaseGenerate()
         {
             while (true)
@@ -124,17 +150,20 @@ namespace Economy
 
         private void Start()
         {
+            //start the baseGenerateCoroutine so that the player can afford starting towers and initialise the economy variables
             StartCoroutine(BaseGenerate());
             InitializeBaseMaxEconomy();
         }
 
         private void Update()
         {
+            //set how full the economy display bars are
             if (metalHudBar.sprite && energyHudBar.sprite)
             {
                 metalHudBar.fillAmount = (float)EconomyTracker.metal / (float)EconomyTracker.MaxMetal;
                 energyHudBar.fillAmount = (float)EconomyTracker.energy / (float)EconomyTracker.MaxEnergy;
             }
+            //set what the economy display texts show.
             if (metalHudText && energyHudText)
             {
                 metalHudText.text = $"Metal: {EconomyTracker.metal} / {EconomyTracker.MaxMetal}";
