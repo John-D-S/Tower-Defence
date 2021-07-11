@@ -63,12 +63,17 @@ namespace Structures
         IEnumerator DestroyAllStructures()
         {
             List<GameObject> allStructures = new List<GameObject>(currentStructures.Keys);
+            int i = 0;
             foreach (GameObject structureGO in allStructures)
             {
                 if (structureGO && structureGO != gameObject)
                 {
                     Destroy(structureGO);
-                    yield return new WaitForSeconds(0.05f);
+                    i++;
+                    if ( i > 5 )
+                    {
+                        yield return new WaitForSeconds(0.05f);
+                    }
                 }
             }
             allStructuresDestroyed = true;
