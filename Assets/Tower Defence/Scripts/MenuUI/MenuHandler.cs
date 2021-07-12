@@ -174,12 +174,9 @@ namespace Menu
 
         public void SetFullscreen(bool isFullscreen)
         {
-            if (Application.isEditor)
-            {
-                Screen.fullScreen = isFullscreen;
-                PlayerPrefs.SetInt("IsFullscreen", isFullscreen ? 1 : 0);
-                PlayerPrefs.Save();
-            }
+            Screen.fullScreen = isFullscreen;
+            PlayerPrefs.SetInt("IsFullscreen", isFullscreen ? 1 : 0);
+            PlayerPrefs.Save();
         }
 
         #endregion
